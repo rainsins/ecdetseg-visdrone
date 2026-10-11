@@ -1,0 +1,35 @@
+[workspace]
+authors = ["rainsins <1820278582@qq.com>"]
+channels = ["conda-forge"]
+name = "EdgeCrafter"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[pypi-options]
+index-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+extra-index-urls = ["https://download.pytorch.org/whl/xpu"]
+index-strategy = "unsafe-best-match"
+
+[dependencies]
+python = ">=3.10,<3.12"
+numpy = ">=1.26.0,<2.0.0"
+ml_dtypes = "==0.2.0"
+scipy = "==1.11.4"
+opencv = "*"
+huggingface_hub = ">=1.32.0,<2"
+
+[pypi-dependencies]
+torch = "==2.9.1+xpu"
+torchvision = "==0.24.1+xpu"
+pytorch-triton-xpu = "*"
+pycocotools = "*"
+pyyaml = "*"
+tensorboard = "*"
+calflops = "*"
+transformers = "*"
+tabulate = "*"
+onnx = "==1.16.1"
+onnxruntime = "*"
+
+[tasks]
+start = "python main.py"

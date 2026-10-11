@@ -25,20 +25,35 @@ from ...misc import dist_utils
 
 __all__ = ['CocoEvaluator',]
 
+DEFAULT_EVAL_MAX_DETS = 300
+
+
+def build_max_dets(max_det=None):
+    """Build the COCO `params.maxDets` list.
+
+    The standard 1/10/100 slots are kept for @100 vs @300 comparison; the
+    configured upper bound (cfg['eval_maxDets']) is appended as the trailing
+    entry, which is the one reported by the summary and the class-wise table.
+    """
+    max_det = DEFAULT_EVAL_MAX_DETS if max_det is None else int(max_det)
+    return sorted(set([1, 10, 100, max_det]))
+
 
 @register()
 class CocoEvaluator(object):
-    def __init__(self, coco_gt, iou_types, verbose=True):
+    def __init__(self, coco_gt, iou_types, verbose=True, max_dets=None):
         assert isinstance(iou_types, (list, tuple))
         coco_gt = copy.deepcopy(coco_gt)
         self.coco_gt : COCO = coco_gt
         self.coco_gt.dataset.setdefault('info', {})
         self.iou_types = iou_types
         self.labels = [cat['name'] for cat in coco_gt.loadCats(coco_gt.getCatIds())] if verbose else None
+        self.max_dets = build_max_dets(max_dets)
 
         self.coco_eval = {}
         for iou_type in iou_types:
             self.coco_eval[iou_type] = COCOeval(coco_gt, iouType=iou_type)
+            self.coco_eval[iou_type].params.maxDets = list(self.max_dets)
 
         self.img_ids = []
         self.eval_imgs = {k: [] for k in iou_types}
@@ -47,6 +62,7 @@ class CocoEvaluator(object):
         self.coco_eval = {}
         for iou_type in self.iou_types:
             self.coco_eval[iou_type] = COCOeval(self.coco_gt, iouType=iou_type)
+            self.coco_eval[iou_type].params.maxDets = list(self.max_dets)
         self.img_ids = []
         self.eval_imgs = {k: [] for k in self.iou_types}
 
@@ -83,7 +99,7 @@ class CocoEvaluator(object):
     def summarize(self):
         for iou_type, coco_eval in self.coco_eval.items():
             print("IoU metric: {}".format(iou_type))
-            coco_eval.summarize()
+            coco_summarize(coco_eval)
 
     def prepare(self, predictions, iou_type):
         if iou_type == "bbox":
@@ -183,6 +199,93 @@ class CocoEvaluator(object):
 
 
 
+def coco_summarize(coco_eval):
+    """COCOeval.summarize() that reports at `params.maxDets[-1]`.
+
+    pycocotools hardcodes maxDets=100 for the AP@all line and uses
+    params.maxDets[2] for the rest, which truncates recall on dense datasets
+    (e.g. VisDrone) and prints -1.000 when the 100 slot is absent. This mirrors
+    the official summary but reads the trailing entry of params.maxDets, staying
+    consistent with the class-wise table (which also indexes maxDets[-1]).
+    """
+    p = coco_eval.params
+    if not coco_eval.eval:
+        raise Exception('Please run accumulate() first')
+    max_det = p.maxDets[-1]
+
+    def _summarize(ap=1, iouThr=None, areaRng='all', maxDets=None):
+        if maxDets is None:
+            maxDets = max_det
+        iStr = ' {:<18} {} @[ IoU={:<9} | area={:>6s} | maxDets={:>3d} ] = {:0.3f}'
+        titleStr = 'Average Precision' if ap == 1 else 'Average Recall'
+        typeStr = '(AP)' if ap == 1 else '(AR)'
+        iouStr = '{:0.2f}:{:0.2f}'.format(p.iouThrs[0], p.iouThrs[-1]) \
+            if iouThr is None else '{:0.2f}'.format(iouThr)
+
+        aind = [i for i, aRng in enumerate(p.areaRngLbl) if aRng == areaRng]
+        mind = [i for i, mDet in enumerate(p.maxDets) if mDet == maxDets]
+        if ap == 1:
+            # dimension of precision: [TxRxKxAxM]
+            s = coco_eval.eval['precision']
+            if iouThr is not None:
+                t = np.where(iouThr == p.iouThrs)[0]
+                s = s[t]
+            s = s[:, :, :, aind, mind]
+        else:
+            # dimension of recall: [TxKxAxM]
+            s = coco_eval.eval['recall']
+            if iouThr is not None:
+                t = np.where(iouThr == p.iouThrs)[0]
+                s = s[t]
+            s = s[:, :, aind, mind]
+        if len(s[s > -1]) == 0:
+            mean_s = -1
+        else:
+            mean_s = np.mean(s[s > -1])
+        print(iStr.format(titleStr, typeStr, iouStr, areaRng, maxDets, mean_s))
+        return mean_s
+
+    def _summarizeDets():
+        stats = np.zeros((12,))
+        stats[0] = _summarize(1, maxDets=max_det)
+        stats[1] = _summarize(1, iouThr=.5, maxDets=max_det)
+        stats[2] = _summarize(1, iouThr=.75, maxDets=max_det)
+        stats[3] = _summarize(1, areaRng='small', maxDets=max_det)
+        stats[4] = _summarize(1, areaRng='medium', maxDets=max_det)
+        stats[5] = _summarize(1, areaRng='large', maxDets=max_det)
+        stats[6] = _summarize(0, maxDets=p.maxDets[0])
+        stats[7] = _summarize(0, maxDets=p.maxDets[1])
+        stats[8] = _summarize(0, maxDets=max_det)
+        stats[9] = _summarize(0, areaRng='small', maxDets=max_det)
+        stats[10] = _summarize(0, areaRng='medium', maxDets=max_det)
+        stats[11] = _summarize(0, areaRng='large', maxDets=max_det)
+        return stats
+
+    def _summarizeKps():
+        stats = np.zeros((10,))
+        stats[0] = _summarize(1, maxDets=max_det)
+        stats[1] = _summarize(1, maxDets=max_det, iouThr=.5)
+        stats[2] = _summarize(1, maxDets=max_det, iouThr=.75)
+        stats[3] = _summarize(1, areaRng='medium', maxDets=max_det)
+        stats[4] = _summarize(1, areaRng='large', maxDets=max_det)
+        stats[5] = _summarize(0, maxDets=max_det)
+        stats[6] = _summarize(0, maxDets=max_det, iouThr=.5)
+        stats[7] = _summarize(0, maxDets=max_det, iouThr=.75)
+        stats[8] = _summarize(0, areaRng='medium', maxDets=max_det)
+        stats[9] = _summarize(0, areaRng='large', maxDets=max_det)
+        return stats
+
+    if p.iouType in ('segm', 'bbox'):
+        stats = _summarizeDets()
+    elif p.iouType == 'keypoints':
+        stats = _summarizeKps()
+    else:
+        raise ValueError('Unknown iouType {}'.format(p.iouType))
+
+    coco_eval.stats = stats
+    return stats
+
+
 def create_common_coco_eval(coco_eval, img_ids, eval_imgs):
     img_ids, eval_imgs = merge(img_ids, eval_imgs)
     img_ids = list(img_ids)
@@ -191,7 +294,7 @@ def create_common_coco_eval(coco_eval, img_ids, eval_imgs):
     coco_eval.evalImgs = eval_imgs
     coco_eval.params.imgIds = img_ids
     coco_eval._paramsEval = copy.deepcopy(coco_eval.params)
-    
+
 def convert_to_xywh(boxes):
     xmin, ymin, xmax, ymax = boxes.unbind(1)
     return torch.stack((xmin, ymin, xmax - xmin, ymax - ymin), dim=1)

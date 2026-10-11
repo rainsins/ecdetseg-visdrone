@@ -2,41 +2,40 @@ task: detection
 
 evaluator:
   type: CocoEvaluator
-  iou_types: ['bbox', ]
-  verbose: False
+  iou_types: ['bbox']
+  verbose: True   # 改成 True 可以看到每个类别的 AP
 
-num_classes: 777 # your dataset classes
+num_classes: 10  # VisDrone 是 10 类
 remap_mscoco_category: False
 
 train_dataloader:
   type: DataLoader
   dataset:
     type: CocoDetection
-    img_folder: /data/yourdataset/train
-    ann_file: /data/yourdataset/train/train.json
+    img_folder: /home/rainsin/Projects/Career/Paper/dataset/VisDrone/train          # 改成你的绝对路径
+    ann_file: /home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_train.json
     return_masks: False
     transforms:
       type: Compose
       ops: ~
   shuffle: True
-  num_workers: 4
+  num_workers: 8          # Arc 770 建议先用 2，稳定后再加
   drop_last: True
   collate_fn:
     type: BatchImageCollateFunction
-
 
 val_dataloader:
   type: DataLoader
   dataset:
     type: CocoDetection
-    img_folder: /data/yourdataset/val
-    ann_file: /data/yourdataset/val/val.json
+    img_folder: /home/rainsin/Projects/Career/Paper/dataset/VisDrone/val
+    ann_file: /home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_val.json
     return_masks: False
     transforms:
       type: Compose
       ops: ~
   shuffle: False
-  num_workers: 4
+  num_workers: 8
   drop_last: False
   collate_fn:
     type: BatchImageCollateFunction

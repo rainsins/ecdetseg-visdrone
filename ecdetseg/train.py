@@ -15,6 +15,7 @@ import os
 import sys
 import warnings
 
+
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 
 import argparse
@@ -30,6 +31,7 @@ warnings.filterwarnings("always", message=".*stop_epoch.*")
 
 if debug:
     import torch
+    torch.xpu.empty_cache()
     def custom_repr(self):
         return f'{{Tensor:{tuple(self.shape)}}} {original_repr(self)}'
     original_repr = torch.Tensor.__repr__
@@ -76,7 +78,7 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--tuning', type=str, help='tuning from checkpoint')
     parser.add_argument('-d', '--device', type=str, help="device (e.g. 'cuda:0', 'xpu:0', 'xpu' or 'cpu')")
     parser.add_argument('--seed', type=int, default=0, help='exp reproducibility')
-    parser.add_argument('--use-amp', action='store_true', help='auto mixed precision training')
+    parser.add_argument('--use-amp', action='store_true', default=None, help='auto mixed precision training')
     parser.add_argument('--output-dir', type=str, help='output directoy')
     parser.add_argument('--summary-dir', type=str, help='tensorboard summry')
     parser.add_argument('--test-only', action='store_true', default=False,)

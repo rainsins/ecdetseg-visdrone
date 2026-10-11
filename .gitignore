@@ -211,4 +211,6 @@ __marimo__/
 *.pth
 *.onnx
 *.zip
-.DS_Store
+.DS_Store# pixi environments
+.pixi/*
+!.pixi/config.toml

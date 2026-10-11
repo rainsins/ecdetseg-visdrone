@@ -8,7 +8,7 @@ import torch
 
 from ..core import register
 
-__all__ = ['GradScaler']
+__all__ = ['GradScaler', 'get_amp_dtype']
 
 
 def _default_amp_device() -> str:
@@ -19,9 +19,19 @@ def _default_amp_device() -> str:
     return 'cpu'
 
 
+def get_amp_dtype(device_type: str = None):
+    dt = device_type or _default_amp_device()
+    if dt == 'cuda':
+        return torch.float16
+    if dt == 'xpu':
+        return torch.bfloat16
+    return torch.float32
+
+
 @register()
 class GradScaler(torch.amp.GradScaler):
-    """Device-agnostic GradScaler, defaults to the available accelerator (cuda/xpu/cpu)."""
-
-    def __init__(self, device: str = None, **kwargs):
-        super().__init__(device=device or _default_amp_device(), **kwargs)
+    def __init__(self, device: str = None, enabled: bool = None, **kwargs):
+        device = device or _default_amp_device()
+        if enabled is None:
+            enabled = (device == 'cuda')
+        super().__init__(device=device, enabled=enabled, **kwargs)

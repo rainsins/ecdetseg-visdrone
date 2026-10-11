@@ -1,0 +1,4 @@
+# P30u resolution override: 960 input.
+# reset_cfg derives Mosaic.output_size = 480 and every Resize size = 960.
+# Use EITHER this include OR `-u eval_spatial_size='[960,960]'`.
+eval_spatial_size: [960, 960]   # h w

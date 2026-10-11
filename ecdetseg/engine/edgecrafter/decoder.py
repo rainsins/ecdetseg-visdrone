@@ -28,7 +28,35 @@ from .utils import (bias_init_with_prob, deformable_attention_core_func_v2,
                     weighting_function)
 
 __all__ = ['ECTransformer']
-    
+
+MAX_GT_FOR_DN = 100
+
+
+def cap_dn_targets(targets, max_gt=MAX_GT_FOR_DN):
+    """Randomly subsample the per-GT fields of each target to at most `max_gt`.
+
+    Ultra-dense images (e.g. VisDrone, up to ~900 GT) make the contrastive
+    denoising attn mask O(max_gt^2) and exhaust host memory. This caps what the
+    denoising branch sees without touching the main matching branch.
+
+    Every tensor whose leading dim equals the number of labels (boxes, labels,
+    masks, keypoints, area, iscrowd, mixup, ...) is sliced with the same index so
+    per-GT fields stay aligned; per-image fields (image_id, orig_size, size, ...)
+    are kept as-is.
+    """
+    if targets is None:
+        return targets
+
+    capped = []
+    for t in targets:
+        num_gt = len(t['labels'])
+        if num_gt > max_gt:
+            idx = torch.randperm(num_gt, device=t['labels'].device)[:max_gt]
+            t = {k: (v[idx] if isinstance(v, torch.Tensor) and v.dim() > 0 and v.size(0) == num_gt else v)
+                 for k, v in t.items()}
+        capped.append(t)
+    return capped
+
 
 class MLP(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim, num_layers=3, act='relu'):
@@ -42,7 +70,7 @@ class MLP(nn.Module):
         for i, layer in enumerate(self.layers):
             x = self.act(layer(x)) if i < self.num_layers - 1 else layer(x)
         return x
-    
+
 
 class Gate(nn.Module):
     def __init__(self, d_model):
@@ -58,7 +86,7 @@ class Gate(nn.Module):
         gates = torch.sigmoid(self.gate(gate_input))
         gate1, gate2 = gates.chunk(2, dim=-1)
         return self.norm(gate1 * x1 + gate2 * x2)
-    
+
 
 class Integral(nn.Module):
     """
@@ -241,7 +269,7 @@ class TransformerDecoderLayer(nn.Module):
         self.dropout3 = nn.Dropout(dropout)
         self.linear2 = nn.Linear(dim_feedforward, d_model)
         # self.ffn = SwiGLUFFN(d_model, dim_feedforward, d_model)
-        
+
         self.dropout4 = nn.Dropout(dropout)
         self.norm2 = nn.LayerNorm(d_model)
 
@@ -275,7 +303,7 @@ class TransformerDecoderLayer(nn.Module):
         # ffn
         target2 = self.linear2(self.dropout3(self.activation(self.linear1(target))))
         # target2 = self.ffn(target)
-        
+
         target = target + self.dropout4(target2)
         target = self.norm2(target.clamp(min=-65504, max=65504))
 
@@ -476,10 +504,10 @@ class ECTransformer(nn.Module):
             activation, num_levels, num_points, cross_attn_method=cross_attn_method)
         decoder_layer_wide = TransformerDecoderLayer(hidden_dim, nhead, dim_feedforward, dropout, \
             activation, num_levels, num_points, cross_attn_method=cross_attn_method, layer_scale=layer_scale)
-        
+
         # SegmetationHead
         segmentation_head = SegmentationHead(hidden_dim, num_layers, downsample_ratio=mask_downsample_ratio, image_size=eval_spatial_size) if mask_downsample_ratio else None
-        
+
         self.decoder = TransformerDecoder(hidden_dim, decoder_layer, decoder_layer_wide, segmentation_head, num_layers, nhead,
                                           reg_max, self.reg_scale, self.up, eval_idx, layer_scale, act=activation)
       # denoising
@@ -709,7 +737,7 @@ class ECTransformer(nn.Module):
             index=topk_ind.unsqueeze(-1).repeat(1, 1, memory.shape[-1]))
 
         return topk_memory, topk_logits, topk_anchors
-    
+
     @staticmethod
     def _split(x, dim, s_idx):
         return torch.split(x, s_idx, dim=dim) if x is not None else (None, None)
@@ -718,10 +746,18 @@ class ECTransformer(nn.Module):
         # input projection and embedding
         memory, spatial_shapes = self._get_encoder_input(feats)
 
+        # Cap the per-image GT count for the CDN/denoising branch only. Dense images
+        # otherwise blow up the O(max_gt^2) CDN attn mask and exhaust host memory.
+        # The main matching branch keeps the full, untouched targets.
+        if self.training and self.num_denoising > 0 and targets is not None:
+            dn_targets = cap_dn_targets(targets, MAX_GT_FOR_DN)
+        else:
+            dn_targets = targets
+
         # prepare denoising training
         if self.training and self.num_denoising > 0:
             denoising_logits, denoising_bbox_unact, attn_mask, dn_meta = \
-                get_contrastive_denoising_training_group(targets, \
+                get_contrastive_denoising_training_group(dn_targets, \
                     self.num_classes,
                     self.num_queries,
                     self.denoising_class_embed,
@@ -729,6 +765,9 @@ class ECTransformer(nn.Module):
                     label_noise_ratio=self.label_noise_ratio,
                     box_noise_scale=1.0,
                     )
+            # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+            dn_meta['dn_targets'] = dn_targets
+            # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
         else:
             denoising_logits, denoising_bbox_unact, attn_mask, dn_meta = None, None, None, None
 
@@ -750,7 +789,7 @@ class ECTransformer(nn.Module):
                 self.up,
                 self.reg_scale,
                 attn_mask=attn_mask,
-                dn_meta=dn_meta)    
+                dn_meta=dn_meta)
 
         s_idx = dn_meta['dn_num_split'] if dn_meta is not None else None
 
@@ -767,13 +806,13 @@ class ECTransformer(nn.Module):
 
         if self.training:
             out = {'pred_logits': out_logits[-1], 'pred_boxes': out_bboxes[-1], 'pred_corners': out_corners[-1],
-                    'pred_masks': out_masks[-1] if out_masks is not None else None, 
+                    'pred_masks': out_masks[-1] if out_masks is not None else None,
                     'ref_points': out_refs[-1], 'up': self.up, 'reg_scale': self.reg_scale}
         else:
             out = {'pred_logits': out_logits[-1], 'pred_boxes': out_bboxes[-1], 'pred_masks': out_masks[-1] if out_masks is not None else None}
 
         if self.training and self.aux_loss:
-            out['aux_outputs'] = self._set_aux_loss2(out_logits[:-1], out_bboxes[:-1], out_corners[:-1], 
+            out['aux_outputs'] = self._set_aux_loss2(out_logits[:-1], out_bboxes[:-1], out_corners[:-1],
                                                      out_refs[:-1], out_masks[:-1] if out_masks is not None else None,
                                                      out_corners[-1], out_logits[-1])
             out['enc_aux_outputs'] = self._set_aux_loss(enc_topk_logits_list, enc_topk_bboxes_list)
@@ -841,4 +880,3 @@ class ECTransformer(nn.Module):
             results.append(result)
 
         return results
-

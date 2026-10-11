@@ -1,0 +1,87 @@
+# ============================================================
+# P30u training protocol — the SINGLE place protocol values live.
+# Included LAST (after ecdet.yml / struct_s.yml) so it wins over any
+# legacy defaults still sitting in those frozen files.
+#
+# Rationale for the non-obvious values (see audit.md):
+#   flat_epoch=15 : real cosine tail. The scheduler's no-aug length is
+#                   (epochs - stop_epoch)=2; flat must be < epochs-2 or the
+#                   cosine region is empty (that is why the old flat_epoch=28
+#                   silently produced a step drop instead of annealing).
+#   no_aug_epoch  : DEAD KEY (never read; scheduler uses epochs-stop_epoch).
+#                   Kept only so the number matches stop_epoch for humans.
+#   stop_epoch=28 : -> no_aug_epochs = 30-28 = 2; also gates strong-aug removal.
+#   mosaic_epoch=26 < stop_epoch=28 : mosaic stops at 26, other strong augs at 28.
+# ============================================================
+epochs: 30
+no_aug_epoch: 2          # NOTE: informational only (audit.md Q4)
+flat_epoch: 15
+warmup_iter: 2000
+lr_gamma: 0.5
+
+sync_bn: False
+find_unused_parameters: False
+use_amp: True
+scaler:
+  type: GradScaler
+eval_maxDets: 300
+
+use_ema: True
+ema:
+  type: ModelEMA
+  decay: 0.9995
+  warmups: 1000
+  start: 0
+
+optimizer:
+  type: AdamW
+  lr: 0.0005
+  betas: [0.9, 0.999]
+  weight_decay: 0.0001
+  params:
+    -                                   # backbone, except norm/bn/bias
+      params: '^(?=.*.backbone)(?!.*(?:norm|bn|bias)).*$'
+      lr: 0.000025
+    -                                   # backbone norm/bn/bias
+      params: '^(?=.*.backbone)(?=.*(?:norm|bn|bias)).*$'
+      lr: 0.000025
+      weight_decay: 0.
+    -                                   # non-backbone norm/bn/bias
+      params: '^(?!.*\.backbone)(?=.*(?:norm|bn|bias)).*$'
+      weight_decay: 0.
+
+train_dataloader:
+  shuffle: True
+  total_batch_size: 8
+  num_workers: 4                        # single source of truth for workers
+  dataset:
+    transforms:
+      policy: stop_epoch
+      stop_epoch: 28
+      # --- Mosaic is OFF for the default P30u run ---
+      # mosaic_prob MUST be 0 (not merely omitted): the frozen ecdet.yml still
+      # carries mosaic_prob:0.5, and stop_epoch_forward (container.py:83-96) uses
+      # it to gate RandomZoomOut / RandomIoUCrop *even when Mosaic is absent*.
+      # Leaving it would silently skip ZoomOut/IoUCrop ~50% of the time.
+      mosaic_prob: 0
+      mosaic_epoch: 0
+      remove_ops: ['RandomPhotometricDistort', 'RandomZoomOut', 'RandomIoUCrop']
+      ops:
+        - {type: RandomPhotometricDistort, p: 0.5}
+        - {type: RandomZoomOut, fill: 0}
+        - {type: RandomIoUCrop, p: 0.8}
+        - {type: SanitizeBoundingBoxes, min_size: 1}
+        - {type: RandomHorizontalFlip}
+        - {type: Resize, size: [640, 640]}
+        - {type: SanitizeBoundingBoxes, min_size: 1}
+        - {type: ConvertPILImage, dtype: 'float32', scale: True}
+        - {type: Normalize, mean: [0.485, 0.456, 0.406], std: [0.229, 0.224, 0.225]}
+        - {type: ConvertBoxes, fmt: 'cxcywh', normalize: True}
+  collate_fn:
+    type: BatchImageCollateFunction
+    mixup_prob: 0
+    mixup_epoch: 0                      # legal value; mixup is off (prob=0)
+
+val_dataloader:
+  total_batch_size: 16
+  num_workers: 4

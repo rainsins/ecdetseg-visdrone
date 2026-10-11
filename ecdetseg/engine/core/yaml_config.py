@@ -104,7 +104,8 @@ class YAMLConfig(BaseConfig):
             if self.yaml_cfg['evaluator']['type'] == 'CocoEvaluator':
                 from ..data import get_coco_api_from_dataset
                 base_ds = get_coco_api_from_dataset(self.val_dataloader.dataset)
-                self._evaluator = create('evaluator', self.global_cfg, coco_gt=base_ds)
+                self._evaluator = create('evaluator', self.global_cfg, coco_gt=base_ds,
+                                         max_dets=self.yaml_cfg.get('eval_maxDets'))
             else:
                 raise NotImplementedError(f"{self.yaml_cfg['evaluator']['type']}")
         return super().evaluator

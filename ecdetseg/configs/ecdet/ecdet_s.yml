@@ -1,16 +1,19 @@
 __include__: [
-  '../dataset/coco.yml',
+  '../dataset/custom.yml',
   'ecdet.yml',
 ]
 
-output_dir: outputs/ecdet_s
+use_amp: True
+scaler:
+  type: GradScaler
+output_dir: outputs/ecdet_s_coco_pre_weights
 
 
 ViTAdapter:
   name: ecvitt
   embed_dim: 192
   num_heads: 3
-  interaction_indexes: [10, 11] 
+  interaction_indexes: [10, 11]
   weights_path: ecvits/ecvitt.pth
 
 
@@ -25,24 +28,24 @@ ECTransformer:
   feat_channels: [192, 192, 192]
   hidden_dim: 192
   dim_feedforward: 512
-  num_layers: 4  
+  num_layers: 4
   eval_idx: -1
 
 
 optimizer:
   type: AdamW
 
-  params: 
+  params:
     -
       # except norm/bn/bias in backbone
-      params: '^(?=.*.backbone)(?!.*(?:norm|bn|bias)).*$'  
+      params: '^(?=.*.backbone)(?!.*(?:norm|bn|bias)).*$'
       lr: 0.000025
     -
       # including all norm/bn/bias in backbone
-      params: '^(?=.*.backbone)(?=.*(?:norm|bn|bias)).*$'    
+      params: '^(?=.*.backbone)(?=.*(?:norm|bn|bias)).*$'
       lr: 0.000025
       weight_decay: 0.
-    - 
+    -
       # including all norm/bn/bias except for the backbone
       params: '^(?!.*\.backbone)(?=.*(?:norm|bn|bias)).*$'
       weight_decay: 0.
@@ -52,20 +55,19 @@ optimizer:
   weight_decay: 0.0001
 
 
-epochs: 74  
+epochs: 30
 warmup_iter: 2000
 lr_gamma: 0.5
 
 eval_spatial_size: [640, 640] # h w
 
 train_dataloader:
-  dataset: 
+  dataset:
     transforms:
-      mosaic_epoch: 36
+      mosaic_epoch: 26
       mosaic_prob: 0.75
-      stop_epoch: 72
+      stop_epoch: 28
 
   collate_fn:
-    mixup_prob: 0.75
+    mixup_prob: 0
     mixup_epoch: 36
-

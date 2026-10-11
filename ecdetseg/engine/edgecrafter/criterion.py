@@ -439,16 +439,25 @@ class ECCriterion(nn.Module):
         # In case of cdn auxiliary losses.
         if 'dn_outputs' in outputs:
             assert 'dn_meta' in outputs, ''
-            indices_dn = self.get_cdn_matched_indices(outputs['dn_meta'], targets)
-            dn_num_boxes = num_boxes * outputs['dn_meta']['dn_num_group']
+            # Denoising supervision must be paired with the (possibly capped) targets the
+            # DN queries were actually built from, and normalized by their own GT count
+            # instead of the main branch's full-target num_boxes.
+            dn_targets = outputs['dn_meta'].get('dn_targets', targets)
+            indices_dn = self.get_cdn_matched_indices(outputs['dn_meta'], dn_targets)
+            dn_num_boxes = sum(len(t["labels"]) for t in dn_targets)
+            dn_num_boxes = torch.as_tensor([dn_num_boxes], dtype=torch.float, device=next(iter(outputs.values())).device)
+            if is_dist_available_and_initialized():
+                torch.distributed.all_reduce(dn_num_boxes)
+            dn_num_boxes = torch.clamp(dn_num_boxes / get_world_size(), min=1).item()
+            dn_num_boxes = dn_num_boxes * outputs['dn_meta']['dn_num_group']
             dn_num_boxes = 1 if dn_num_boxes == 0 else dn_num_boxes
             for i, aux_outputs in enumerate(outputs['dn_outputs']):
                 if 'local' in self.losses:      # only work for local loss
                     aux_outputs['is_dn'] = True
                     aux_outputs['up'], aux_outputs['reg_scale'] = outputs['up'], outputs['reg_scale']
                 for loss in self.losses:
-                    meta = self.get_loss_meta_info(loss, aux_outputs, targets, indices_dn)
-                    l_dict = self.get_loss(loss, aux_outputs, targets, indices_dn, dn_num_boxes, **meta)
+                    meta = self.get_loss_meta_info(loss, aux_outputs, dn_targets, indices_dn)
+                    l_dict = self.get_loss(loss, aux_outputs, dn_targets, indices_dn, dn_num_boxes, **meta)
                     l_dict = {k: l_dict[k] * self.weight_dict[k] for k in l_dict if k in self.weight_dict}
                     l_dict = {k + f'_dn_{i}': v for k, v in l_dict.items()}
                     losses.update(l_dict)
@@ -457,8 +466,8 @@ class ECCriterion(nn.Module):
             if 'dn_pre_outputs' in outputs:
                 aux_outputs = outputs['dn_pre_outputs']
                 for loss in self.losses:
-                    meta = self.get_loss_meta_info(loss, aux_outputs, targets, indices_dn)
-                    l_dict = self.get_loss(loss, aux_outputs, targets, indices_dn, dn_num_boxes, **meta)
+                    meta = self.get_loss_meta_info(loss, aux_outputs, dn_targets, indices_dn)
+                    l_dict = self.get_loss(loss, aux_outputs, dn_targets, indices_dn, dn_num_boxes, **meta)
                     l_dict = {k: l_dict[k] * self.weight_dict[k] for k in l_dict if k in self.weight_dict}
                     l_dict = {k + '_dn_pre': v for k, v in l_dict.items()}
                     losses.update(l_dict)

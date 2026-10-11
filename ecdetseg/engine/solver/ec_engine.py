@@ -18,6 +18,7 @@ from torch.utils.tensorboard import SummaryWriter
 from ..data import CocoEvaluator
 from ..misc import MetricLogger, SmoothedValue, dist_utils
 from ..optim import ModelEMA
+from ..optim.amp import get_amp_dtype
 
 
 def train_one_epoch(self_lr_scheduler, lr_scheduler, model: torch.nn.Module, criterion: torch.nn.Module,
@@ -45,7 +46,7 @@ def train_one_epoch(self_lr_scheduler, lr_scheduler, model: torch.nn.Module, cri
         metas = dict(epoch=epoch, step=i, global_step=global_step, epoch_step=len(data_loader))
 
         if scaler is not None:
-            with torch.autocast(device_type=device.type, cache_enabled=True):
+            with torch.autocast(device_type=device.type, dtype=get_amp_dtype(device.type), cache_enabled=True):
                 outputs = model(samples, targets=targets)
 
             if torch.isnan(outputs['pred_boxes']).any() or torch.isinf(outputs['pred_boxes']).any():
@@ -168,21 +169,21 @@ def evaluate(model: torch.nn.Module, criterion: torch.nn.Module, postprocessor, 
     stats = {}
     # stats = {k: meter.global_avg for k, meter in metric_logger.meters.items()}
     if coco_evaluator.labels is not None:
-        
+
         import numpy as np
         from tabulate import tabulate
-        
+
         res_per_type = {}
         headers = ['class']
 
         for iou_type in coco_evaluator.iou_types:
             if iou_type not in coco_evaluator.coco_eval:
                 continue
-            
+
             precisions = coco_evaluator.coco_eval[iou_type].eval['precision']
             ap = np.mean(precisions[..., 0, -1], axis=(0, 1)) * 100
             ap_50 = np.mean(precisions[0, :, :, 0, -1], axis=0) * 100
-            
+
             prefix = 'bbox' if iou_type == 'bbox' else 'segm'
             headers.extend([f'{prefix}-AP', f'{prefix}-AP50'])
             res_per_type[iou_type] = (ap, ap_50)
@@ -199,8 +200,8 @@ def evaluate(model: torch.nn.Module, criterion: torch.nn.Module, postprocessor, 
 
         print(f"\n### Class-wise Evaluation Metrics ###")
         print(tabulate(table_data, headers=headers, tablefmt='pretty'))
-        
-    
+
+
     if coco_evaluator is not None:
         if 'segm' in iou_types:
             stats['coco_eval_mask'] = coco_evaluator.coco_eval['segm'].stats.tolist()

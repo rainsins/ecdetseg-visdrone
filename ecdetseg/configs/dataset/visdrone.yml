@@ -1,0 +1,44 @@
+# ============================================================
+# P30u data config (data-only). No training-protocol keys here.
+# Paths are PLACEHOLDERS: the loader does NOT expand ${ENV}, so
+# scripts/run_exp.sh injects them via `-u` from $VISDRONE_ROOT.
+# ============================================================
+task: detection
+
+num_classes: 10            # VisDrone ids are 0..9 (audit.md Q8) -> 10 classes, no remap
+remap_mscoco_category: False
+
+evaluator:
+  type: CocoEvaluator
+  iou_types: ['bbox']
+  verbose: True            # per-class AP table
+
+train_dataloader:
+  type: DataLoader
+  dataset:
+    type: CocoDetection
+    img_folder: /home/rainsin/Projects/Career/Paper/dataset/VisDrone/train
+    ann_file: /home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_train.json
+    return_masks: False
+    transforms:
+      type: Compose
+      ops: ~
+  shuffle: True
+  drop_last: True
+  collate_fn:
+    type: BatchImageCollateFunction
+
+val_dataloader:
+  type: DataLoader
+  dataset:
+    type: CocoDetection
+    img_folder: /home/rainsin/Projects/Career/Paper/dataset/VisDrone/val
+    ann_file: /home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_val.json
+    return_masks: False
+    transforms:
+      type: Compose
+      ops: ~
+  shuffle: False
+  drop_last: False
+  collate_fn:
+    type: BatchImageCollateFunction

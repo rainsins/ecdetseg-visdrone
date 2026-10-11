@@ -5,7 +5,7 @@ criterion: ECCriterion
 postprocessor: PostProcessor
 
 use_focal_loss: True
-checkpoint_freq: 5    # save freq
+checkpoint_freq: 1    # save freq
 
 
 ####################################################### MODEL CONFIG ########################################################
@@ -87,8 +87,8 @@ ECCriterion:
 
 eval_spatial_size: [640, 640] # h w
 
-train_dataloader: 
-  dataset: 
+train_dataloader:
+  dataset:
     transforms:
       ops:
         - {type: Mosaic, output_size: 320, rotation_range: 10, translation_range: [0.1, 0.1], scaling_range: [0.5, 1.5],
@@ -107,21 +107,21 @@ train_dataloader:
       policy: stop_epoch  # close augmention at certain epoch
 
       # Mosaic options
-      mosaic_epoch: 36
+      mosaic_epoch: 28
       mosaic_prob: 0.5
-      stop_epoch: 60
+      stop_epoch: 56
 
-      # remove strong augmentations after at no_aug_epoch 
+      # remove strong augmentations after at no_aug_epoch
       remove_ops: ['Mosaic', 'RandomPhotometricDistort', 'RandomZoomOut', 'RandomIoUCrop', ]
-      
+
   collate_fn:
     type: BatchImageCollateFunction
     # Mixup options
-    mixup_prob: 0.5
-    mixup_epoch: 36
+    mixup_prob: 0.3
+    mixup_epoch: 28
 
   shuffle: True
-  total_batch_size: 32 # total batch size equals to 32 (4 * 8)
+  total_batch_size: 8 # total batch size equals to 32 (4 * 8)
   num_workers: 4
 
 
@@ -141,7 +141,7 @@ val_dataloader:
 
 ####################################################### TRAINING CONFIG ########################################################
 
-print_freq: 500
+print_freq: 20
 output_dir: './logs'
 
 sync_bn: True
@@ -150,7 +150,6 @@ find_unused_parameters: False
 use_amp: True
 scaler:
   type: GradScaler
-  enabled: True
 
 use_ema: True
 ema:
@@ -166,15 +165,15 @@ clip_max_norm: 0.1
 optimizer:
   type: AdamW
 
-  params: 
+  params:
     -
-      params: '^(?=.*.backbone)(?!.*(?:norm|bn|bias)).*$'  
+      params: '^(?=.*.backbone)(?!.*(?:norm|bn|bias)).*$'
       lr: 0.000025
     -
-      params: '^(?=.*.backbone)(?=.*(?:norm|bn|bias)).*$'    
+      params: '^(?=.*.backbone)(?=.*(?:norm|bn|bias)).*$'
       lr: 0.000025
       weight_decay: 0.
-    - 
+    -
       params: '^(?!.*\.backbone)(?=.*(?:norm|bn|bias)).*$'
       weight_decay: 0.
 
@@ -184,9 +183,10 @@ optimizer:
 
 
 ## LR-Scheduler
-epochs: 62 # 5x (1x for 12 epochs) + 2(no_aug_epoch)
+epochs: 30 # 5x (1x for 12 epochs) + 2(no_aug_epoch)
 
 lrsheduler: flatcosine
 lr_gamma: 0.5
 warmup_iter: 2000
-flat_epoch: ~    
+flat_epoch: 28      # ← 原来是 ~，改为 28（30 - 2 no_aug）
+no_aug_epoch: 2

@@ -1,0 +1,11 @@
+# ============================================================
+# ECDet-S @ P30u  — experiment entry config (640 default).
+# Include order = increasing priority (later overrides earlier):
+#   data  <  base struct  <  S struct  <  resolution  <  protocol
+# ============================================================
+__include__:
+  - '../dataset/visdrone.yml'      # data only (paths injected by run_exp.sh)
+  - 'ecdet.yml'                    # base detector structure + default aug ops
+  - 'struct_s.yml'                 # S structural delta
+  - 'protocol/res640.yml'          # resolution (swap to res960.yml for 960)
+  - 'protocol/p30u.yml'            # protocol, LAST -> authoritative

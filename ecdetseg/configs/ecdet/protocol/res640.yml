@@ -1,0 +1,4 @@
+# P30u resolution override: 640 input.
+# This is the ONLY knob: reset_cfg derives Mosaic.output_size = 320 and every
+# Resize size = 640 from eval_spatial_size (audit.md Q10).
+eval_spatial_size: [640, 640]   # h w
