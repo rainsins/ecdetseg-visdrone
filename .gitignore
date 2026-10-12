@@ -216,3 +216,8 @@ __marimo__/
 !.pixi/config.toml
  outputs
  */outputs
+ outputs/
+ *.pth
+ *.pt
+ wandb/
+ __pycache__/
