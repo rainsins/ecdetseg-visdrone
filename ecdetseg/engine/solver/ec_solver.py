@@ -108,7 +108,7 @@ class ECSolver(BaseSolver):
 
             self.last_epoch += 1
 
-            if self.output_dir and epoch < stop_aug_epoch:
+            if self.output_dir:
                 checkpoint_paths = [self.output_dir / 'last.pth']
                 # extra checkpoint before LR drop and every 100 epochs
                 if (epoch + 1) % args.checkpoint_freq == 0:
@@ -143,6 +143,7 @@ class ECSolver(BaseSolver):
                     top1 = best_stat[k]
                     if self.output_dir:
                         dist_utils.save_on_master(self.state_dict(), self.output_dir / 'best.pth')
+                        print(f'[best] saved best.pth at epoch {epoch} (NOTE: selected on VAL)')
 
                 best_stat_print[k] = max(best_stat[k], top1)
                 print(f'best_stat: {best_stat_print}')  # global best
@@ -171,6 +172,16 @@ class ECSolver(BaseSolver):
             accelerator = getattr(torch, dist_utils.current_device(), None)
             if accelerator is not None:  # Just for clearing up GPU memory. You can remove it if you have enough GPU memory.
                 accelerator.empty_cache()
+
+        # Always persist the LAST-epoch weights, independent of the val-selected 'best'.
+        if self.output_dir:
+            dist_utils.save_on_master(self.state_dict(), self.output_dir / 'final.pth')
+            if dist_utils.is_main_process():
+                (self.output_dir / 'best.pth.info').write_text(
+                    "best.pth is SELECTED ON THE VAL SPLIT (best val AP); it is not a "
+                    "held-out selection. Report test-dev for final numbers. final.pth "
+                    "always holds the last epoch.\n")
+            print(f'[final] saved final.pth (last epoch = {self.last_epoch})')
 
         total_time = time.time() - start_time
         total_time_str = str(datetime.timedelta(seconds=int(total_time)))

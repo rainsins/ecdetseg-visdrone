@@ -1,0 +1,12 @@
+{
+  "weights_type": "ema",
+  "epoch": 29,
+  "AP": 0.25867676611608836,
+  "AP50": 0.4424799316054541,
+  "AP75": 0.25362558177007233,
+  "APS": 0.15457407883936125,
+  "APM": 0.3843485274403602,
+  "APL": 0.6281187425548584,
+  "params": 9803112,
+  "ckpt": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/outputs/p30u/e2_s42/best.pth"
+}

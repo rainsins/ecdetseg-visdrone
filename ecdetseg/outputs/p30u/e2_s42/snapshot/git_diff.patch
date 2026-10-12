@@ -1,0 +1,121 @@
+diff --git a/ecdetseg/scripts/run_exp.sh b/ecdetseg/scripts/run_exp.sh
+index 775e488..92d070c 100755
+--- a/ecdetseg/scripts/run_exp.sh
++++ b/ecdetseg/scripts/run_exp.sh
+@@ -186,13 +186,56 @@ run_training() {   # returns train exit code; forwards logs to train.log
+   return "$rc"
+ }
+ 
++do_final_eval() {
++  [ "${SKIP_FINAL_EVAL:-0}" = "1" ] && { log "final eval skipped (SKIP_FINAL_EVAL=1)"; return 0; }
++  if [ -f "$OUT_DIR/eval.jsonl" ] && [ "${FORCE_FINAL_EVAL:-0}" != "1" ]; then
++    log "final eval already present ($OUT_DIR/eval.jsonl); skip (FORCE_FINAL_EVAL=1 to redo)."
++    return 0
++  fi
++  log "=== final evaluation (val, EMA) ==="
++  : > "$OUT_DIR/eval.jsonl"
++
++  run_eval() {   # $1=ckpt $2=label $3=note
++    # NOTE: keep these two `local` lines separate — `local a="$1" b="...$a..."` would
++    # expand $a before `local` assigns it (unbound under `set -u`).
++    local ckpt="$1" label="$2" note="$3"
++    local out="$OUT_DIR/eval_${label}.json"
++    [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 0; }
++    if [ -n "${EVAL_BIN:-}" ]; then                    # test hook (no XPU)
++      "$EVAL_BIN" -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" \
++        -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" >> "$TRAIN_LOG" 2>&1
++    else
++      ( cd "$PROJECT_DIR" && \
++        pixi run --manifest-path "$MANIFEST" python scripts/eval_final.py \
++          -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" \
++          -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1
++    fi
++    if [ -f "$out" ]; then
++      python - "$out" "$label" "$note" <<'PY' >> "$OUT_DIR/eval.jsonl"
++import json, sys
++d = json.load(open(sys.argv[1])); d["label"] = sys.argv[2]; d["note"] = sys.argv[3]
++print(json.dumps(d))
++PY
++      log "eval[$label] -> $(basename "$out")"
++    else
++      log "eval[$label]: failed (see train.log)"
++    fi
++  }
++
++  run_eval "$OUT_DIR/best.pth" "best_ema" "EMA@best; best was SELECTED ON VAL -> reference only"
++  run_eval "$OUT_DIR/last.pth" "last_ema" "EMA@last; NOTE last.pth freezes at stop_epoch (see audit.md Q6)"
++  log "final eval summary: $OUT_DIR/eval.jsonl"
++}
++
+ # ============================================================
+ snapshot
+ log "=== P30u guardian start | init=$INIT seed=$SEED out=$OUT_DIR ==="
+ log "config=$CONFIG tuning=${TUNING:-<none>} res=${P30U_RES:-640}"
+ 
+ if [ -f "$DONE_FILE" ]; then
+-  log "DONE marker already present -> experiment complete; refusing to resume. (delete $DONE_FILE to rerun)"
++  log "DONE marker already present -> training complete; running final eval only. (delete $DONE_FILE to retrain)"
++  do_final_eval
++  log "=== P30u guardian done ==="
+   exit 0
+ fi
+ 
+@@ -252,29 +295,6 @@ while :; do
+ done
+ 
+ # ----- final evaluation (EMA on val; NO test-dev) -----
+-if [ -f "$DONE_FILE" ] && [ "${SKIP_FINAL_EVAL:-0}" != "1" ]; then
+-  log "=== final evaluation (val, EMA) ==="
+-  run_eval() {   # $1=ckpt $2=label $3=note
+-    local ckpt="$1" label="$2" note="$3" out="$OUT_DIR/eval_${label}.json"
+-    [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 0; }
+-    ( cd "$PROJECT_DIR" && \
+-      pixi run --manifest-path "$MANIFEST" python scripts/eval_final.py \
+-        -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" \
+-        -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1
+-    if [ -f "$out" ]; then
+-      python - "$out" "$label" "$note" <<'PY' >> "$OUT_DIR/eval.jsonl"
+-import json, sys
+-d = json.load(open(sys.argv[1])); d["label"] = sys.argv[2]; d["note"] = sys.argv[3]
+-print(json.dumps(d))
+-PY
+-      log "eval[$label] -> $(basename "$out")"
+-    else
+-      log "eval[$label]: failed (see train.log)"
+-    fi
+-  }
+-  run_eval "$OUT_DIR/best.pth"  "best_ema" "EMA@best; best was SELECTED ON VAL -> reference only"
+-  run_eval "$OUT_DIR/last.pth"  "last_ema" "EMA@last; NOTE last.pth freezes at stop_epoch (see audit.md Q6)"
+-  log "final eval summary: $OUT_DIR/eval.jsonl"
+-fi
++do_final_eval
+ 
+ log "=== P30u guardian done ==="
+diff --git a/ecdetseg/scripts/test_run_exp.sh b/ecdetseg/scripts/test_run_exp.sh
+index b396e3f..ce36aea 100755
+--- a/ecdetseg/scripts/test_run_exp.sh
++++ b/ecdetseg/scripts/test_run_exp.sh
+@@ -63,6 +63,21 @@ wait "$pid"; rc=$?
+ [ "$(grep -c 'FAKE train.py invoked' "$OUTROOT/e1_s45/train.log")" -eq 1 ] \
+   && ok "no retry (1 launch)" || bad "retried after signal"
+ 
++echo "== T5: final-eval path when DONE exists (regression for unbound var) =="
++reset
++out="$OUTROOT/e1_s46"; mkdir -p "$out"
++: > "$out/best.pth"; : > "$out/last.pth"; : > "$out/DONE"
++export EVAL_BIN="$HERE/fake_eval.sh"
++unset SKIP_FINAL_EVAL
++bash "$RUN" e1 46 >/tmp/opencode/t5.out 2>&1; rc=$?
++[ "$rc" -eq 0 ] && ok "exit 0" || bad "exit=$rc (want 0)"
++[ "$(wc -l < "$out/eval.jsonl" 2>/dev/null || echo 0)" -eq 2 ] \
++  && ok "2 eval lines" || bad "eval.jsonl lines != 2"
++grep -q '"label": "best_ema"' "$out/eval.jsonl" && ok "best_ema present" || bad "best_ema missing"
++grep -q '"label": "last_ema"' "$out/eval.jsonl" && ok "last_ema present" || bad "last_ema missing"
++unset EVAL_BIN
++export SKIP_FINAL_EVAL=1
++
+ echo
+ echo "== summary: $pass passed, $fail failed =="
+-[ "$fail" -eq 0 ]
++[ "$fail" -eq 0 ]
+\ No newline at end of file

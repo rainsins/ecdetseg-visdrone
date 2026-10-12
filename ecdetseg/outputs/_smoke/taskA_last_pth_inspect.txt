@@ -1,0 +1,32 @@
+======================================================================
+outputs/p30u/e1_s42/last.pth
+  mtime        : 2026-10-12 02:59:06
+  last_epoch   : 27
+  date         : 2026-10-12T02:59:06.221992
+  top keys     : ['criterion', 'date', 'ema', 'last_epoch', 'model', 'optimizer', 'postprocessor', 'scaler']
+  has model    : True | has ema: True | ema.updates: 22624
+  has optimizer: True | has scaler: True | has lr_scheduler: False
+======================================================================
+outputs/p30u/e1_s42/best.pth
+  mtime        : 2026-10-12 03:19:45
+  last_epoch   : 29
+  date         : 2026-10-12T03:19:44.585302
+  top keys     : ['criterion', 'date', 'ema', 'last_epoch', 'model', 'optimizer', 'postprocessor', 'scaler']
+  has model    : True | has ema: True | ema.updates: 24240
+  has optimizer: True | has scaler: True | has lr_scheduler: False
+======================================================================
+outputs/p30u/e1_s42/checkpoint0027.pth
+  mtime        : 2026-10-12 02:59:07
+  last_epoch   : 27
+  date         : 2026-10-12T02:59:06.693343
+  top keys     : ['criterion', 'date', 'ema', 'last_epoch', 'model', 'optimizer', 'postprocessor', 'scaler']
+  has model    : True | has ema: True | ema.updates: 22624
+  has optimizer: True | has scaler: True | has lr_scheduler: False
+======================================================================
+outputs/p30u/e1_s42/checkpoint0000.pth
+  mtime        : 2026-10-11 22:26:08
+  last_epoch   : 0
+  date         : 2026-10-11T22:26:07.986747
+  top keys     : ['criterion', 'date', 'ema', 'last_epoch', 'model', 'optimizer', 'postprocessor', 'scaler']
+  has model    : True | has ema: True | ema.updates: 808
+  has optimizer: True | has scaler: True | has lr_scheduler: False

@@ -1,0 +1,30 @@
+ M ecdetseg/README_exp.md
+ M ecdetseg/engine/solver/ec_solver.py
+ D ecdetseg/script/train_ecdet.sh
+ D ecdetseg/script/train_o365.sh
+ M ecdetseg/scripts/eval_final.py
+ M ecdetseg/scripts/run_exp.sh
+ M ecdetseg/scripts/test_run_exp.sh
+ M ecdetseg/scripts/verify_p30u_xpu.sh
+ M pixi.lock
+ M pixi.toml
+?? ecdetseg/P30U_GUIDE.md
+?? ecdetseg/configs/ecdet/ecdet_s_p74u.yml
+?? ecdetseg/configs/ecdet/ecdet_s_p74u_960.yml
+?? ecdetseg/configs/ecdet/ecdet_s_p74u_mosaic0.yml
+?? ecdetseg/configs/ecdet/ecdet_s_p74u_mosaic0_960.yml
+?? ecdetseg/configs/ecdet/protocol/p74u.yml
+?? ecdetseg/configs/ecdet/protocol/p74u_mosaic0.yml
+?? ecdetseg/configs_dump/p74u_960_E1.yml
+?? ecdetseg/configs_dump/p74u_E1.yml
+?? ecdetseg/configs_dump/p74u_mosaic0_960_E1.yml
+?? ecdetseg/configs_dump/p74u_mosaic0_E1.yml
+?? ecdetseg/dfine_curve.png
+?? ecdetseg/ecosystem.config.js
+?? ecdetseg/outputs/_smoke/
+?? ecdetseg/outputs/p30u/
+?? ecdetseg/scripts/fake_eval.sh
+?? ecdetseg/scripts/polt.py
+?? ecdetseg/scripts/run_all_p30u.sh
+?? ecdetseg/scripts/script/
+?? ecdetseg/test.py

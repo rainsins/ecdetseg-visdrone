@@ -1,0 +1,6 @@
+init=e1 seed=7
+config=configs/ecdet/ecdet_s_p30u.yml
+tuning=<none>
+output_dir=/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/outputs/_smoke/e1_s7
+cmd=/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/scripts/run_exp.sh e1 7 epochs=4 stop_epoch=2 flat_epoch=1 warmup_iter=200 
+env: RES=640 PYTORCH_SYCL_ALLOC_CONF=expandable_segments:True SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=0

@@ -1,0 +1,10 @@
+{
+  "AP": 0.21941008651906316,
+  "AP50": 0.3867593528192965,
+  "AP75": 0.21108114034586903,
+  "APS": 0.1241127848821636,
+  "APM": 0.3327246991236008,
+  "APL": 0.47627319373405197,
+  "params": 9803112,
+  "ckpt": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/outputs/p30u/e1_s42/last.pth"
+}

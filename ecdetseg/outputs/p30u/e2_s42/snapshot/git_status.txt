@@ -1,0 +1,6 @@
+ M ecdetseg/scripts/run_exp.sh
+ M ecdetseg/scripts/test_run_exp.sh
+?? ecdetseg/ecosystem.config.js
+?? ecdetseg/outputs/p30u/
+?? ecdetseg/scripts/fake_eval.sh
+?? ecdetseg/scripts/run_all_p30u.sh

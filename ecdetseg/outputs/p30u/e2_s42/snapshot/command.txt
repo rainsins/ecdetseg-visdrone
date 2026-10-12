@@ -1,0 +1,6 @@
+init=e2 seed=42
+config=configs/ecdet/ecdet_s_p30u.yml
+tuning=/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/ecdet_s.pth
+output_dir=/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/outputs/p30u/e2_s42
+cmd=/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/scripts/run_exp.sh e2 42 '' 
+env: P30U_RES=640 PYTORCH_SYCL_ALLOC_CONF=expandable_segments:True SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=0

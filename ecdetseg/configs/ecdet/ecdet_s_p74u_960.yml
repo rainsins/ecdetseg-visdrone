@@ -1,0 +1,18 @@
+# ============================================================
+# ECDet-S @ P74u @ 960 — VisDrone baseline, 960 input (official 74-epoch schedule)
+#   schedule : epochs=74  stop_epoch=72  flat_epoch=36  lr_gamma=0.5  (no-aug=2)
+#   aug tier : Mosaic ON (prob=0.75 epoch=36) | Mixup ON (prob=0.75 epoch=36)
+#   resolution: 960  -> reset_cfg derives Mosaic.output_size=480, Resize=960
+#
+# include order = increasing priority. DO NOT REORDER (later wins):
+#   data < base(ecdet.yml) < S struct < resolution(res960) < protocol/p74u.yml (LAST)
+# NOTE: 960 roughly ~2.25x the activation memory of 640; on a 16G Arc you may need
+#       `total_batch_size=4` (pass as an extra override to run_exp.sh).
+# ============================================================
+__include__:
+  - '../dataset/visdrone.yml'      # data only (paths injected by run_exp.sh)
+  - 'ecdet.yml'                    # base detector structure + default aug ops
+  - 'struct_s.yml'                 # S structural delta
+  - 'protocol/res960.yml'          # resolution 960
+  - 'protocol/p74u.yml'            # protocol, LAST -> authoritative
+output_dir: outputs/p74u_960

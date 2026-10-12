@@ -84,13 +84,45 @@ python train.py -c configs/ecdet/ecdet_s_p30u_mosaic025.yml -d xpu \
 > `mosaic_prob` 必须显式置 0/0.25：`container.py:83-96` 用它门控 `RandomZoomOut/RandomIoUCrop`，
 > 与 Mosaic 是否存在无关（详见 CHANGES.md §4）。
 
+## 5c. P74u（EdgeCrafter 官方 S 档 74-epoch 基线）
+
+- 协议 `protocol/p74u.yml`：`epochs=74 stop_epoch=72 flat_epoch=36 lr_gamma=0.5`，
+  增强 **Mosaic 0.75/ep36 + Mixup 0.75/ep36**，`ema.decay=0.9999`；其余键与 P30u 相同。
+- 消融 `protocol/p74u_mosaic0.yml`：仅 `mosaic_prob/mosaic_epoch/mixup_prob/mixup_epoch` 置 0
+  （ops 保持相同；Mosaic op 仍在列表但被 `mosaic_prob:0` 跳过）。
+- 入口：`ecdet_s_p74u.yml`（基线，Mosaic 开）、`ecdet_s_p74u_mosaic0.yml`（Mosaic 关）。
+- **960 臂**：`ecdet_s_p74u_960.yml`、`ecdet_s_p74u_mosaic0_960.yml`（include `protocol/res960.yml`，
+  `output_dir` 为 `outputs/p74u_960` / `outputs/p74u_mosaic0_960`）。也可用 `P74U_RES=960` 覆盖（见下）。
+
+```bash
+# 单实验
+P74U_CONFIG=configs/ecdet/ecdet_s_p74u.yml \
+P74U_OUT_ROOT=$PWD/outputs/p74u VISDRONE_ROOT=$VISDRONE_ROOT \
+  bash scripts/run_exp.sh e1 42
+
+# pm2 批跑（串行 3 seed × 3 init）
+P74U_CONFIG=configs/ecdet/ecdet_s_p74u.yml \
+P74U_OUT_ROOT=$PWD/outputs/p74u VISDRONE_ROOT=$VISDRONE_ROOT \
+  pm2 start ecosystem.config.js --only p74u-all
+```
+> 优先级：`P30U_CONFIG` > `P74U_CONFIG`；`P30U_OUT_ROOT` > `P74U_OUT_ROOT`；
+> 分辨率 `P74U_RES` > `P30U_RES` > 640。
+> resume 前会用 `snapshot/config_merged.yml` 校验协议/增强一致性，不一致则退出码 4。
+
+**输出目录命名约定**：`outputs/<protocol>[_mosaic0]/<init>_s<seed>/`
+（例：`outputs/p30u/e1_s42`、`outputs/p74u/e2_s42`、`outputs/p74u_mosaic0/e1_s42`）。
+
+> ⚠️ P74u 基线**含 Mosaic op**（官方增强）。若逐字照抄 P30u（其 ops 已删 Mosaic）而只改
+> `mosaic_prob:0.75`，Mosaic **不会生效**且会静默门控 `RandomZoomOut/RandomIoUCrop`
+> （`container.py:83-96`，见 CHANGES.md §4）。故 P74u 恢复了 Mosaic op。
+
 ## 6. 静态验证（随时可跑，不碰 XPU）
 
 ```bash
 cd ecdetseg
 bash -n scripts/run_exp.sh scripts/fake_train.sh scripts/test_run_exp.sh
 python scripts/dump_config.py -c configs/ecdet/ecdet_s_p30u.yml -o /tmp/p30u.yml
-bash scripts/test_run_exp.sh          # 13 项：重试/进展/DONE/信号
+bash scripts/test_run_exp.sh          # 21 项：重试/进展/DONE/信号/终评/协议守卫
 ```
 
 ## 7. XPU 验证（**训练结束后**，脚本会先 `pgrep` 守卫）

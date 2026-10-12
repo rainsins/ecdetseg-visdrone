@@ -41,7 +41,7 @@ VOPTS=( "epochs=2" "stop_epoch=2" "flat_epoch=1"
 for init in e1 e2 e3; do
   echo "==================== verify $init ===================="
   rm -rf "$P30U_OUT_ROOT/${init}_s0"
-  bash "$HERE/run_exp.sh" "$init" 0 -u "${VOPTS[@]}"
+  bash "$HERE/run_exp.sh" "$init" 0 "${VOPTS[@]}"
   log="$P30U_OUT_ROOT/${init}_s0/train.log"
   echo "-- scheduler:      $(grep -m1 'FlatCosineLRScheduler with' "$log" || echo NA)"
   echo "-- ViT backbone:   $(grep -m1 'Pretrained ViT weights loaded' "$log" || echo '(none)')"
@@ -50,7 +50,7 @@ for init in e1 e2 e3; do
 
   echo "-- resume check (delete DONE, rerun -> expect -r last.pth) --"
   rm -f "$P30U_OUT_ROOT/${init}_s0/DONE"
-  bash "$HERE/run_exp.sh" "$init" 0 -u "${VOPTS[@]}" >/dev/null 2>&1 || true
+  bash "$HERE/run_exp.sh" "$init" 0 "${VOPTS[@]}" >/dev/null 2>&1 || true
   grep -m1 -E "attempt #[0-9]+: resume from|Resume checkpoint from" "$P30U_OUT_ROOT/${init}_s0/train.log" \
     || echo "   (resume line not found)"
 done

@@ -17,6 +17,7 @@ ml_dtypes = "==0.2.0"
 scipy = "==1.11.4"
 opencv = "*"
 huggingface_hub = ">=1.32.0,<2"
+matplotlib = ">=3.11.2,<4"
 
 [pypi-dependencies]
 torch = "==2.9.1+xpu"

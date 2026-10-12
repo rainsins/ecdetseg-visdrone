@@ -17,7 +17,12 @@
 # Env (required/optional):
 #   VISDRONE_ROOT   required; dataset root (paths are injected via -u)
 #   WEIGHTS_DIR     optional; dir holding ecdet_s.pth / ecdet_s_o3652coco.pth (default: ecdetseg/)
-#   P30U_RES        optional; input resolution (default 640)
+#   P30U_CONFIG     optional; entry config (default P30u). P74U_CONFIG also honoured
+#                   (74-epoch baseline); P30U_CONFIG takes precedence.
+#   P30U_OUT_ROOT   optional; outputs root (default ecdetseg/outputs/p30u).
+#                   P74U_OUT_ROOT also honoured; P30U_OUT_ROOT takes precedence.
+#   P30U_RES        optional; input resolution (default 640). P74U_RES also honoured
+#                   (P74U_RES takes precedence).
 #   NO_PROGRESS_LIMIT, RETRY_WAIT  optional tunables
 #   PYTHON_BIN      optional test hook: replace `pixi run python train.py`
 #   FAKE_CKPT_OK, FAKE_*  test hooks (see scripts/fake_train.sh)
@@ -30,13 +35,16 @@ Usage: run_exp.sh <e1|e2|e3> <seed> [extra -u key=value ...]
   e1 : cold start, no tuning checkpoint (backbone from ViTAdapter.weights_path)
   e2 : -t $WEIGHTS_DIR/ecdet_s.pth
   e3 : -t $WEIGHTS_DIR/ecdet_s_o3652coco.pth
-Env: VISDRONE_ROOT (required), WEIGHTS_DIR, P30U_RES, NO_PROGRESS_LIMIT, RETRY_WAIT
+Env: VISDRONE_ROOT (required), WEIGHTS_DIR, P30U_RES/P74U_RES, NO_PROGRESS_LIMIT, RETRY_WAIT
 EOF
 }
 
 [ $# -ge 2 ] || { usage; exit 2; }
 INIT="$1"; SEED="$2"; shift 2
 EXTRA=( "$@" )
+# Accept both "run_exp.sh e1 42 key=val" and "run_exp.sh e1 42 -u key=val":
+# strip a leading -u so we never emit two `-u` flags (argparse would keep only the last).
+if [ "${EXTRA[0]:-}" = "-u" ]; then EXTRA=( "${EXTRA[@]:1}" ); fi
 
 case "$INIT" in e1|e2|e3) : ;; *) echo "run_exp: bad init '$INIT'" >&2; usage; exit 2 ;; esac
 case "$SEED" in ''|*[!0-9]*) echo "run_exp: seed must be a non-negative integer" >&2; exit 2 ;; esac
@@ -47,9 +55,14 @@ REPO_ROOT="$(cd "$PROJECT_DIR/.." && pwd)"             # pixi.toml lives here
 MANIFEST="$REPO_ROOT/pixi.toml"
 GIT_ROOT="$(cd "$REPO_ROOT" && git rev-parse --show-toplevel 2>/dev/null || echo "$REPO_ROOT")"
 
-: "${VISDRONE_ROOT:?run_exp: set VISDRONE_ROOT to the VisDrone dataset dir}"
+# VISDRONE_ROOT is required for a fresh run, but optional when resuming/eval-ing a
+# dir that already carries a snapshot (its data paths are reused).
+: "${VISDRONE_ROOT:=}"
 WEIGHTS_DIR="${WEIGHTS_DIR:-$PROJECT_DIR}"
-CONFIG="${P30U_CONFIG:-configs/ecdet/ecdet_s_p30u.yml}"
+# Protocol selection: P30U_* (default) or P74U_* (74-epoch baseline).
+CONFIG="${P30U_CONFIG:-${P74U_CONFIG:-configs/ecdet/ecdet_s_p30u.yml}}"
+# Input resolution: P74U_RES wins, else P30U_RES, else 640.
+RES="${P74U_RES:-${P30U_RES:-640}}"
 NO_PROGRESS_LIMIT="${NO_PROGRESS_LIMIT:-3}"
 RETRY_WAIT="${RETRY_WAIT:-30}"
 
@@ -60,7 +73,13 @@ case "$INIT" in
   e3) TUNING="$WEIGHTS_DIR/ecdet_s_o3652coco.pth" ;;
 esac
 
-OUT_ROOT="${P30U_OUT_ROOT:-$PROJECT_DIR/outputs/p30u}"
+if [ -n "${P30U_OUT_ROOT:-}" ]; then
+  OUT_ROOT="$P30U_OUT_ROOT"
+elif [ -n "${P74U_OUT_ROOT:-}" ]; then
+  OUT_ROOT="$P74U_OUT_ROOT"
+else
+  OUT_ROOT="$PROJECT_DIR/outputs/p30u"
+fi
 OUT_DIR="$OUT_ROOT/${INIT}_s${SEED}"
 export OUT_DIR                       # visible to train hook / fake_train.sh
 TRAIN_LOG="$OUT_DIR/train.log"
@@ -79,13 +98,61 @@ export SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS="${SYCL_PI_LEVEL_ZERO_USE_I
 log() { printf '[%s] %s\n' "$(date '+%F %T')" "$*" | tee -a "$TRAIN_LOG"; }
 
 # ----- overrides passed to train.py (-u) -----
+# Data paths: prefer this dir's own snapshot (the immutable identity of an
+# already-trained run) over the current $VISDRONE_ROOT, so a mistyped or a
+# re-pointed VISDRONE_ROOT cannot break resume/eval of an existing experiment.
+# EXTRA overrides are appended last, so an explicit override still wins.
+SNAP_CFG=""
+for c in "$OUT_DIR/snapshot/config_merged.yml" "$OUT_DIR/snapshot/config.yml"; do
+  [ -f "$c" ] && { SNAP_CFG="$c"; break; }
+done
+DATA_OVERRIDES=()
+if [ -n "$SNAP_CFG" ]; then
+  while IFS= read -r line; do [ -n "$line" ] && DATA_OVERRIDES+=( "$line" ); done < <(
+    python - "$SNAP_CFG" <<'PY'
+import sys, yaml
+d = yaml.safe_load(open(sys.argv[1])) or {}
+def glom(path):
+    x = d
+    for k in path.split('.'):
+        if not isinstance(x, dict) or k not in x:
+            return None
+        x = x[k]
+    return x
+for key in ['train_dataloader.dataset.img_folder', 'train_dataloader.dataset.ann_file',
+            'val_dataloader.dataset.img_folder', 'val_dataloader.dataset.ann_file']:
+    v = glom(key)
+    if v is not None:
+        print(f"{key}={v}")
+PY
+  )
+fi
+if [ ${#DATA_OVERRIDES[@]} -eq 0 ]; then
+  [ -n "$VISDRONE_ROOT" ] || { echo "run_exp: set VISDRONE_ROOT (required for a fresh run with no snapshot)" >&2; exit 2; }
+  DATA_OVERRIDES=(
+    "train_dataloader.dataset.img_folder=$VISDRONE_ROOT/train"
+    "train_dataloader.dataset.ann_file=$VISDRONE_ROOT/annotations_VisDrone_train.json"
+    "val_dataloader.dataset.img_folder=$VISDRONE_ROOT/val"
+    "val_dataloader.dataset.ann_file=$VISDRONE_ROOT/annotations_VisDrone_val.json"
+  )
+fi
+# fail fast on a typo'd / missing dataset root (before building the model)
+for entry in "${DATA_OVERRIDES[@]}"; do
+  case "$entry" in
+    *ann_file=*)
+      f="${entry#*=}"
+      [ -f "$f" ] || { echo "run_exp: annotation file not found: $f" >&2
+                       echo "          check VISDRONE_ROOT='$VISDRONE_ROOT' (typo?)" >&2; exit 2; } ;;
+    *img_folder=*)
+      d="${entry#*=}"
+      [ -d "$d" ] || { echo "run_exp: image folder not found: $d" >&2
+                       echo "          check VISDRONE_ROOT='$VISDRONE_ROOT' (typo?)" >&2; exit 2; } ;;
+  esac
+done
 OVERRIDES=()
 OVERRIDES+=( "output_dir=$OUT_DIR" "seed=$SEED" )
-OVERRIDES+=( "train_dataloader.dataset.img_folder=$VISDRONE_ROOT/train" )
-OVERRIDES+=( "train_dataloader.dataset.ann_file=$VISDRONE_ROOT/annotations_VisDrone_train.json" )
-OVERRIDES+=( "val_dataloader.dataset.img_folder=$VISDRONE_ROOT/val" )
-OVERRIDES+=( "val_dataloader.dataset.ann_file=$VISDRONE_ROOT/annotations_VisDrone_val.json" )
-[ "${P30U_RES:-640}" != "640" ] && OVERRIDES+=( "eval_spatial_size=[${P30U_RES}, ${P30U_RES}]" )
+OVERRIDES+=( "${DATA_OVERRIDES[@]}" )
+[ "${RES}" != "640" ] && OVERRIDES+=( "eval_spatial_size=[${RES}, ${RES}]" )
 [ ${#EXTRA[@]} -gt 0 ] && OVERRIDES+=( "${EXTRA[@]}" )
 
 # ----- one-time snapshot -----
@@ -93,7 +160,8 @@ snapshot() {
   local snap="$OUT_DIR/snapshot"
   [ -f "$snap/command.txt" ] && return 0            # keep the original snapshot
   ( cd "$PROJECT_DIR" && python scripts/dump_config.py -c "$CONFIG" -u "${OVERRIDES[@]}" ) \
-      > "$snap/config.yml" 2> "$snap/config.dump.err"
+      > "$snap/config_merged.yml" 2> "$snap/config.dump.err"
+  cp -f "$snap/config_merged.yml" "$snap/config.yml" 2>/dev/null || true
   ( cd "$GIT_ROOT" && git rev-parse HEAD )            > "$snap/git_commit.txt" 2>&1
   ( cd "$GIT_ROOT" && git status --porcelain )        > "$snap/git_status.txt" 2>&1
   ( cd "$GIT_ROOT" && git diff )                      > "$snap/git_diff.patch" 2>&1
@@ -106,8 +174,8 @@ snapshot() {
     printf 'tuning=%s\n' "${TUNING:-<none>}"
     printf 'output_dir=%s\n' "$OUT_DIR"
     printf 'cmd='; printf '%q ' "$SCRIPT_DIR/run_exp.sh" "$INIT" "$SEED" "${EXTRA[@]:-}"; printf '\n'
-    printf 'env: P30U_RES=%s PYTORCH_SYCL_ALLOC_CONF=%s SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=%s\n' \
-      "${P30U_RES:-640}" "$PYTORCH_SYCL_ALLOC_CONF" "$SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS"
+    printf 'env: RES=%s PYTORCH_SYCL_ALLOC_CONF=%s SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=%s\n' \
+      "$RES" "$PYTORCH_SYCL_ALLOC_CONF" "$SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS"
   } > "$snap/command.txt"
 }
 
@@ -139,6 +207,46 @@ find_resume_ckpt() {
     log "resume: unusable checkpoint, skipping: $c"
   done
   return 1
+}
+
+guard_protocol_consistency() {
+  # Refuse to resume if the snapshot's protocol/aug identity differs from the
+  # config currently being expanded (prevents e.g. resuming a P30u ckpt with a
+  # P74u config, where the epochs mismatch silently rewrites stop_epoch).
+  local snap="$OUT_DIR/snapshot/config_merged.yml"
+  [ -f "$snap" ] || snap="$OUT_DIR/snapshot/config.yml"
+  [ -f "$snap" ] || { log "resume-guard: no snapshot config found; skipping check"; return 0; }
+  local cur="$OUT_DIR/snapshot/.current_merged.yml"
+  ( cd "$PROJECT_DIR" && python scripts/dump_config.py -c "$CONFIG" -u "${OVERRIDES[@]}" ) \
+      > "$cur" 2>/dev/null || { log "resume-guard: could not expand current config; skipping"; return 0; }
+  local out rc
+  out="$(python - "$snap" "$cur" <<'PY'
+import sys, yaml
+KEYS=[('epochs',),('flat_epoch',),('no_aug_epoch',),
+      ('train_dataloader','dataset','transforms','stop_epoch'),
+      ('train_dataloader','dataset','transforms','mosaic_prob'),
+      ('train_dataloader','dataset','transforms','mosaic_epoch'),
+      ('train_dataloader','collate_fn','mixup_prob'),
+      ('train_dataloader','collate_fn','mixup_epoch')]
+def glom(d, path):
+    for k in path:
+        if not isinstance(d, dict) or k not in d:
+            return '<absent>'
+        d = d[k]
+    return d
+def load(p):
+    d = yaml.safe_load(open(p)) or {}
+    return {'.'.join(k): glom(d, k) for k in KEYS}
+a = load(sys.argv[1]); b = load(sys.argv[2])
+diff = {k: (a[k], b[k]) for k in a if str(a[k]) != str(b[k])}
+if diff:
+    print('PROTOCOL_MISMATCH ' + repr(diff)); sys.exit(4)
+print('PROTOCOL_OK')
+PY
+)"; rc=$?
+  if [ "$rc" -ne 0 ]; then log "resume-guard: $out"; return 1; fi
+  log "resume-guard: $out"
+  return 0
 }
 
 progress_count() {   # number of *.pth newer than marker file $1
@@ -186,13 +294,61 @@ run_training() {   # returns train exit code; forwards logs to train.log
   return "$rc"
 }
 
+do_final_eval() {
+  [ "${SKIP_FINAL_EVAL:-0}" = "1" ] && { log "final eval skipped (SKIP_FINAL_EVAL=1)"; return 0; }
+  if [ "${FORCE_FINAL_EVAL:-0}" != "1" ] \
+     && grep -q '"label": "final_ema"' "$OUT_DIR/eval.jsonl" 2>/dev/null \
+     && grep -q '"label": "final_raw"' "$OUT_DIR/eval.jsonl" 2>/dev/null; then
+    log "final eval already present and complete ($OUT_DIR/eval.jsonl); skip (FORCE_FINAL_EVAL=1 to redo)."
+    return 0
+  fi
+  log "=== final evaluation on val (final.pth: EMA + raw; best.pth: EMA) ==="
+  : > "$OUT_DIR/eval.jsonl"
+
+  run_eval() {   # $1=ckpt $2=weights(ema|raw) $3=label $4=note
+    # NOTE: keep these two `local` lines separate — `local a="$1" b="...$a..."` would
+    # expand $a before `local` assigns it (unbound under `set -u`).
+    local ckpt="$1" weights="$2" label="$3" note="$4"
+    local out="$OUT_DIR/eval_${label}.json"
+    [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 0; }
+    if [ -n "${EVAL_BIN:-}" ]; then                    # test hook (no XPU)
+      "$EVAL_BIN" -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" --weights "$weights" \
+        -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" >> "$TRAIN_LOG" 2>&1
+    else
+      ( cd "$PROJECT_DIR" && \
+        pixi run --manifest-path "$MANIFEST" python scripts/eval_final.py \
+          -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" --weights "$weights" \
+          -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1
+    fi
+    if [ -f "$out" ]; then
+      python - "$out" "$label" "$note" <<'PY' >> "$OUT_DIR/eval.jsonl"
+import json, sys
+d = json.load(open(sys.argv[1])); d["label"] = sys.argv[2]; d["note"] = sys.argv[3]
+print(json.dumps(d))
+PY
+      log "eval[$label] -> $(basename "$out")"
+    else
+      log "eval[$label]: failed (see train.log)"
+    fi
+  }
+
+  # final.pth if present (post-fix); fall back to last.pth for runs predating the fix.
+  FINAL_CKPT="$OUT_DIR/final.pth"; [ -f "$FINAL_CKPT" ] || FINAL_CKPT="$OUT_DIR/last.pth"
+  run_eval "$FINAL_CKPT"       "ema" "final_ema" "final weights, EMA (weights_type=ema)"
+  run_eval "$FINAL_CKPT"       "raw" "final_raw" "final weights, raw model (weights_type=raw)"
+  run_eval "$OUT_DIR/best.pth" "ema" "best_ema"  "best.pth: SELECTED ON VAL -> reference only"
+  log "final eval summary: $OUT_DIR/eval.jsonl"
+}
+
 # ============================================================
 snapshot
 log "=== P30u guardian start | init=$INIT seed=$SEED out=$OUT_DIR ==="
-log "config=$CONFIG tuning=${TUNING:-<none>} res=${P30U_RES:-640}"
+log "config=$CONFIG tuning=${TUNING:-<none>} res=${RES}"
 
 if [ -f "$DONE_FILE" ]; then
-  log "DONE marker already present -> experiment complete; refusing to resume. (delete $DONE_FILE to rerun)"
+  log "DONE marker already present -> training complete; running final eval only. (delete $DONE_FILE to retrain)"
+  do_final_eval
+  log "=== P30u guardian done ==="
   exit 0
 fi
 
@@ -202,6 +358,10 @@ while :; do
   attempt=$((attempt + 1))
   MODE_ARGS=()
   if RESUME_CKPT="$(find_resume_ckpt)"; then
+    if ! guard_protocol_consistency; then
+      log "resume-guard: REFUSING to resume $RESUME_CKPT — protocol/aug mismatch vs $OUT_DIR/snapshot/config_merged.yml. exit 4."
+      exit 4
+    fi
     MODE_ARGS=( -r "$RESUME_CKPT" )
     log "attempt #$attempt: resume from $RESUME_CKPT"
   elif [ -n "$TUNING" ] && [ -f "$TUNING" ]; then
@@ -245,36 +405,13 @@ while :; do
   crash_tail
   if [ "$no_prog" -ge "$NO_PROGRESS_LIMIT" ]; then
     log "ERROR: $NO_PROGRESS_LIMIT consecutive attempts with no progress -> stopping."
-    log "       Likely OOM / deterministic crash. Inspect crash_*.log; lower batch size or P30U_RES."
+    log "       Likely OOM / deterministic crash. Inspect crash_*.log; lower batch size or RES."
     exit 3
   fi
   sleep "$RETRY_WAIT"
 done
 
 # ----- final evaluation (EMA on val; NO test-dev) -----
-if [ -f "$DONE_FILE" ] && [ "${SKIP_FINAL_EVAL:-0}" != "1" ]; then
-  log "=== final evaluation (val, EMA) ==="
-  run_eval() {   # $1=ckpt $2=label $3=note
-    local ckpt="$1" label="$2" note="$3" out="$OUT_DIR/eval_${label}.json"
-    [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 0; }
-    ( cd "$PROJECT_DIR" && \
-      pixi run --manifest-path "$MANIFEST" python scripts/eval_final.py \
-        -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" \
-        -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1
-    if [ -f "$out" ]; then
-      python - "$out" "$label" "$note" <<'PY' >> "$OUT_DIR/eval.jsonl"
-import json, sys
-d = json.load(open(sys.argv[1])); d["label"] = sys.argv[2]; d["note"] = sys.argv[3]
-print(json.dumps(d))
-PY
-      log "eval[$label] -> $(basename "$out")"
-    else
-      log "eval[$label]: failed (see train.log)"
-    fi
-  }
-  run_eval "$OUT_DIR/best.pth"  "best_ema" "EMA@best; best was SELECTED ON VAL -> reference only"
-  run_eval "$OUT_DIR/last.pth"  "last_ema" "EMA@last; NOTE last.pth freezes at stop_epoch (see audit.md Q6)"
-  log "final eval summary: $OUT_DIR/eval.jsonl"
-fi
+do_final_eval
 
 log "=== P30u guardian done ==="

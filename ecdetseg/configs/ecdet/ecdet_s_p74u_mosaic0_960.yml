@@ -1,0 +1,16 @@
+# ============================================================
+# ECDet-S @ P74u @ 960 — Mosaic/Mixup OFF ablation, 960 input
+#   schedule : epochs=74  stop_epoch=72  flat_epoch=36  lr_gamma=0.5  (no-aug=2)
+#   aug tier : Mosaic OFF | Mixup OFF
+#   resolution: 960 -> Mosaic.output_size=480, Resize=960 (auto)
+#
+# include order = increasing priority. DO NOT REORDER (later wins):
+#   data < base(ecdet.yml) < S struct < resolution(res960) < protocol/p74u_mosaic0.yml (LAST)
+# ============================================================
+__include__:
+  - '../dataset/visdrone.yml'      # data only (paths injected by run_exp.sh)
+  - 'ecdet.yml'                    # base detector structure + default aug ops
+  - 'struct_s.yml'                 # S structural delta
+  - 'protocol/res960.yml'          # resolution 960
+  - 'protocol/p74u_mosaic0.yml'    # protocol, LAST -> authoritative (Mosaic off)
+output_dir: outputs/p74u_mosaic0_960

@@ -1,0 +1,667 @@
+diff --git a/ecdetseg/README_exp.md b/ecdetseg/README_exp.md
+index 4a1a297..d791468 100644
+--- a/ecdetseg/README_exp.md
++++ b/ecdetseg/README_exp.md
+@@ -84,13 +84,45 @@ python train.py -c configs/ecdet/ecdet_s_p30u_mosaic025.yml -d xpu \
+ > `mosaic_prob` 必须显式置 0/0.25：`container.py:83-96` 用它门控 `RandomZoomOut/RandomIoUCrop`，
+ > 与 Mosaic 是否存在无关（详见 CHANGES.md §4）。
+ 
++## 5c. P74u（EdgeCrafter 官方 S 档 74-epoch 基线）
++
++- 协议 `protocol/p74u.yml`：`epochs=74 stop_epoch=72 flat_epoch=36 lr_gamma=0.5`，
++  增强 **Mosaic 0.75/ep36 + Mixup 0.75/ep36**，`ema.decay=0.9999`；其余键与 P30u 相同。
++- 消融 `protocol/p74u_mosaic0.yml`：仅 `mosaic_prob/mosaic_epoch/mixup_prob/mixup_epoch` 置 0
++  （ops 保持相同；Mosaic op 仍在列表但被 `mosaic_prob:0` 跳过）。
++- 入口：`ecdet_s_p74u.yml`（基线，Mosaic 开）、`ecdet_s_p74u_mosaic0.yml`（Mosaic 关）。
++- **960 臂**：`ecdet_s_p74u_960.yml`、`ecdet_s_p74u_mosaic0_960.yml`（include `protocol/res960.yml`，
++  `output_dir` 为 `outputs/p74u_960` / `outputs/p74u_mosaic0_960`）。也可用 `P74U_RES=960` 覆盖（见下）。
++
++```bash
++# 单实验
++P74U_CONFIG=configs/ecdet/ecdet_s_p74u.yml \
++P74U_OUT_ROOT=$PWD/outputs/p74u VISDRONE_ROOT=$VISDRONE_ROOT \
++  bash scripts/run_exp.sh e1 42
++
++# pm2 批跑（串行 3 seed × 3 init）
++P74U_CONFIG=configs/ecdet/ecdet_s_p74u.yml \
++P74U_OUT_ROOT=$PWD/outputs/p74u VISDRONE_ROOT=$VISDRONE_ROOT \
++  pm2 start ecosystem.config.js --only p74u-all
++```
++> 优先级：`P30U_CONFIG` > `P74U_CONFIG`；`P30U_OUT_ROOT` > `P74U_OUT_ROOT`；
++> 分辨率 `P74U_RES` > `P30U_RES` > 640。
++> resume 前会用 `snapshot/config_merged.yml` 校验协议/增强一致性，不一致则退出码 4。
++
++**输出目录命名约定**：`outputs/<protocol>[_mosaic0]/<init>_s<seed>/`
++（例：`outputs/p30u/e1_s42`、`outputs/p74u/e2_s42`、`outputs/p74u_mosaic0/e1_s42`）。
++
++> ⚠️ P74u 基线**含 Mosaic op**（官方增强）。若逐字照抄 P30u（其 ops 已删 Mosaic）而只改
++> `mosaic_prob:0.75`，Mosaic **不会生效**且会静默门控 `RandomZoomOut/RandomIoUCrop`
++> （`container.py:83-96`，见 CHANGES.md §4）。故 P74u 恢复了 Mosaic op。
++
+ ## 6. 静态验证（随时可跑，不碰 XPU）
+ 
+ ```bash
+ cd ecdetseg
+ bash -n scripts/run_exp.sh scripts/fake_train.sh scripts/test_run_exp.sh
+ python scripts/dump_config.py -c configs/ecdet/ecdet_s_p30u.yml -o /tmp/p30u.yml
+-bash scripts/test_run_exp.sh          # 13 项：重试/进展/DONE/信号
++bash scripts/test_run_exp.sh          # 21 项：重试/进展/DONE/信号/终评/协议守卫
+ ```
+ 
+ ## 7. XPU 验证（**训练结束后**，脚本会先 `pgrep` 守卫）
+diff --git a/ecdetseg/engine/solver/ec_solver.py b/ecdetseg/engine/solver/ec_solver.py
+index e19c651..27c344b 100644
+--- a/ecdetseg/engine/solver/ec_solver.py
++++ b/ecdetseg/engine/solver/ec_solver.py
+@@ -108,7 +108,7 @@ class ECSolver(BaseSolver):
+ 
+             self.last_epoch += 1
+ 
+-            if self.output_dir and epoch < stop_aug_epoch:
++            if self.output_dir:
+                 checkpoint_paths = [self.output_dir / 'last.pth']
+                 # extra checkpoint before LR drop and every 100 epochs
+                 if (epoch + 1) % args.checkpoint_freq == 0:
+@@ -143,6 +143,7 @@ class ECSolver(BaseSolver):
+                     top1 = best_stat[k]
+                     if self.output_dir:
+                         dist_utils.save_on_master(self.state_dict(), self.output_dir / 'best.pth')
++                        print(f'[best] saved best.pth at epoch {epoch} (NOTE: selected on VAL)')
+ 
+                 best_stat_print[k] = max(best_stat[k], top1)
+                 print(f'best_stat: {best_stat_print}')  # global best
+@@ -172,6 +173,16 @@ class ECSolver(BaseSolver):
+             if accelerator is not None:  # Just for clearing up GPU memory. You can remove it if you have enough GPU memory.
+                 accelerator.empty_cache()
+ 
++        # Always persist the LAST-epoch weights, independent of the val-selected 'best'.
++        if self.output_dir:
++            dist_utils.save_on_master(self.state_dict(), self.output_dir / 'final.pth')
++            if dist_utils.is_main_process():
++                (self.output_dir / 'best.pth.info').write_text(
++                    "best.pth is SELECTED ON THE VAL SPLIT (best val AP); it is not a "
++                    "held-out selection. Report test-dev for final numbers. final.pth "
++                    "always holds the last epoch.\n")
++            print(f'[final] saved final.pth (last epoch = {self.last_epoch})')
++
+         total_time = time.time() - start_time
+         total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+         print('Training time {}'.format(total_time_str))
+diff --git a/ecdetseg/script/train_ecdet.sh b/ecdetseg/script/train_ecdet.sh
+deleted file mode 100755
+index 4c7b975..0000000
+--- a/ecdetseg/script/train_ecdet.sh
++++ /dev/null
+@@ -1,69 +0,0 @@
+-#!/bin/bash
+-# ============================================================
+-# EdgeCrafter ECDet-S 训练守护脚本
+-# 功能：自动增量恢复 + 崩溃重试 + 防死循环 + 崩溃日志留档
+-# 用法：配合 pm2 使用，也可直接 bash 运行
+-# ============================================================
+-
+-# ---------- 配置区 ----------
+-REPO_ROOT="/home/rainsin/Projects/Career/Paper/EdgeCrafter"          # pixi.toml 所在
+-PROJECT_DIR="${REPO_ROOT}/ecdetseg"                                   # train.py 所在
+-CONFIG="configs/ecdet/ecdet_s.yml"                                    # 相对 ecdetseg
+-INIT_WEIGHT="${PROJECT_DIR}/ecdet_s.pth"                              # COCO 预训练权重
+-CKPT_DIR="${PROJECT_DIR}/outputs/ecdet_s_coco_pre_weights"            # ← 启动前 ls 确认实际目录名
+-LAST_CKPT="${CKPT_DIR}/last.pth"
+-MAX_RETRY=20                                                          # 连续崩溃重试上限
+-RETRY_WAIT=15                                                         # 崩溃后等待秒数
+-# ---------------------------
+-
+-# ---------- 路径检查 ----------
+-cd "$REPO_ROOT" || { echo "[FATAL] repo root not found: $REPO_ROOT"; exit 1; }
+-[ -d "$PROJECT_DIR" ] || { echo "[FATAL] project dir not found: $PROJECT_DIR"; exit 1; }
+-[ -f "$REPO_ROOT/pixi.toml" ] || { echo "[FATAL] pixi.toml not found"; exit 1; }
+-
+-# ---------- XPU 环境 ----------
+-export PYTORCH_SYCL_ALLOC_CONF=expandable_segments:True
+-export SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=0
+-
+-mkdir -p "$CKPT_DIR"
+-
+-retry_count=0
+-while true; do
+-    # ---------- 智能选择恢复模式 ----------
+-    if [ -f "$LAST_CKPT" ]; then
+-        MODE="-r $LAST_CKPT"
+-        TAG="resume"
+-        echo "[$(date '+%F %T')] Resuming from checkpoint: $LAST_CKPT"
+-    elif [ -f "$INIT_WEIGHT" ]; then
+-        MODE="-t $INIT_WEIGHT"
+-        TAG="cold"
+-        echo "[$(date '+%F %T')] Cold start from: $INIT_WEIGHT"
+-    else
+-        echo "[FATAL] neither checkpoint nor init weight found"
+-        exit 1
+-    fi
+-
+-    # ---------- 训练（崩溃 traceback 留档） ----------
+-    cd "$PROJECT_DIR"
+-    pixi run --manifest-path "$REPO_ROOT/pixi.toml" \
+-        python train.py -c "$CONFIG" -d xpu $MODE \
+-        2> >(tee -a "${CKPT_DIR}/crash_${TAG}_$(date '+%m%d_%H%M').log" >&2)
+-    EXIT_CODE=$?
+-    cd "$REPO_ROOT"
+-
+-    # ---------- 正常结束 ----------
+-    if [ $EXIT_CODE -eq 0 ]; then
+-        echo "[$(date '+%F %T')] Training finished normally."
+-        break
+-    fi
+-
+-    # ---------- 防死循环 ----------
+-    retry_count=$((retry_count + 1))
+-    if [ $retry_count -ge $MAX_RETRY ]; then
+-        echo "[FATAL] crashed $MAX_RETRY times in a row, giving up."
+-        exit 2
+-    fi
+-
+-    echo "[$(date '+%F %T')] Crash #$retry_count (exit=$EXIT_CODE), restarting in ${RETRY_WAIT}s..."
+-    sleep $RETRY_WAIT
+-done
+diff --git a/ecdetseg/script/train_o365.sh b/ecdetseg/script/train_o365.sh
+deleted file mode 100755
+index d7ac1ca..0000000
+--- a/ecdetseg/script/train_o365.sh
++++ /dev/null
+@@ -1,9 +0,0 @@
+-#!/bin/bash
+-cd "$(dirname "$0")"
+-
+-exec pixi run python ../train.py \
+-  -c ../configs/ecdet/ecdet_s.yml \
+-  -d xpu \
+-  -r ../outputs/ecdet_s_o3652coco_visdrone/last.pth \
+-  --output-dir ../outputs/ecdet_s_o3652coco_visdrone \
+-  -u epochs=60 flat_epoch=56 no_aug_epoch=4 mosaic_prob=0.25 mosaic_epoch=52
+diff --git a/ecdetseg/scripts/eval_final.py b/ecdetseg/scripts/eval_final.py
+index 5217039..750d8f8 100755
+--- a/ecdetseg/scripts/eval_final.py
++++ b/ecdetseg/scripts/eval_final.py
+@@ -1,12 +1,16 @@
+ #!/usr/bin/env python3
+ """
+-Evaluate one checkpoint (EMA weights) on the val set and dump a small JSON.
++Evaluate one checkpoint on the val set and dump a small JSON.
+ Thin wrapper around the existing engine; NO test-dev, NO training.
+ 
+     python scripts/eval_final.py -c configs/ecdet/ecdet_s_p30u.yml -d xpu \
+-        -r outputs/p30u/e1_s42/best.pth -o outputs/p30u/e1_s42/eval_best_ema.json -u ...
++        -r outputs/p30u/e1_s42/final.pth -o /tmp/eval.json --weights ema
+ 
+-Output keys: AP, AP50, AP75, APS, APM, APL, params, ckpt.
++--weights ema : evaluate the EMA weights (`ckpt['ema'].module`)
++--weights raw : evaluate the raw model weights (`ckpt['model']`)
++--weights both: emit a JSON list with both (manual use)
++
++Output object keys: weights_type, epoch, ckpt, AP, AP50, AP75, APS, APM, APL, params.
+ """
+ import argparse
+ import json
+@@ -25,10 +29,12 @@ def main():
+     ap.add_argument("-r", "--resume", required=True)
+     ap.add_argument("-d", "--device", default="xpu")
+     ap.add_argument("-o", "--out", required=True)
++    ap.add_argument("--weights", choices=["ema", "raw", "both"], default="ema")
+     ap.add_argument("-u", "--update", nargs="+", default=[])
+     args = ap.parse_args()
+ 
+     from engine.core import YAMLConfig, yaml_utils
++    from engine.misc import dist_utils
+     from engine.solver import TASKS
+     from engine.solver.ec_engine import evaluate
+ 
+@@ -40,23 +46,39 @@ def main():
+ 
+     solver = TASKS[cfg.yaml_cfg["task"]](cfg)
+     solver.eval()
++    epoch = getattr(solver, "last_epoch", None)
++
++    def _evaluate(module):
++        stats, _ = evaluate(module, solver.criterion, solver.postprocessor,
++                            solver.val_dataloader, solver.evaluator, solver.device)
++        s = stats.get("coco_eval_bbox") or stats.get("coco_eval_mask")
++        if s is None:
++            raise RuntimeError("no coco_eval stats produced")
++        return s
++
++    which = ["ema", "raw"] if args.weights == "both" else [args.weights]
++    results = []
++    for w in which:
++        if w == "ema":
++            module = solver.ema.module if solver.ema else solver.model
++        else:
++            module = dist_utils.de_parallel(solver.model)
++        s = _evaluate(module)
++        results.append({
++            "weights_type": w,
++            "epoch": epoch,
++            "AP": s[0], "AP50": s[1], "AP75": s[2],
++            "APS": s[3], "APM": s[4], "APL": s[5],
++            "params": int(sum(p.numel() for p in module.parameters())),
++            "ckpt": os.path.abspath(args.resume),
++        })
+ 
+-    module = solver.ema.module if solver.ema else solver.model
+-    stats, _ = evaluate(module, solver.criterion, solver.postprocessor,
+-                        solver.val_dataloader, solver.evaluator, solver.device)
+-
+-    s = stats.get("coco_eval_bbox") or stats.get("coco_eval_mask")
+-    if s is None:
+-        raise RuntimeError("no coco_eval stats produced")
+-    out = {
+-        "AP": s[0], "AP50": s[1], "AP75": s[2],
+-        "APS": s[3], "APM": s[4], "APL": s[5],
+-        "params": int(sum(p.numel() for p in module.parameters())),
+-        "ckpt": os.path.abspath(args.resume),
+-    }
+     with open(args.out, "w") as f:
+-        json.dump(out, f, indent=2)
+-    print("[eval_final] wrote", args.out, out)
++        json.dump(results[0] if len(results) == 1 else results, f, indent=2)
++    print("[eval_final] weights=%s -> %s" % (args.weights, args.out))
++    for r in results:
++        print("    %-3s AP=%.4f AP50=%.4f AP75=%.4f (epoch=%s)" %
++              (r["weights_type"], r["AP"], r["AP50"], r["AP75"], r["epoch"]))
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/ecdetseg/scripts/run_exp.sh b/ecdetseg/scripts/run_exp.sh
+index 775e488..5932462 100755
+--- a/ecdetseg/scripts/run_exp.sh
++++ b/ecdetseg/scripts/run_exp.sh
+@@ -17,7 +17,12 @@
+ # Env (required/optional):
+ #   VISDRONE_ROOT   required; dataset root (paths are injected via -u)
+ #   WEIGHTS_DIR     optional; dir holding ecdet_s.pth / ecdet_s_o3652coco.pth (default: ecdetseg/)
+-#   P30U_RES        optional; input resolution (default 640)
++#   P30U_CONFIG     optional; entry config (default P30u). P74U_CONFIG also honoured
++#                   (74-epoch baseline); P30U_CONFIG takes precedence.
++#   P30U_OUT_ROOT   optional; outputs root (default ecdetseg/outputs/p30u).
++#                   P74U_OUT_ROOT also honoured; P30U_OUT_ROOT takes precedence.
++#   P30U_RES        optional; input resolution (default 640). P74U_RES also honoured
++#                   (P74U_RES takes precedence).
+ #   NO_PROGRESS_LIMIT, RETRY_WAIT  optional tunables
+ #   PYTHON_BIN      optional test hook: replace `pixi run python train.py`
+ #   FAKE_CKPT_OK, FAKE_*  test hooks (see scripts/fake_train.sh)
+@@ -30,13 +35,16 @@ Usage: run_exp.sh <e1|e2|e3> <seed> [extra -u key=value ...]
+   e1 : cold start, no tuning checkpoint (backbone from ViTAdapter.weights_path)
+   e2 : -t $WEIGHTS_DIR/ecdet_s.pth
+   e3 : -t $WEIGHTS_DIR/ecdet_s_o3652coco.pth
+-Env: VISDRONE_ROOT (required), WEIGHTS_DIR, P30U_RES, NO_PROGRESS_LIMIT, RETRY_WAIT
++Env: VISDRONE_ROOT (required), WEIGHTS_DIR, P30U_RES/P74U_RES, NO_PROGRESS_LIMIT, RETRY_WAIT
+ EOF
+ }
+ 
+ [ $# -ge 2 ] || { usage; exit 2; }
+ INIT="$1"; SEED="$2"; shift 2
+ EXTRA=( "$@" )
++# Accept both "run_exp.sh e1 42 key=val" and "run_exp.sh e1 42 -u key=val":
++# strip a leading -u so we never emit two `-u` flags (argparse would keep only the last).
++if [ "${EXTRA[0]:-}" = "-u" ]; then EXTRA=( "${EXTRA[@]:1}" ); fi
+ 
+ case "$INIT" in e1|e2|e3) : ;; *) echo "run_exp: bad init '$INIT'" >&2; usage; exit 2 ;; esac
+ case "$SEED" in ''|*[!0-9]*) echo "run_exp: seed must be a non-negative integer" >&2; exit 2 ;; esac
+@@ -47,9 +55,14 @@ REPO_ROOT="$(cd "$PROJECT_DIR/.." && pwd)"             # pixi.toml lives here
+ MANIFEST="$REPO_ROOT/pixi.toml"
+ GIT_ROOT="$(cd "$REPO_ROOT" && git rev-parse --show-toplevel 2>/dev/null || echo "$REPO_ROOT")"
+ 
+-: "${VISDRONE_ROOT:?run_exp: set VISDRONE_ROOT to the VisDrone dataset dir}"
++# VISDRONE_ROOT is required for a fresh run, but optional when resuming/eval-ing a
++# dir that already carries a snapshot (its data paths are reused).
++: "${VISDRONE_ROOT:=}"
+ WEIGHTS_DIR="${WEIGHTS_DIR:-$PROJECT_DIR}"
+-CONFIG="${P30U_CONFIG:-configs/ecdet/ecdet_s_p30u.yml}"
++# Protocol selection: P30U_* (default) or P74U_* (74-epoch baseline).
++CONFIG="${P30U_CONFIG:-${P74U_CONFIG:-configs/ecdet/ecdet_s_p30u.yml}}"
++# Input resolution: P74U_RES wins, else P30U_RES, else 640.
++RES="${P74U_RES:-${P30U_RES:-640}}"
+ NO_PROGRESS_LIMIT="${NO_PROGRESS_LIMIT:-3}"
+ RETRY_WAIT="${RETRY_WAIT:-30}"
+ 
+@@ -60,7 +73,13 @@ case "$INIT" in
+   e3) TUNING="$WEIGHTS_DIR/ecdet_s_o3652coco.pth" ;;
+ esac
+ 
+-OUT_ROOT="${P30U_OUT_ROOT:-$PROJECT_DIR/outputs/p30u}"
++if [ -n "${P30U_OUT_ROOT:-}" ]; then
++  OUT_ROOT="$P30U_OUT_ROOT"
++elif [ -n "${P74U_OUT_ROOT:-}" ]; then
++  OUT_ROOT="$P74U_OUT_ROOT"
++else
++  OUT_ROOT="$PROJECT_DIR/outputs/p30u"
++fi
+ OUT_DIR="$OUT_ROOT/${INIT}_s${SEED}"
+ export OUT_DIR                       # visible to train hook / fake_train.sh
+ TRAIN_LOG="$OUT_DIR/train.log"
+@@ -79,13 +98,48 @@ export SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS="${SYCL_PI_LEVEL_ZERO_USE_I
+ log() { printf '[%s] %s\n' "$(date '+%F %T')" "$*" | tee -a "$TRAIN_LOG"; }
+ 
+ # ----- overrides passed to train.py (-u) -----
++# Data paths: prefer this dir's own snapshot (the immutable identity of an
++# already-trained run) over the current $VISDRONE_ROOT, so a mistyped or a
++# re-pointed VISDRONE_ROOT cannot break resume/eval of an existing experiment.
++# EXTRA overrides are appended last, so an explicit override still wins.
++SNAP_CFG=""
++for c in "$OUT_DIR/snapshot/config_merged.yml" "$OUT_DIR/snapshot/config.yml"; do
++  [ -f "$c" ] && { SNAP_CFG="$c"; break; }
++done
++DATA_OVERRIDES=()
++if [ -n "$SNAP_CFG" ]; then
++  while IFS= read -r line; do [ -n "$line" ] && DATA_OVERRIDES+=( "$line" ); done < <(
++    python - "$SNAP_CFG" <<'PY'
++import sys, yaml
++d = yaml.safe_load(open(sys.argv[1])) or {}
++def glom(path):
++    x = d
++    for k in path.split('.'):
++        if not isinstance(x, dict) or k not in x:
++            return None
++        x = x[k]
++    return x
++for key in ['train_dataloader.dataset.img_folder', 'train_dataloader.dataset.ann_file',
++            'val_dataloader.dataset.img_folder', 'val_dataloader.dataset.ann_file']:
++    v = glom(key)
++    if v is not None:
++        print(f"{key}={v}")
++PY
++  )
++fi
++if [ ${#DATA_OVERRIDES[@]} -eq 0 ]; then
++  [ -n "$VISDRONE_ROOT" ] || { echo "run_exp: set VISDRONE_ROOT (required for a fresh run with no snapshot)" >&2; exit 2; }
++  DATA_OVERRIDES=(
++    "train_dataloader.dataset.img_folder=$VISDRONE_ROOT/train"
++    "train_dataloader.dataset.ann_file=$VISDRONE_ROOT/annotations_VisDrone_train.json"
++    "val_dataloader.dataset.img_folder=$VISDRONE_ROOT/val"
++    "val_dataloader.dataset.ann_file=$VISDRONE_ROOT/annotations_VisDrone_val.json"
++  )
++fi
+ OVERRIDES=()
+ OVERRIDES+=( "output_dir=$OUT_DIR" "seed=$SEED" )
+-OVERRIDES+=( "train_dataloader.dataset.img_folder=$VISDRONE_ROOT/train" )
+-OVERRIDES+=( "train_dataloader.dataset.ann_file=$VISDRONE_ROOT/annotations_VisDrone_train.json" )
+-OVERRIDES+=( "val_dataloader.dataset.img_folder=$VISDRONE_ROOT/val" )
+-OVERRIDES+=( "val_dataloader.dataset.ann_file=$VISDRONE_ROOT/annotations_VisDrone_val.json" )
+-[ "${P30U_RES:-640}" != "640" ] && OVERRIDES+=( "eval_spatial_size=[${P30U_RES}, ${P30U_RES}]" )
++OVERRIDES+=( "${DATA_OVERRIDES[@]}" )
++[ "${RES}" != "640" ] && OVERRIDES+=( "eval_spatial_size=[${RES}, ${RES}]" )
+ [ ${#EXTRA[@]} -gt 0 ] && OVERRIDES+=( "${EXTRA[@]}" )
+ 
+ # ----- one-time snapshot -----
+@@ -93,7 +147,8 @@ snapshot() {
+   local snap="$OUT_DIR/snapshot"
+   [ -f "$snap/command.txt" ] && return 0            # keep the original snapshot
+   ( cd "$PROJECT_DIR" && python scripts/dump_config.py -c "$CONFIG" -u "${OVERRIDES[@]}" ) \
+-      > "$snap/config.yml" 2> "$snap/config.dump.err"
++      > "$snap/config_merged.yml" 2> "$snap/config.dump.err"
++  cp -f "$snap/config_merged.yml" "$snap/config.yml" 2>/dev/null || true
+   ( cd "$GIT_ROOT" && git rev-parse HEAD )            > "$snap/git_commit.txt" 2>&1
+   ( cd "$GIT_ROOT" && git status --porcelain )        > "$snap/git_status.txt" 2>&1
+   ( cd "$GIT_ROOT" && git diff )                      > "$snap/git_diff.patch" 2>&1
+@@ -106,8 +161,8 @@ snapshot() {
+     printf 'tuning=%s\n' "${TUNING:-<none>}"
+     printf 'output_dir=%s\n' "$OUT_DIR"
+     printf 'cmd='; printf '%q ' "$SCRIPT_DIR/run_exp.sh" "$INIT" "$SEED" "${EXTRA[@]:-}"; printf '\n'
+-    printf 'env: P30U_RES=%s PYTORCH_SYCL_ALLOC_CONF=%s SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=%s\n' \
+-      "${P30U_RES:-640}" "$PYTORCH_SYCL_ALLOC_CONF" "$SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS"
++    printf 'env: RES=%s PYTORCH_SYCL_ALLOC_CONF=%s SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=%s\n' \
++      "$RES" "$PYTORCH_SYCL_ALLOC_CONF" "$SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS"
+   } > "$snap/command.txt"
+ }
+ 
+@@ -141,6 +196,46 @@ find_resume_ckpt() {
+   return 1
+ }
+ 
++guard_protocol_consistency() {
++  # Refuse to resume if the snapshot's protocol/aug identity differs from the
++  # config currently being expanded (prevents e.g. resuming a P30u ckpt with a
++  # P74u config, where the epochs mismatch silently rewrites stop_epoch).
++  local snap="$OUT_DIR/snapshot/config_merged.yml"
++  [ -f "$snap" ] || snap="$OUT_DIR/snapshot/config.yml"
++  [ -f "$snap" ] || { log "resume-guard: no snapshot config found; skipping check"; return 0; }
++  local cur="$OUT_DIR/snapshot/.current_merged.yml"
++  ( cd "$PROJECT_DIR" && python scripts/dump_config.py -c "$CONFIG" -u "${OVERRIDES[@]}" ) \
++      > "$cur" 2>/dev/null || { log "resume-guard: could not expand current config; skipping"; return 0; }
++  local out rc
++  out="$(python - "$snap" "$cur" <<'PY'
++import sys, yaml
++KEYS=[('epochs',),('flat_epoch',),('no_aug_epoch',),
++      ('train_dataloader','dataset','transforms','stop_epoch'),
++      ('train_dataloader','dataset','transforms','mosaic_prob'),
++      ('train_dataloader','dataset','transforms','mosaic_epoch'),
++      ('train_dataloader','collate_fn','mixup_prob'),
++      ('train_dataloader','collate_fn','mixup_epoch')]
++def glom(d, path):
++    for k in path:
++        if not isinstance(d, dict) or k not in d:
++            return '<absent>'
++        d = d[k]
++    return d
++def load(p):
++    d = yaml.safe_load(open(p)) or {}
++    return {'.'.join(k): glom(d, k) for k in KEYS}
++a = load(sys.argv[1]); b = load(sys.argv[2])
++diff = {k: (a[k], b[k]) for k in a if str(a[k]) != str(b[k])}
++if diff:
++    print('PROTOCOL_MISMATCH ' + repr(diff)); sys.exit(4)
++print('PROTOCOL_OK')
++PY
++)"; rc=$?
++  if [ "$rc" -ne 0 ]; then log "resume-guard: $out"; return 1; fi
++  log "resume-guard: $out"
++  return 0
++}
++
+ progress_count() {   # number of *.pth newer than marker file $1
+   [ -f "$1" ] || { echo 0; return; }
+   find "$OUT_DIR" -maxdepth 1 -name '*.pth' -newer "$1" 2>/dev/null | wc -l
+@@ -186,13 +281,61 @@ run_training() {   # returns train exit code; forwards logs to train.log
+   return "$rc"
+ }
+ 
++do_final_eval() {
++  [ "${SKIP_FINAL_EVAL:-0}" = "1" ] && { log "final eval skipped (SKIP_FINAL_EVAL=1)"; return 0; }
++  if [ "${FORCE_FINAL_EVAL:-0}" != "1" ] \
++     && grep -q '"label": "final_ema"' "$OUT_DIR/eval.jsonl" 2>/dev/null \
++     && grep -q '"label": "final_raw"' "$OUT_DIR/eval.jsonl" 2>/dev/null; then
++    log "final eval already present and complete ($OUT_DIR/eval.jsonl); skip (FORCE_FINAL_EVAL=1 to redo)."
++    return 0
++  fi
++  log "=== final evaluation on val (final.pth: EMA + raw; best.pth: EMA) ==="
++  : > "$OUT_DIR/eval.jsonl"
++
++  run_eval() {   # $1=ckpt $2=weights(ema|raw) $3=label $4=note
++    # NOTE: keep these two `local` lines separate — `local a="$1" b="...$a..."` would
++    # expand $a before `local` assigns it (unbound under `set -u`).
++    local ckpt="$1" weights="$2" label="$3" note="$4"
++    local out="$OUT_DIR/eval_${label}.json"
++    [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 0; }
++    if [ -n "${EVAL_BIN:-}" ]; then                    # test hook (no XPU)
++      "$EVAL_BIN" -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" --weights "$weights" \
++        -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" >> "$TRAIN_LOG" 2>&1
++    else
++      ( cd "$PROJECT_DIR" && \
++        pixi run --manifest-path "$MANIFEST" python scripts/eval_final.py \
++          -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" --weights "$weights" \
++          -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1
++    fi
++    if [ -f "$out" ]; then
++      python - "$out" "$label" "$note" <<'PY' >> "$OUT_DIR/eval.jsonl"
++import json, sys
++d = json.load(open(sys.argv[1])); d["label"] = sys.argv[2]; d["note"] = sys.argv[3]
++print(json.dumps(d))
++PY
++      log "eval[$label] -> $(basename "$out")"
++    else
++      log "eval[$label]: failed (see train.log)"
++    fi
++  }
++
++  # final.pth if present (post-fix); fall back to last.pth for runs predating the fix.
++  FINAL_CKPT="$OUT_DIR/final.pth"; [ -f "$FINAL_CKPT" ] || FINAL_CKPT="$OUT_DIR/last.pth"
++  run_eval "$FINAL_CKPT"       "ema" "final_ema" "final weights, EMA (weights_type=ema)"
++  run_eval "$FINAL_CKPT"       "raw" "final_raw" "final weights, raw model (weights_type=raw)"
++  run_eval "$OUT_DIR/best.pth" "ema" "best_ema"  "best.pth: SELECTED ON VAL -> reference only"
++  log "final eval summary: $OUT_DIR/eval.jsonl"
++}
++
+ # ============================================================
+ snapshot
+ log "=== P30u guardian start | init=$INIT seed=$SEED out=$OUT_DIR ==="
+-log "config=$CONFIG tuning=${TUNING:-<none>} res=${P30U_RES:-640}"
++log "config=$CONFIG tuning=${TUNING:-<none>} res=${RES}"
+ 
+ if [ -f "$DONE_FILE" ]; then
+-  log "DONE marker already present -> experiment complete; refusing to resume. (delete $DONE_FILE to rerun)"
++  log "DONE marker already present -> training complete; running final eval only. (delete $DONE_FILE to retrain)"
++  do_final_eval
++  log "=== P30u guardian done ==="
+   exit 0
+ fi
+ 
+@@ -202,6 +345,10 @@ while :; do
+   attempt=$((attempt + 1))
+   MODE_ARGS=()
+   if RESUME_CKPT="$(find_resume_ckpt)"; then
++    if ! guard_protocol_consistency; then
++      log "resume-guard: REFUSING to resume $RESUME_CKPT — protocol/aug mismatch vs $OUT_DIR/snapshot/config_merged.yml. exit 4."
++      exit 4
++    fi
+     MODE_ARGS=( -r "$RESUME_CKPT" )
+     log "attempt #$attempt: resume from $RESUME_CKPT"
+   elif [ -n "$TUNING" ] && [ -f "$TUNING" ]; then
+@@ -245,36 +392,13 @@ while :; do
+   crash_tail
+   if [ "$no_prog" -ge "$NO_PROGRESS_LIMIT" ]; then
+     log "ERROR: $NO_PROGRESS_LIMIT consecutive attempts with no progress -> stopping."
+-    log "       Likely OOM / deterministic crash. Inspect crash_*.log; lower batch size or P30U_RES."
++    log "       Likely OOM / deterministic crash. Inspect crash_*.log; lower batch size or RES."
+     exit 3
+   fi
+   sleep "$RETRY_WAIT"
+ done
+ 
+ # ----- final evaluation (EMA on val; NO test-dev) -----
+-if [ -f "$DONE_FILE" ] && [ "${SKIP_FINAL_EVAL:-0}" != "1" ]; then
+-  log "=== final evaluation (val, EMA) ==="
+-  run_eval() {   # $1=ckpt $2=label $3=note
+-    local ckpt="$1" label="$2" note="$3" out="$OUT_DIR/eval_${label}.json"
+-    [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 0; }
+-    ( cd "$PROJECT_DIR" && \
+-      pixi run --manifest-path "$MANIFEST" python scripts/eval_final.py \
+-        -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" \
+-        -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1
+-    if [ -f "$out" ]; then
+-      python - "$out" "$label" "$note" <<'PY' >> "$OUT_DIR/eval.jsonl"
+-import json, sys
+-d = json.load(open(sys.argv[1])); d["label"] = sys.argv[2]; d["note"] = sys.argv[3]
+-print(json.dumps(d))
+-PY
+-      log "eval[$label] -> $(basename "$out")"
+-    else
+-      log "eval[$label]: failed (see train.log)"
+-    fi
+-  }
+-  run_eval "$OUT_DIR/best.pth"  "best_ema" "EMA@best; best was SELECTED ON VAL -> reference only"
+-  run_eval "$OUT_DIR/last.pth"  "last_ema" "EMA@last; NOTE last.pth freezes at stop_epoch (see audit.md Q6)"
+-  log "final eval summary: $OUT_DIR/eval.jsonl"
+-fi
++do_final_eval
+ 
+ log "=== P30u guardian done ==="
+diff --git a/ecdetseg/scripts/test_run_exp.sh b/ecdetseg/scripts/test_run_exp.sh
+index b396e3f..2848212 100755
+--- a/ecdetseg/scripts/test_run_exp.sh
++++ b/ecdetseg/scripts/test_run_exp.sh
+@@ -63,6 +63,48 @@ wait "$pid"; rc=$?
+ [ "$(grep -c 'FAKE train.py invoked' "$OUTROOT/e1_s45/train.log")" -eq 1 ] \
+   && ok "no retry (1 launch)" || bad "retried after signal"
+ 
++echo "== T5: final-eval path when DONE exists (regression for unbound var) =="
++reset
++out="$OUTROOT/e1_s46"; mkdir -p "$out"
++: > "$out/best.pth"; : > "$out/last.pth"; : > "$out/DONE"
++export EVAL_BIN="$HERE/fake_eval.sh"
++unset SKIP_FINAL_EVAL
++bash "$RUN" e1 46 >/tmp/opencode/t5.out 2>&1; rc=$?
++[ "$rc" -eq 0 ] && ok "exit 0" || bad "exit=$rc (want 0)"
++[ "$(wc -l < "$out/eval.jsonl" 2>/dev/null || echo 0)" -eq 3 ] \
++  && ok "3 eval lines (final ema+raw, best ema)" || bad "eval.jsonl lines != 3"
++grep -q '"label": "final_ema"' "$out/eval.jsonl" && ok "final_ema present" || bad "final_ema missing"
++grep -q '"label": "final_raw"' "$out/eval.jsonl" && ok "final_raw present" || bad "final_raw missing"
++grep -q '"weights_type": "raw"' "$out/eval.jsonl" && ok "weights_type raw present" || bad "weights_type raw missing"
++grep -q '"label": "best_ema"' "$out/eval.jsonl" && ok "best_ema present" || bad "best_ema missing"
++unset EVAL_BIN
++export SKIP_FINAL_EVAL=1
++
++echo "== T6: resume guard refuses protocol/aug mismatch (exit 4) =="
++reset
++out="$OUTROOT/e1_s47"; mkdir -p "$out/snapshot"
++: > "$out/last.pth"                        # a resumable ckpt
++: > "$out/snapshot/command.txt"            # keep snapshot (so config is NOT rewritten)
++cat > "$out/snapshot/config_merged.yml" <<'YML'
++epochs: 30
++flat_epoch: 15
++no_aug_epoch: 2
++train_dataloader:
++  dataset:
++    transforms:
++      stop_epoch: 28
++      mosaic_prob: 0
++      mosaic_epoch: 0
++  collate_fn:
++    mixup_prob: 0
++    mixup_epoch: 0
++YML
++export P30U_CONFIG=configs/ecdet/ecdet_s_p74u.yml     # current config = P74u (epochs 74)
++bash "$RUN" e1 47 >/tmp/opencode/t6.out 2>&1; rc=$?
++[ "$rc" -eq 4 ] && ok "exit 4" || bad "exit=$rc (want 4)"
++grep -q "PROTOCOL_MISMATCH" "$out/train.log" && ok "mismatch logged" || bad "no mismatch log"
++unset P30U_CONFIG
++
+ echo
+ echo "== summary: $pass passed, $fail failed =="
+-[ "$fail" -eq 0 ]
++[ "$fail" -eq 0 ]
+\ No newline at end of file
+diff --git a/ecdetseg/scripts/verify_p30u_xpu.sh b/ecdetseg/scripts/verify_p30u_xpu.sh
+index f4a1d21..5849188 100755
+--- a/ecdetseg/scripts/verify_p30u_xpu.sh
++++ b/ecdetseg/scripts/verify_p30u_xpu.sh
+@@ -41,7 +41,7 @@ VOPTS=( "epochs=2" "stop_epoch=2" "flat_epoch=1"
+ for init in e1 e2 e3; do
+   echo "==================== verify $init ===================="
+   rm -rf "$P30U_OUT_ROOT/${init}_s0"
+-  bash "$HERE/run_exp.sh" "$init" 0 -u "${VOPTS[@]}"
++  bash "$HERE/run_exp.sh" "$init" 0 "${VOPTS[@]}"
+   log="$P30U_OUT_ROOT/${init}_s0/train.log"
+   echo "-- scheduler:      $(grep -m1 'FlatCosineLRScheduler with' "$log" || echo NA)"
+   echo "-- ViT backbone:   $(grep -m1 'Pretrained ViT weights loaded' "$log" || echo '(none)')"
+@@ -50,7 +50,7 @@ for init in e1 e2 e3; do
+ 
+   echo "-- resume check (delete DONE, rerun -> expect -r last.pth) --"
+   rm -f "$P30U_OUT_ROOT/${init}_s0/DONE"
+-  bash "$HERE/run_exp.sh" "$init" 0 -u "${VOPTS[@]}" >/dev/null 2>&1 || true
++  bash "$HERE/run_exp.sh" "$init" 0 "${VOPTS[@]}" >/dev/null 2>&1 || true
+   grep -m1 -E "attempt #[0-9]+: resume from|Resume checkpoint from" "$P30U_OUT_ROOT/${init}_s0/train.log" \
+     || echo "   (resume line not found)"
+ done
+diff --git a/pixi.lock b/pixi.lock
+index 324b3e7..4230615 100644
+Binary files a/pixi.lock and b/pixi.lock differ
+diff --git a/pixi.toml b/pixi.toml
+index f464586..5500726 100644
+--- a/pixi.toml
++++ b/pixi.toml
+@@ -17,6 +17,7 @@ ml_dtypes = "==0.2.0"
+ scipy = "==1.11.4"
+ opencv = "*"
+ huggingface_hub = ">=1.32.0,<2"
++matplotlib = ">=3.11.2,<4"
+ 
+ [pypi-dependencies]
+ torch = "==2.9.1+xpu"

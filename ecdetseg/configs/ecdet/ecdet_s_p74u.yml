@@ -1,0 +1,15 @@
+# ============================================================
+# ECDet-S @ P74u — VisDrone BASELINE (EdgeCrafter official S 74-epoch)
+#   schedule : epochs=74  stop_epoch=72  flat_epoch=36  lr_gamma=0.5  (no-aug=2)
+#   aug tier : Mosaic ON  (prob=0.75 epoch=36) | Mixup ON (prob=0.75 epoch=36)
+#
+# include order = increasing priority. DO NOT REORDER (later wins):
+#   data < base(ecdet.yml) < S struct < resolution < protocol/p74u.yml (LAST)
+# ============================================================
+__include__:
+  - '../dataset/visdrone.yml'      # data only (paths injected by run_exp.sh)
+  - 'ecdet.yml'                    # base detector structure + default aug ops
+  - 'struct_s.yml'                 # S structural delta
+  - 'protocol/res640.yml'          # resolution (swap to res960.yml for 960)
+  - 'protocol/p74u.yml'            # protocol, LAST -> authoritative
+output_dir: outputs/p74u
