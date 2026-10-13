@@ -168,6 +168,7 @@ P30U_RES=960 bash scripts/run_exp.sh e1 42                          # 换 960
 每个 `.pth` 内**同时含** `model`(原始) 与 `ema`(EMA)，另有 optimizer/scaler/criterion/postprocessor。
 
 画曲线：`python scripts/polt.py outputs/p30u/e1_s42` → 生成 `.../dfine_curve.png`。
+`run_exp.sh` **结束时已自动调用 `polt.py`**（生成 `<run>/dfine_curve.png`；`SKIP_PLOT=1` 可跳过）。
 
 ## 5b. 冒烟与 `_smoke` 清理约定
 

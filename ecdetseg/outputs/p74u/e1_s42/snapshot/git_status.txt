@@ -1,0 +1,6 @@
+ M ecdetseg/P30U_GUIDE.md
+ M ecdetseg/README_exp.md
+ M ecdetseg/scripts/run_exp.sh
+ M ecdetseg/scripts/test_run_exp.sh
+?? ecdetseg/outputs/_smoke/e1_s7/dfine_curve.png
+?? ecdetseg/outputs/p74u/

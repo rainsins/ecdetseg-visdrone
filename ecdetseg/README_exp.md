@@ -46,7 +46,8 @@ for s in 42 43 44; do for i in e1 e2 e3; do bash scripts/run_exp.sh $i $s; done;
   `checkpointXXXX.pth`；都没有 → 冷启动（e1 无 `-t`，e2/e3 带 `-t`）。
 - **重试**：以“是否产生新 `.pth`”判进展；连续 `NO_PROGRESS_LIMIT`(=3) 次无进展 → 退出码 3（疑似 OOM）。
 - **信号**：SIGINT/SIGTERM（Ctrl-C / `pm2 stop`）转发到训练进程组，**不重试**，退出码 130。
-- **结束**：exit 0 → 写 `DONE` → 自动在 val 上评估 `best.pth`(EMA) 与 `last.pth`(EMA) 写 `eval.jsonl`（`SKIP_FINAL_EVAL=1` 可跳过）。
+- **结束**：exit 0 → 写 `DONE` → 自动在 val 上评估 `final.pth`(EMA+raw) 与 `best.pth`(EMA) 写 `eval.jsonl`
+  → 自动调用 `scripts/polt.py` 生成 `<run>/dfine_curve.png`（`SKIP_FINAL_EVAL=1` / `SKIP_PLOT=1` 可分别跳过）。
 
 ### 注意
 - `last.pth` 在 `epoch >= stop_epoch` 后**不再更新**（`ec_solver.py:111`），no-aug 阶段只更新 `best.pth`。

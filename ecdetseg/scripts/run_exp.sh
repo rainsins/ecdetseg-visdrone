@@ -25,6 +25,7 @@
 #                   (P74U_RES takes precedence).
 #   NO_PROGRESS_LIMIT, RETRY_WAIT  optional tunables
 #   PYTHON_BIN      optional test hook: replace `pixi run python train.py`
+#   SKIP_FINAL_EVAL / SKIP_PLOT / FORCE_FINAL_EVAL  optional toggles
 #   FAKE_CKPT_OK, FAKE_*  test hooks (see scripts/fake_train.sh)
 # ============================================================
 set -u -o pipefail
@@ -340,6 +341,16 @@ PY
   log "final eval summary: $OUT_DIR/eval.jsonl"
 }
 
+do_plot() {
+  [ "${SKIP_PLOT:-0}" = "1" ] && { log "plot skipped (SKIP_PLOT=1)"; return 0; }
+  [ -f "$OUT_DIR/log.txt" ] || { log "plot: no log.txt yet; skip"; return 0; }
+  if ( cd "$PROJECT_DIR" && python scripts/polt.py "$OUT_DIR" ) >> "$TRAIN_LOG" 2>&1; then
+    log "plot -> $OUT_DIR/dfine_curve.png"
+  else
+    log "plot: polt.py failed (see train.log)"
+  fi
+}
+
 # ============================================================
 snapshot
 log "=== P30u guardian start | init=$INIT seed=$SEED out=$OUT_DIR ==="
@@ -348,6 +359,7 @@ log "config=$CONFIG tuning=${TUNING:-<none>} res=${RES}"
 if [ -f "$DONE_FILE" ]; then
   log "DONE marker already present -> training complete; running final eval only. (delete $DONE_FILE to retrain)"
   do_final_eval
+  do_plot
   log "=== P30u guardian done ==="
   exit 0
 fi
@@ -413,5 +425,6 @@ done
 
 # ----- final evaluation (EMA on val; NO test-dev) -----
 do_final_eval
+do_plot
 
 log "=== P30u guardian done ==="

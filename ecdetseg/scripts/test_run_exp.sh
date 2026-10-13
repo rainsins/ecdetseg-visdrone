@@ -109,6 +109,17 @@ bash "$RUN" e1 47 >/tmp/opencode/t6.out 2>&1; rc=$?
 grep -q "PROTOCOL_MISMATCH" "$out/train.log" && ok "mismatch logged" || bad "no mismatch log"
 unset P30U_CONFIG
 
+echo "== T7: plot wired into guardian (log.txt -> dfine_curve.png) =="
+reset
+out="$OUTROOT/e1_s48"; mkdir -p "$out"; : > "$out/DONE"
+cat > "$out/log.txt" <<'JSONL'
+{"epoch": 0, "train_lr": 0.0001,  "train_loss": 30.0, "test_coco_eval_bbox": [0.1, 0.2, 0.05, 0.01, 0.1, 0.2]}
+{"epoch": 1, "train_lr": 0.00005, "train_loss": 20.0, "test_coco_eval_bbox": [0.2, 0.3, 0.10, 0.02, 0.2, 0.3]}
+JSONL
+bash "$RUN" e1 48 >/tmp/opencode/t7.out 2>&1; rc=$?
+[ "$rc" -eq 0 ] && ok "exit 0" || bad "exit=$rc (want 0)"
+[ -f "$out/dfine_curve.png" ] && ok "dfine_curve.png produced" || bad "no plot produced"
+
 echo
 echo "== summary: $pass passed, $fail failed =="
 [ "$fail" -eq 0 ]

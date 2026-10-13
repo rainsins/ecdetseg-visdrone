@@ -1,0 +1,6 @@
+init=e1 seed=42
+config=configs/ecdet/ecdet_s_p74u.yml
+tuning=<none>
+output_dir=/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/outputs/p74u/e1_s42
+cmd=/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/scripts/run_exp.sh e1 42 '' 
+env: RES=640 PYTORCH_SYCL_ALLOC_CONF=expandable_segments:True SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS=0

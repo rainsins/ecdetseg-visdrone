@@ -1,0 +1,93 @@
+diff --git a/ecdetseg/P30U_GUIDE.md b/ecdetseg/P30U_GUIDE.md
+index 9610d54..45d6f1a 100644
+--- a/ecdetseg/P30U_GUIDE.md
++++ b/ecdetseg/P30U_GUIDE.md
+@@ -168,6 +168,7 @@ P30U_RES=960 bash scripts/run_exp.sh e1 42                          # 换 960
+ 每个 `.pth` 内**同时含** `model`(原始) 与 `ema`(EMA)，另有 optimizer/scaler/criterion/postprocessor。
+ 
+ 画曲线：`python scripts/polt.py outputs/p30u/e1_s42` → 生成 `.../dfine_curve.png`。
++`run_exp.sh` **结束时已自动调用 `polt.py`**（生成 `<run>/dfine_curve.png`；`SKIP_PLOT=1` 可跳过）。
+ 
+ ## 5b. 冒烟与 `_smoke` 清理约定
+ 
+diff --git a/ecdetseg/README_exp.md b/ecdetseg/README_exp.md
+index d791468..bae12ab 100644
+--- a/ecdetseg/README_exp.md
++++ b/ecdetseg/README_exp.md
+@@ -46,7 +46,8 @@ for s in 42 43 44; do for i in e1 e2 e3; do bash scripts/run_exp.sh $i $s; done;
+   `checkpointXXXX.pth`；都没有 → 冷启动（e1 无 `-t`，e2/e3 带 `-t`）。
+ - **重试**：以“是否产生新 `.pth`”判进展；连续 `NO_PROGRESS_LIMIT`(=3) 次无进展 → 退出码 3（疑似 OOM）。
+ - **信号**：SIGINT/SIGTERM（Ctrl-C / `pm2 stop`）转发到训练进程组，**不重试**，退出码 130。
+-- **结束**：exit 0 → 写 `DONE` → 自动在 val 上评估 `best.pth`(EMA) 与 `last.pth`(EMA) 写 `eval.jsonl`（`SKIP_FINAL_EVAL=1` 可跳过）。
++- **结束**：exit 0 → 写 `DONE` → 自动在 val 上评估 `final.pth`(EMA+raw) 与 `best.pth`(EMA) 写 `eval.jsonl`
++  → 自动调用 `scripts/polt.py` 生成 `<run>/dfine_curve.png`（`SKIP_FINAL_EVAL=1` / `SKIP_PLOT=1` 可分别跳过）。
+ 
+ ### 注意
+ - `last.pth` 在 `epoch >= stop_epoch` 后**不再更新**（`ec_solver.py:111`），no-aug 阶段只更新 `best.pth`。
+diff --git a/ecdetseg/scripts/run_exp.sh b/ecdetseg/scripts/run_exp.sh
+index 84a9a00..98e1a96 100755
+--- a/ecdetseg/scripts/run_exp.sh
++++ b/ecdetseg/scripts/run_exp.sh
+@@ -25,6 +25,7 @@
+ #                   (P74U_RES takes precedence).
+ #   NO_PROGRESS_LIMIT, RETRY_WAIT  optional tunables
+ #   PYTHON_BIN      optional test hook: replace `pixi run python train.py`
++#   SKIP_FINAL_EVAL / SKIP_PLOT / FORCE_FINAL_EVAL  optional toggles
+ #   FAKE_CKPT_OK, FAKE_*  test hooks (see scripts/fake_train.sh)
+ # ============================================================
+ set -u -o pipefail
+@@ -340,6 +341,16 @@ PY
+   log "final eval summary: $OUT_DIR/eval.jsonl"
+ }
+ 
++do_plot() {
++  [ "${SKIP_PLOT:-0}" = "1" ] && { log "plot skipped (SKIP_PLOT=1)"; return 0; }
++  [ -f "$OUT_DIR/log.txt" ] || { log "plot: no log.txt yet; skip"; return 0; }
++  if ( cd "$PROJECT_DIR" && python scripts/polt.py "$OUT_DIR" ) >> "$TRAIN_LOG" 2>&1; then
++    log "plot -> $OUT_DIR/dfine_curve.png"
++  else
++    log "plot: polt.py failed (see train.log)"
++  fi
++}
++
+ # ============================================================
+ snapshot
+ log "=== P30u guardian start | init=$INIT seed=$SEED out=$OUT_DIR ==="
+@@ -348,6 +359,7 @@ log "config=$CONFIG tuning=${TUNING:-<none>} res=${RES}"
+ if [ -f "$DONE_FILE" ]; then
+   log "DONE marker already present -> training complete; running final eval only. (delete $DONE_FILE to retrain)"
+   do_final_eval
++  do_plot
+   log "=== P30u guardian done ==="
+   exit 0
+ fi
+@@ -413,5 +425,6 @@ done
+ 
+ # ----- final evaluation (EMA on val; NO test-dev) -----
+ do_final_eval
++do_plot
+ 
+ log "=== P30u guardian done ==="
+diff --git a/ecdetseg/scripts/test_run_exp.sh b/ecdetseg/scripts/test_run_exp.sh
+index 22562e4..4916265 100755
+--- a/ecdetseg/scripts/test_run_exp.sh
++++ b/ecdetseg/scripts/test_run_exp.sh
+@@ -109,6 +109,17 @@ bash "$RUN" e1 47 >/tmp/opencode/t6.out 2>&1; rc=$?
+ grep -q "PROTOCOL_MISMATCH" "$out/train.log" && ok "mismatch logged" || bad "no mismatch log"
+ unset P30U_CONFIG
+ 
++echo "== T7: plot wired into guardian (log.txt -> dfine_curve.png) =="
++reset
++out="$OUTROOT/e1_s48"; mkdir -p "$out"; : > "$out/DONE"
++cat > "$out/log.txt" <<'JSONL'
++{"epoch": 0, "train_lr": 0.0001,  "train_loss": 30.0, "test_coco_eval_bbox": [0.1, 0.2, 0.05, 0.01, 0.1, 0.2]}
++{"epoch": 1, "train_lr": 0.00005, "train_loss": 20.0, "test_coco_eval_bbox": [0.2, 0.3, 0.10, 0.02, 0.2, 0.3]}
++JSONL
++bash "$RUN" e1 48 >/tmp/opencode/t7.out 2>&1; rc=$?
++[ "$rc" -eq 0 ] && ok "exit 0" || bad "exit=$rc (want 0)"
++[ -f "$out/dfine_curve.png" ] && ok "dfine_curve.png produced" || bad "no plot produced"
++
+ echo
+ echo "== summary: $pass passed, $fail failed =="
+ [ "$fail" -eq 0 ]
+\ No newline at end of file

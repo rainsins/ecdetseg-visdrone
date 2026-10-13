@@ -1,0 +1,1 @@
+best.pth is SELECTED ON THE VAL SPLIT (best val AP); it is not a held-out selection. Report test-dev for final numbers. final.pth always holds the last epoch.
