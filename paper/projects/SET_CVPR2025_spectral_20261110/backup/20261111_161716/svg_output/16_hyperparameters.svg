@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial" data-pptx-page-role="content">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#FFFFFF"/>
+<g id="header" data-pptx-bounds="56 30 1168 112"><text x="56" y="52" font-size="16" fill="#087E8B">03 / 超参数与适用边界</text><text x="56" y="111" font-size="40" font-weight="bold" fill="#142D4E">适度增强优于过强约束</text></g>
+<g id="hyperparameter-evidence" data-pptx-bounds="56 168 766 422"><image href="../images/fig6.png" x="56" y="178" width="756" height="375" preserveAspectRatio="xMidYMid meet"/><text x="56" y="584" font-size="20" fill="#58677A">Fig.6(a)：r与ρ；Fig.6(b)：辅助损失权重λ。</text></g>
+<g id="parameter-reading" data-pptx-bounds="854 170 370 426"><text x="854" y="208" font-size="30" font-weight="bold" fill="#087E8B">r=4 · ρ=1 · λ=1</text><text x="854" y="265" font-size="24" fill="#243447"><tspan x="854" dy="0">r/ρ搜索：FCOS训练3轮。</tspan><tspan x="854" dy="49">r=16时，性能低于基线。</tspan><tspan x="854" dy="49">ρ=5的强扰动表现更差。</tspan><tspan x="854" dy="49">ρ=0时，仍有HBS收益。</tspan><tspan x="854" dy="49">λ=1在三个框架中较好。</tspan></text></g>
+<g id="transfer-caveat" data-pptx-bounds="56 604 1168 38"><text x="56" y="630" font-size="24" font-weight="bold" fill="#BC5A24">这是论文设置下的选择，迁移到VisDrone / EdgeCrafter后仍需重新验证。</text></g>
+<g id="footer" data-pptx-bounds="56 653 1168 34" font-size="16" fill="#58677A"><text x="56" y="675">来源：SET，PDF pp.7–8，§4.5与Fig.6；不把短程搜索结果当作普适最优</text><text x="1189" y="675">16</text></g>
+</svg>

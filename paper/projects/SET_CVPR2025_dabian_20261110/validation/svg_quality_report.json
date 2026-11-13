@@ -1,0 +1,564 @@
+{
+  "schema": "ppt-master.svg-quality-report.v1",
+  "stage": "final",
+  "target": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110",
+  "source_fingerprint": {
+    "algorithm": "sha256",
+    "digest": "3dcab47de61e08ab1adb9b012ed3153eeca5845fbd365781415a8ddcdaad1d6e",
+    "file_count": 29,
+    "files": [
+      {
+        "file": "authoring-svg-flat/slide_01.svg",
+        "sha256": "46a0227b2148a90981ba987e3488996e68d279272107625a1055aa53d8bf2ede"
+      },
+      {
+        "file": "authoring-svg-flat/slide_02.svg",
+        "sha256": "3f67619dca41661322355bd77e961b43a7c3e413c12fb8c614ef4481d20415a7"
+      },
+      {
+        "file": "authoring-svg-flat/slide_03.svg",
+        "sha256": "4655e415be783f32589d79e25beb853138428201030310cce6325ced3bb3ae98"
+      },
+      {
+        "file": "authoring-svg-flat/slide_04.svg",
+        "sha256": "4f50a703eeefb0cfd27c773c30f9b36393f6bfeceb19026a337a1299cc44020a"
+      },
+      {
+        "file": "authoring-svg-flat/slide_05.svg",
+        "sha256": "ca82c6e62307b35048cbcd8d6c1b0db0a3a04c0100898280166a919cca5a6f33"
+      },
+      {
+        "file": "authoring-svg-flat/slide_06.svg",
+        "sha256": "b856d968d7b15c8fb1b39250eea4567789a7f7d1f3f172b9951e1b848ebbcc77"
+      },
+      {
+        "file": "authoring-svg-flat/slide_07.svg",
+        "sha256": "51714f6e7c92747de0865a8c587067c8d713018e7e0cfe37d3a9081992c03318"
+      },
+      {
+        "file": "authoring-svg-flat/slide_08.svg",
+        "sha256": "0f7d9377432846d2736f2da1d8f48989b9c3829a216d6abeab4f5ad8e3cc322a"
+      },
+      {
+        "file": "authoring-svg-flat/slide_09.svg",
+        "sha256": "fd855852d593dcf416b2e028ccac9ae6e1758f65ccf6f72753c72bf5ce2affad"
+      },
+      {
+        "file": "authoring-svg-flat/slide_10.svg",
+        "sha256": "601913997518bf250dc052100f1c7492c3cef3f999235a26aa798560a97e04c7"
+      },
+      {
+        "file": "authoring-svg-flat/slide_11.svg",
+        "sha256": "916135fabfa18ea15fc8ac2c76cf8da66a2cf7f7ce212dc36e95242dff5c6d9a"
+      },
+      {
+        "file": "authoring-svg-flat/slide_12.svg",
+        "sha256": "b139e5959612430f94716919c83ff4ccfd7688b726eacda7d8f5269caada7c06"
+      },
+      {
+        "file": "authoring-svg-flat/slide_13.svg",
+        "sha256": "0396b6b89c690d45cfe9d0dfb21787f7f81fdab4233548196531acfd09f7b77d"
+      },
+      {
+        "file": "authoring-svg-flat/slide_14.svg",
+        "sha256": "1b1fecd4e686eb09690e3d56b9a71fff0d93198de3cd7a9d667dc95ce6b195e7"
+      },
+      {
+        "file": "authoring-svg-flat/slide_15.svg",
+        "sha256": "87c24e7baee789426b1c685b270f6a6dfad03ebd6425e4cc59c785bcd1dfc198"
+      },
+      {
+        "file": "authoring-svg-flat/slide_16.svg",
+        "sha256": "62dad800a00aba0dfdefee35f7eae3ec656039b920c172bcedda6ff3083b9ba2"
+      },
+      {
+        "file": "authoring-svg-flat/slide_17.svg",
+        "sha256": "73116fd0d06f2fb6924edca4a9485292aaeb83183cd37a82a595975167130b1b"
+      },
+      {
+        "file": "authoring-svg-flat/slide_18.svg",
+        "sha256": "2be322f288883b17aa2e115c7f9e5b40088193d4c092810c1576654fc64a0905"
+      },
+      {
+        "file": "authoring-svg-flat/slide_19.svg",
+        "sha256": "6e8a8e6c61821ff834c2d136820440381accbbf75d7be6ba79fbfac47856a2d0"
+      },
+      {
+        "file": "authoring-svg-flat/slide_20.svg",
+        "sha256": "490b8101184c657ce946f00f976479b4928a073ea01ac8cc51fc0923399cd85c"
+      },
+      {
+        "file": "authoring-svg-flat/slide_21.svg",
+        "sha256": "a3b1b7f1703286fddecc7797a3bed2cecc75dcf1190d05f8b2410248f2412ab2"
+      },
+      {
+        "file": "authoring-svg-flat/slide_22.svg",
+        "sha256": "2830b4dff76fd002d0d5ff86743ec6df23723391ac80c63d6825e04fbe01f607"
+      },
+      {
+        "file": "authoring-svg-flat/slide_23.svg",
+        "sha256": "6b4672a4e4b1d3bf7e13c749560e660d855a9f94028df69db11f70addac9d7ae"
+      },
+      {
+        "file": "authoring-svg-flat/slide_24.svg",
+        "sha256": "54842206621dcbe9fe614c98c36955cbd0d0dadcdcc7661b127fc386d0e3096f"
+      },
+      {
+        "file": "authoring-svg-flat/slide_25.svg",
+        "sha256": "6b34bfd65b0f9583d3ef464a1c187f37443bf4b77f9ea49e16c30702aee8091b"
+      },
+      {
+        "file": "authoring-svg-flat/slide_26.svg",
+        "sha256": "82908987c13ff9e31f76b0d73ec129a637dcb5941b7555866f3f0ea836dd8ce2"
+      },
+      {
+        "file": "authoring-svg-flat/slide_27.svg",
+        "sha256": "8d4c5b99b275dcdfbcc050388a86fcffda206b3cf5186a7f77b6fbf55b56737d"
+      },
+      {
+        "file": "authoring-svg-flat/slide_28.svg",
+        "sha256": "f40421e14bc3bbca53555ca86eb482fbf4c971047016c8b4f7f4aadc85cb667a"
+      },
+      {
+        "file": "page_plan.json",
+        "sha256": "bddfc451082ba313a54cbd0fbc45335924f76942edb7be120424ec039e7c8d3a"
+      }
+    ]
+  },
+  "summary": {
+    "total": 18,
+    "passed": 18,
+    "warnings": 0,
+    "errors": 0
+  },
+  "issue_types": {},
+  "categories": {
+    "blocking": {
+      "count": 0,
+      "issues": []
+    },
+    "introduced": {
+      "count": 0,
+      "issues": []
+    },
+    "inherited": {
+      "count": 0,
+      "issues": []
+    },
+    "source-import": {
+      "count": 0,
+      "summary": {
+        "warning_count": 0,
+        "by_code": {}
+      }
+    }
+  },
+  "drift": {
+    "colors": {},
+    "fonts": {},
+    "sizes": {}
+  },
+  "carrier_receipt": {
+    "scope": "informational-not-a-quota",
+    "pages": 0,
+    "totals": {
+      "text_elements": 0,
+      "image_placements": 0,
+      "icons": 0,
+      "svg_geometry_elements": 0,
+      "preset_shapes": 0,
+      "page_frame_elements": 0,
+      "marker_uses": 0,
+      "inline_emphasis_runs": 0,
+      "gradient_uses": 0,
+      "filter_uses": 0,
+      "text_effects": 0
+    },
+    "pages_with": {
+      "images": 0,
+      "icons": 0,
+      "presets": 0,
+      "charts": 0,
+      "tables": 0,
+      "formulas": 0,
+      "inline_emphasis_runs": 0,
+      "gradient_uses": 0,
+      "filter_uses": 0,
+      "text_effects": 0
+    },
+    "relationship_pages": null,
+    "geometry_elements": {},
+    "preset_names": {},
+    "native_objects": {},
+    "image_page_max_frame_share_range": []
+  },
+  "project_issues": {
+    "template": [],
+    "animation": [],
+    "illustration": [],
+    "communication_trace": [],
+    "pptx_structure": []
+  },
+  "files": [
+    {
+      "file": "slide_01.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_01.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 1,
+        "source_slide": 1,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 2,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "46a0227b2148a90981ba987e3488996e68d279272107625a1055aa53d8bf2ede"
+    },
+    {
+      "file": "slide_02.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_02.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 2,
+        "source_slide": 2,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 4,
+        "roundtrip_text_calibration": {
+          "factor": 0.1,
+          "measured_unchanged": 6,
+          "positive_unchanged": 1
+        }
+      },
+      "passed": true,
+      "source_sha256": "3f67619dca41661322355bd77e961b43a7c3e413c12fb8c614ef4481d20415a7"
+    },
+    {
+      "file": "slide_03.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_03.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 3,
+        "source_slide": 3,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 2,
+        "roundtrip_text_calibration": {
+          "factor": 0.01456700091157719,
+          "measured_unchanged": 2,
+          "positive_unchanged": 1
+        }
+      },
+      "passed": true,
+      "source_sha256": "4655e415be783f32589d79e25beb853138428201030310cce6325ced3bb3ae98"
+    },
+    {
+      "file": "slide_04.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_04.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 4,
+        "source_slide": 4,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 8,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "4f50a703eeefb0cfd27c773c30f9b36393f6bfeceb19026a337a1299cc44020a"
+    },
+    {
+      "file": "slide_23.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_23.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 5,
+        "source_slide": 23,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 12,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "6b4672a4e4b1d3bf7e13c749560e660d855a9f94028df69db11f70addac9d7ae"
+    },
+    {
+      "file": "slide_06.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_06.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 6,
+        "source_slide": 6,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 7,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "b856d968d7b15c8fb1b39250eea4567789a7f7d1f3f172b9951e1b848ebbcc77"
+    },
+    {
+      "file": "slide_09.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_09.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 7,
+        "source_slide": 9,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 2,
+        "roundtrip_text_calibration": {
+          "factor": 0.01456700091157719,
+          "measured_unchanged": 2,
+          "positive_unchanged": 1
+        }
+      },
+      "passed": true,
+      "source_sha256": "fd855852d593dcf416b2e028ccac9ae6e1758f65ccf6f72753c72bf5ce2affad"
+    },
+    {
+      "file": "slide_17.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_17.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 8,
+        "source_slide": 17,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 8,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "73116fd0d06f2fb6924edca4a9485292aaeb83183cd37a82a595975167130b1b"
+    },
+    {
+      "file": "slide_19.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_19.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 9,
+        "source_slide": 19,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 13,
+        "roundtrip_text_calibration": {
+          "factor": 0.1,
+          "measured_unchanged": 5,
+          "positive_unchanged": 3
+        }
+      },
+      "passed": true,
+      "source_sha256": "6e8a8e6c61821ff834c2d136820440381accbbf75d7be6ba79fbfac47856a2d0"
+    },
+    {
+      "file": "slide_16.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_16.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 10,
+        "source_slide": 16,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 2,
+        "roundtrip_text_calibration": {
+          "factor": 0.01456700091157719,
+          "measured_unchanged": 2,
+          "positive_unchanged": 1
+        }
+      },
+      "passed": true,
+      "source_sha256": "62dad800a00aba0dfdefee35f7eae3ec656039b920c172bcedda6ff3083b9ba2"
+    },
+    {
+      "file": "slide_05.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_05.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 11,
+        "source_slide": 5,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 8,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "ca82c6e62307b35048cbcd8d6c1b0db0a3a04c0100898280166a919cca5a6f33"
+    },
+    {
+      "file": "slide_24.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_24.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 12,
+        "source_slide": 24,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 7,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "54842206621dcbe9fe614c98c36955cbd0d0dadcdcc7661b127fc386d0e3096f"
+    },
+    {
+      "file": "slide_18.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_18.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 13,
+        "source_slide": 18,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 6,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "2be322f288883b17aa2e115c7f9e5b40088193d4c092810c1576654fc64a0905"
+    },
+    {
+      "file": "slide_20.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_20.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 14,
+        "source_slide": 20,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 2,
+        "roundtrip_text_calibration": {
+          "factor": 0.01456700091157719,
+          "measured_unchanged": 2,
+          "positive_unchanged": 1
+        }
+      },
+      "passed": true,
+      "source_sha256": "490b8101184c657ce946f00f976479b4928a073ea01ac8cc51fc0923399cd85c"
+    },
+    {
+      "file": "slide_10.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_10.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 15,
+        "source_slide": 10,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 9,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "601913997518bf250dc052100f1c7492c3cef3f999235a26aa798560a97e04c7"
+    },
+    {
+      "file": "slide_25.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_25.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 16,
+        "source_slide": 25,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 6,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "6b34bfd65b0f9583d3ef464a1c187f37443bf4b77f9ea49e16c30702aee8091b"
+    },
+    {
+      "file": "slide_27.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_27.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 17,
+        "source_slide": 27,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 10,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 5,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "8d4c5b99b275dcdfbcc050388a86fcffda206b3cf5186a7f77b6fbf55b56737d"
+    },
+    {
+      "file": "slide_28.svg",
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/authoring-svg-flat/slide_28.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "output_page": 18,
+        "source_slide": 28,
+        "viewbox": "0 0 960 540",
+        "edited_text_elements": 2,
+        "roundtrip_text_calibration": {
+          "factor": 0.0,
+          "measured_unchanged": 1,
+          "positive_unchanged": 0
+        }
+      },
+      "passed": true,
+      "source_sha256": "f40421e14bc3bbca53555ca86eb482fbf4c971047016c8b4f7f4aadc85cb667a"
+    }
+  ]
+}

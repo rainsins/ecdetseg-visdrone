@@ -1,0 +1,4164 @@
+{
+  "seed": 42,
+  "num_images": 300,
+  "input_size": 640,
+  "train_ann": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_train.json",
+  "val_ann": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_val.json",
+  "train_img_dir": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/train",
+  "class_names": [
+    "pedestrian",
+    "people",
+    "bicycle",
+    "car",
+    "van",
+    "truck",
+    "tricycle",
+    "awning-tricycle",
+    "bus",
+    "motor"
+  ],
+  "train_instance_counts": {
+    "pedestrian": 79337,
+    "people": 27059,
+    "bicycle": 10480,
+    "car": 144867,
+    "van": 24956,
+    "truck": 12875,
+    "tricycle": 4812,
+    "awning-tricycle": 3246,
+    "bus": 5926,
+    "motor": 29647
+  },
+  "quotas": {
+    "pedestrian": 70,
+    "people": 23,
+    "bicycle": 9,
+    "car": 128,
+    "van": 22,
+    "truck": 11,
+    "tricycle": 4,
+    "awning-tricycle": 2,
+    "bus": 5,
+    "motor": 26
+  },
+  "selected_images_containing_class": {
+    "pedestrian": 251,
+    "people": 198,
+    "bicycle": 139,
+    "car": 282,
+    "van": 226,
+    "truck": 157,
+    "tricycle": 81,
+    "awning-tricycle": 69,
+    "bus": 83,
+    "motor": 205
+  },
+  "selected_instance_counts": {
+    "pedestrian": 3845,
+    "people": 1767,
+    "bicycle": 549,
+    "car": 5534,
+    "van": 1384,
+    "truck": 622,
+    "tricycle": 313,
+    "awning-tricycle": 248,
+    "bus": 307,
+    "motor": 1818
+  },
+  "selection": [
+    {
+      "image_id": 8,
+      "file_name": "0000338_01569_d_0000146.jpg",
+      "calib_file": "calib_imgs/0000008_0000338_01569_d_0000146.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 36,
+      "file_name": "9999955_00000_d_0000177.jpg",
+      "calib_file": "calib_imgs/0000036_9999955_00000_d_0000177.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3,
+        8
+      ]
+    },
+    {
+      "image_id": 50,
+      "file_name": "9999937_00000_d_0000111.jpg",
+      "calib_file": "calib_imgs/0000050_9999937_00000_d_0000111.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 63,
+      "file_name": "9999998_00378_d_0000330.jpg",
+      "calib_file": "calib_imgs/0000063_9999998_00378_d_0000330.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 100,
+      "file_name": "9999950_00000_d_0000043.jpg",
+      "calib_file": "calib_imgs/0000100_9999950_00000_d_0000043.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 148,
+      "file_name": "9999998_00182_d_0000146.jpg",
+      "calib_file": "calib_imgs/0000148_9999998_00182_d_0000146.png",
+      "dominant_class": 4,
+      "classes_present": [
+        1,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 152,
+      "file_name": "9999984_00000_d_0000086.jpg",
+      "calib_file": "calib_imgs/0000152_9999984_00000_d_0000086.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 175,
+      "file_name": "9999955_00000_d_0000037.jpg",
+      "calib_file": "calib_imgs/0000175_9999955_00000_d_0000037.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0
+      ]
+    },
+    {
+      "image_id": 182,
+      "file_name": "9999953_00000_d_0000018.jpg",
+      "calib_file": "calib_imgs/0000182_9999953_00000_d_0000018.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 214,
+      "file_name": "9999999_00392_d_0000171.jpg",
+      "calib_file": "calib_imgs/0000214_9999999_00392_d_0000171.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 234,
+      "file_name": "9999967_00000_d_0000036.jpg",
+      "calib_file": "calib_imgs/0000234_9999967_00000_d_0000036.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 254,
+      "file_name": "9999982_00000_d_0000141.jpg",
+      "calib_file": "calib_imgs/0000254_9999982_00000_d_0000141.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 275,
+      "file_name": "9999982_00000_d_0000212.jpg",
+      "calib_file": "calib_imgs/0000275_9999982_00000_d_0000212.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 284,
+      "file_name": "9999955_00000_d_0000327.jpg",
+      "calib_file": "calib_imgs/0000284_9999955_00000_d_0000327.png",
+      "dominant_class": 8,
+      "classes_present": [
+        0,
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "image_id": 288,
+      "file_name": "9999981_00000_d_0000004.jpg",
+      "calib_file": "calib_imgs/0000288_9999981_00000_d_0000004.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 319,
+      "file_name": "9999981_00000_d_0000125.jpg",
+      "calib_file": "calib_imgs/0000319_9999981_00000_d_0000125.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 335,
+      "file_name": "9999942_00000_d_0000256.jpg",
+      "calib_file": "calib_imgs/0000335_9999942_00000_d_0000256.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 352,
+      "file_name": "9999942_00000_d_0000163.jpg",
+      "calib_file": "calib_imgs/0000352_9999942_00000_d_0000163.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 407,
+      "file_name": "9999985_00000_d_0000060.jpg",
+      "calib_file": "calib_imgs/0000407_9999985_00000_d_0000060.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 473,
+      "file_name": "0000195_01256_d_0000132.jpg",
+      "calib_file": "calib_imgs/0000473_0000195_01256_d_0000132.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 547,
+      "file_name": "9999974_00000_d_0000057.jpg",
+      "calib_file": "calib_imgs/0000547_9999974_00000_d_0000057.png",
+      "dominant_class": 5,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 564,
+      "file_name": "9999999_00209_d_0000087.jpg",
+      "calib_file": "calib_imgs/0000564_9999999_00209_d_0000087.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 593,
+      "file_name": "0000214_01652_d_0000252.jpg",
+      "calib_file": "calib_imgs/0000593_0000214_01652_d_0000252.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 594,
+      "file_name": "9999990_00000_d_0000064.jpg",
+      "calib_file": "calib_imgs/0000594_9999990_00000_d_0000064.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 668,
+      "file_name": "9999953_00000_d_0000091.jpg",
+      "calib_file": "calib_imgs/0000668_9999953_00000_d_0000091.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 686,
+      "file_name": "9999955_00000_d_0000375.jpg",
+      "calib_file": "calib_imgs/0000686_9999955_00000_d_0000375.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 694,
+      "file_name": "9999955_00000_d_0000423.jpg",
+      "calib_file": "calib_imgs/0000694_9999955_00000_d_0000423.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0
+      ]
+    },
+    {
+      "image_id": 711,
+      "file_name": "9999960_00000_d_0000117.jpg",
+      "calib_file": "calib_imgs/0000711_9999960_00000_d_0000117.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 722,
+      "file_name": "9999937_00000_d_0000065.jpg",
+      "calib_file": "calib_imgs/0000722_9999937_00000_d_0000065.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        5
+      ]
+    },
+    {
+      "image_id": 743,
+      "file_name": "9999981_00000_d_0000074.jpg",
+      "calib_file": "calib_imgs/0000743_9999981_00000_d_0000074.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 749,
+      "file_name": "9999972_00000_d_0000003.jpg",
+      "calib_file": "calib_imgs/0000749_9999972_00000_d_0000003.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        2,
+        3,
+        4,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 781,
+      "file_name": "9999998_00128_d_0000106.jpg",
+      "calib_file": "calib_imgs/0000781_9999998_00128_d_0000106.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 789,
+      "file_name": "0000176_00401_d_0000001.jpg",
+      "calib_file": "calib_imgs/0000789_0000176_00401_d_0000001.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "image_id": 1635,
+      "file_name": "0000135_00828_d_0000150.jpg",
+      "calib_file": "calib_imgs/0001635_0000135_00828_d_0000150.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 811,
+      "file_name": "9999999_00135_d_0000052.jpg",
+      "calib_file": "calib_imgs/0000811_9999999_00135_d_0000052.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 815,
+      "file_name": "9999966_00000_d_0000019.jpg",
+      "calib_file": "calib_imgs/0000815_9999966_00000_d_0000019.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 827,
+      "file_name": "9999964_00000_d_0000076.jpg",
+      "calib_file": "calib_imgs/0000827_9999964_00000_d_0000076.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 845,
+      "file_name": "0000300_02001_d_0000148.jpg",
+      "calib_file": "calib_imgs/0000845_0000300_02001_d_0000148.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 849,
+      "file_name": "9999999_00382_d_0000166.jpg",
+      "calib_file": "calib_imgs/0000849_9999999_00382_d_0000166.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 869,
+      "file_name": "0000239_00708_d_0000003.jpg",
+      "calib_file": "calib_imgs/0000869_0000239_00708_d_0000003.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        6
+      ]
+    },
+    {
+      "image_id": 871,
+      "file_name": "9999955_00000_d_0000054.jpg",
+      "calib_file": "calib_imgs/0000871_9999955_00000_d_0000054.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "image_id": 887,
+      "file_name": "9999982_00000_d_0000168.jpg",
+      "calib_file": "calib_imgs/0000887_9999982_00000_d_0000168.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        7,
+        8
+      ]
+    },
+    {
+      "image_id": 900,
+      "file_name": "0000040_01000_d_0000066.jpg",
+      "calib_file": "calib_imgs/0000900_0000040_01000_d_0000066.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "image_id": 919,
+      "file_name": "9999982_00000_d_0000145.jpg",
+      "calib_file": "calib_imgs/0000919_9999982_00000_d_0000145.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 941,
+      "file_name": "9999998_00096_d_0000076.jpg",
+      "calib_file": "calib_imgs/0000941_9999998_00096_d_0000076.png",
+      "dominant_class": 2,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 959,
+      "file_name": "9999972_00000_d_0000064.jpg",
+      "calib_file": "calib_imgs/0000959_9999972_00000_d_0000064.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "image_id": 986,
+      "file_name": "9999999_00430_d_0000190.jpg",
+      "calib_file": "calib_imgs/0000986_9999999_00430_d_0000190.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 1024,
+      "file_name": "9999951_00000_d_0000250.jpg",
+      "calib_file": "calib_imgs/0001024_9999951_00000_d_0000250.png",
+      "dominant_class": 8,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 1029,
+      "file_name": "9999955_00000_d_0000331.jpg",
+      "calib_file": "calib_imgs/0001029_9999955_00000_d_0000331.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 1042,
+      "file_name": "9999972_00000_d_0000128.jpg",
+      "calib_file": "calib_imgs/0001042_9999972_00000_d_0000128.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 1075,
+      "file_name": "0000002_00448_d_0000015.jpg",
+      "calib_file": "calib_imgs/0001075_0000002_00448_d_0000015.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 1079,
+      "file_name": "9999990_00000_d_0000077.jpg",
+      "calib_file": "calib_imgs/0001079_9999990_00000_d_0000077.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 1101,
+      "file_name": "9999951_00000_d_0000037.jpg",
+      "calib_file": "calib_imgs/0001101_9999951_00000_d_0000037.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "image_id": 1102,
+      "file_name": "9999943_00000_d_0000011.jpg",
+      "calib_file": "calib_imgs/0001102_9999943_00000_d_0000011.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 1137,
+      "file_name": "0000210_00000_d_0000223.jpg",
+      "calib_file": "calib_imgs/0001137_0000210_00000_d_0000223.png",
+      "dominant_class": 4,
+      "classes_present": [
+        1,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 1143,
+      "file_name": "9999972_00000_d_0000073.jpg",
+      "calib_file": "calib_imgs/0001143_9999972_00000_d_0000073.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4,
+        7
+      ]
+    },
+    {
+      "image_id": 1167,
+      "file_name": "9999955_00000_d_0000333.jpg",
+      "calib_file": "calib_imgs/0001167_9999955_00000_d_0000333.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 1178,
+      "file_name": "9999955_00000_d_0000319.jpg",
+      "calib_file": "calib_imgs/0001178_9999955_00000_d_0000319.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 1181,
+      "file_name": "9999969_00000_d_0000035.jpg",
+      "calib_file": "calib_imgs/0001181_9999969_00000_d_0000035.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 1199,
+      "file_name": "9999960_00000_d_0000040.jpg",
+      "calib_file": "calib_imgs/0001199_9999960_00000_d_0000040.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3
+      ]
+    },
+    {
+      "image_id": 1228,
+      "file_name": "9999951_00000_d_0000253.jpg",
+      "calib_file": "calib_imgs/0001228_9999951_00000_d_0000253.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "image_id": 1286,
+      "file_name": "9999977_00000_d_0000091.jpg",
+      "calib_file": "calib_imgs/0001286_9999977_00000_d_0000091.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "image_id": 1302,
+      "file_name": "9999985_00000_d_0000034.jpg",
+      "calib_file": "calib_imgs/0001302_9999985_00000_d_0000034.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 1320,
+      "file_name": "9999994_00000_d_0000020.jpg",
+      "calib_file": "calib_imgs/0001320_9999994_00000_d_0000020.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 1326,
+      "file_name": "9999982_00000_d_0000103.jpg",
+      "calib_file": "calib_imgs/0001326_9999982_00000_d_0000103.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 1341,
+      "file_name": "0000204_00332_d_0000192.jpg",
+      "calib_file": "calib_imgs/0001341_0000204_00332_d_0000192.png",
+      "dominant_class": 6,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 1349,
+      "file_name": "9999994_00000_d_0000034.jpg",
+      "calib_file": "calib_imgs/0001349_9999994_00000_d_0000034.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        3,
+        5,
+        7
+      ]
+    },
+    {
+      "image_id": 1353,
+      "file_name": "9999951_00000_d_0000062.jpg",
+      "calib_file": "calib_imgs/0001353_9999951_00000_d_0000062.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 1384,
+      "file_name": "9999984_00000_d_0000078.jpg",
+      "calib_file": "calib_imgs/0001384_9999984_00000_d_0000078.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 1388,
+      "file_name": "9999962_00000_d_0000041.jpg",
+      "calib_file": "calib_imgs/0001388_9999962_00000_d_0000041.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 1407,
+      "file_name": "0000111_04511_d_0000073.jpg",
+      "calib_file": "calib_imgs/0001407_0000111_04511_d_0000073.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 1413,
+      "file_name": "9999998_00095_d_0000075.jpg",
+      "calib_file": "calib_imgs/0001413_9999998_00095_d_0000075.png",
+      "dominant_class": 2,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 1441,
+      "file_name": "9999955_00000_d_0000302.jpg",
+      "calib_file": "calib_imgs/0001441_9999955_00000_d_0000302.png",
+      "dominant_class": 4,
+      "classes_present": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "image_id": 1445,
+      "file_name": "9999987_00000_d_0000044.jpg",
+      "calib_file": "calib_imgs/0001445_9999987_00000_d_0000044.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 1456,
+      "file_name": "9999956_00000_d_0000060.jpg",
+      "calib_file": "calib_imgs/0001456_9999956_00000_d_0000060.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3
+      ]
+    },
+    {
+      "image_id": 1476,
+      "file_name": "0000181_01211_d_0000031.jpg",
+      "calib_file": "calib_imgs/0001476_0000181_01211_d_0000031.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 1484,
+      "file_name": "0000331_01001_d_0000829.jpg",
+      "calib_file": "calib_imgs/0001484_0000331_01001_d_0000829.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 1514,
+      "file_name": "0000342_00785_d_0000246.jpg",
+      "calib_file": "calib_imgs/0001514_0000342_00785_d_0000246.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 1549,
+      "file_name": "9999999_00506_d_0000226.jpg",
+      "calib_file": "calib_imgs/0001549_9999999_00506_d_0000226.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 1592,
+      "file_name": "9999998_00428_d_0000380.jpg",
+      "calib_file": "calib_imgs/0001592_9999998_00428_d_0000380.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 1662,
+      "file_name": "9999984_00000_d_0000158.jpg",
+      "calib_file": "calib_imgs/0001662_9999984_00000_d_0000158.png",
+      "dominant_class": 5,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 1670,
+      "file_name": "0000263_00601_d_0000176.jpg",
+      "calib_file": "calib_imgs/0001670_0000263_00601_d_0000176.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 1684,
+      "file_name": "0000339_02157_d_0000172.jpg",
+      "calib_file": "calib_imgs/0001684_0000339_02157_d_0000172.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 1693,
+      "file_name": "9999951_00000_d_0000111.jpg",
+      "calib_file": "calib_imgs/0001693_9999951_00000_d_0000111.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 1714,
+      "file_name": "9999951_00000_d_0000041.jpg",
+      "calib_file": "calib_imgs/0001714_9999951_00000_d_0000041.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 1722,
+      "file_name": "9999982_00000_d_0000087.jpg",
+      "calib_file": "calib_imgs/0001722_9999982_00000_d_0000087.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 1729,
+      "file_name": "0000309_03001_d_0000348.jpg",
+      "calib_file": "calib_imgs/0001729_0000309_03001_d_0000348.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 1746,
+      "file_name": "9999945_00000_d_0000008.jpg",
+      "calib_file": "calib_imgs/0001746_9999945_00000_d_0000008.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 1787,
+      "file_name": "0000043_00500_d_0000077.jpg",
+      "calib_file": "calib_imgs/0001787_0000043_00500_d_0000077.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 1851,
+      "file_name": "9999966_00000_d_0000039.jpg",
+      "calib_file": "calib_imgs/0001851_9999966_00000_d_0000039.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 1874,
+      "file_name": "9999962_00000_d_0000001.jpg",
+      "calib_file": "calib_imgs/0001874_9999962_00000_d_0000001.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1
+      ]
+    },
+    {
+      "image_id": 1887,
+      "file_name": "9999942_00000_d_0000160.jpg",
+      "calib_file": "calib_imgs/0001887_9999942_00000_d_0000160.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 1896,
+      "file_name": "9999990_00000_d_0000046.jpg",
+      "calib_file": "calib_imgs/0001896_9999990_00000_d_0000046.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 1917,
+      "file_name": "9999982_00000_d_0000186.jpg",
+      "calib_file": "calib_imgs/0001917_9999982_00000_d_0000186.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 1937,
+      "file_name": "9999965_00000_d_0000052.jpg",
+      "calib_file": "calib_imgs/0001937_9999965_00000_d_0000052.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 1950,
+      "file_name": "0000008_02499_d_0000041.jpg",
+      "calib_file": "calib_imgs/0001950_0000008_02499_d_0000041.png",
+      "dominant_class": 5,
+      "classes_present": [
+        3,
+        5
+      ]
+    },
+    {
+      "image_id": 1953,
+      "file_name": "9999984_00000_d_0000089.jpg",
+      "calib_file": "calib_imgs/0001953_9999984_00000_d_0000089.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3
+      ]
+    },
+    {
+      "image_id": 1957,
+      "file_name": "0000252_01210_d_0000005.jpg",
+      "calib_file": "calib_imgs/0001957_0000252_01210_d_0000005.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 1985,
+      "file_name": "0000331_01601_d_0000832.jpg",
+      "calib_file": "calib_imgs/0001985_0000331_01601_d_0000832.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 1994,
+      "file_name": "9999977_00000_d_0000055.jpg",
+      "calib_file": "calib_imgs/0001994_9999977_00000_d_0000055.png",
+      "dominant_class": 1,
+      "classes_present": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 2003,
+      "file_name": "9999955_00000_d_0000241.jpg",
+      "calib_file": "calib_imgs/0002003_9999955_00000_d_0000241.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "image_id": 2005,
+      "file_name": "9999998_00392_d_0000344.jpg",
+      "calib_file": "calib_imgs/0002005_9999998_00392_d_0000344.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 2040,
+      "file_name": "9999997_00000_d_0000012.jpg",
+      "calib_file": "calib_imgs/0002040_9999997_00000_d_0000012.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3
+      ]
+    },
+    {
+      "image_id": 2072,
+      "file_name": "9999937_00000_d_0000196.jpg",
+      "calib_file": "calib_imgs/0002072_9999937_00000_d_0000196.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 2099,
+      "file_name": "9999999_00219_d_0000092.jpg",
+      "calib_file": "calib_imgs/0002099_9999999_00219_d_0000092.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 2115,
+      "file_name": "0000173_02001_d_0000001.jpg",
+      "calib_file": "calib_imgs/0002115_0000173_02001_d_0000001.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 2172,
+      "file_name": "9999981_00000_d_0000100.jpg",
+      "calib_file": "calib_imgs/0002172_9999981_00000_d_0000100.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 2177,
+      "file_name": "9999981_00000_d_0000154.jpg",
+      "calib_file": "calib_imgs/0002177_9999981_00000_d_0000154.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 2185,
+      "file_name": "9999998_00191_d_0000154.jpg",
+      "calib_file": "calib_imgs/0002185_9999998_00191_d_0000154.png",
+      "dominant_class": 4,
+      "classes_present": [
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 2197,
+      "file_name": "9999951_00000_d_0000266.jpg",
+      "calib_file": "calib_imgs/0002197_9999951_00000_d_0000266.png",
+      "dominant_class": 4,
+      "classes_present": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "image_id": 2209,
+      "file_name": "9999991_00000_d_0000008.jpg",
+      "calib_file": "calib_imgs/0002209_9999991_00000_d_0000008.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 2223,
+      "file_name": "9999972_00000_d_0000135.jpg",
+      "calib_file": "calib_imgs/0002223_9999972_00000_d_0000135.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 2237,
+      "file_name": "0000348_04117_d_0000427.jpg",
+      "calib_file": "calib_imgs/0002237_0000348_04117_d_0000427.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7
+      ]
+    },
+    {
+      "image_id": 2313,
+      "file_name": "9999972_00000_d_0000065.jpg",
+      "calib_file": "calib_imgs/0002313_9999972_00000_d_0000065.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 2314,
+      "file_name": "9999956_00000_d_0000045.jpg",
+      "calib_file": "calib_imgs/0002314_9999956_00000_d_0000045.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 2333,
+      "file_name": "0000229_00500_d_0000002.jpg",
+      "calib_file": "calib_imgs/0002333_0000229_00500_d_0000002.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 2337,
+      "file_name": "0000220_00500_d_0000002.jpg",
+      "calib_file": "calib_imgs/0002337_0000220_00500_d_0000002.png",
+      "dominant_class": 5,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 2366,
+      "file_name": "9999937_00000_d_0000021.jpg",
+      "calib_file": "calib_imgs/0002366_9999937_00000_d_0000021.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 2428,
+      "file_name": "9999967_00000_d_0000017.jpg",
+      "calib_file": "calib_imgs/0002428_9999967_00000_d_0000017.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 2453,
+      "file_name": "9999981_00000_d_0000042.jpg",
+      "calib_file": "calib_imgs/0002453_9999981_00000_d_0000042.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 2498,
+      "file_name": "9999967_00000_d_0000010.jpg",
+      "calib_file": "calib_imgs/0002498_9999967_00000_d_0000010.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 2531,
+      "file_name": "9999999_00165_d_0000067.jpg",
+      "calib_file": "calib_imgs/0002531_9999999_00165_d_0000067.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 2563,
+      "file_name": "0000264_00401_d_0000196.jpg",
+      "calib_file": "calib_imgs/0002563_0000264_00401_d_0000196.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 2581,
+      "file_name": "9999965_00000_d_0000033.jpg",
+      "calib_file": "calib_imgs/0002581_9999965_00000_d_0000033.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 2590,
+      "file_name": "0000329_03601_d_0000783.jpg",
+      "calib_file": "calib_imgs/0002590_0000329_03601_d_0000783.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 2608,
+      "file_name": "9999965_00000_d_0000078.jpg",
+      "calib_file": "calib_imgs/0002608_9999965_00000_d_0000078.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 2626,
+      "file_name": "0000076_04382_d_0000015.jpg",
+      "calib_file": "calib_imgs/0002626_0000076_04382_d_0000015.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        5,
+        6
+      ]
+    },
+    {
+      "image_id": 2661,
+      "file_name": "9999965_00000_d_0000048.jpg",
+      "calib_file": "calib_imgs/0002661_9999965_00000_d_0000048.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 2667,
+      "file_name": "9999962_00000_d_0000137.jpg",
+      "calib_file": "calib_imgs/0002667_9999962_00000_d_0000137.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0
+      ]
+    },
+    {
+      "image_id": 2672,
+      "file_name": "9999972_00000_d_0000161.jpg",
+      "calib_file": "calib_imgs/0002672_9999972_00000_d_0000161.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 2681,
+      "file_name": "9999955_00000_d_0000323.jpg",
+      "calib_file": "calib_imgs/0002681_9999955_00000_d_0000323.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 2702,
+      "file_name": "0000197_03351_d_0000154.jpg",
+      "calib_file": "calib_imgs/0002702_0000197_03351_d_0000154.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 2722,
+      "file_name": "9999942_00000_d_0000045.jpg",
+      "calib_file": "calib_imgs/0002722_9999942_00000_d_0000045.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 2760,
+      "file_name": "9999974_00000_d_0000053.jpg",
+      "calib_file": "calib_imgs/0002760_9999974_00000_d_0000053.png",
+      "dominant_class": 6,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 2775,
+      "file_name": "9999999_00727_d_0000331.jpg",
+      "calib_file": "calib_imgs/0002775_9999999_00727_d_0000331.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 2790,
+      "file_name": "0000144_02401_d_0000001.jpg",
+      "calib_file": "calib_imgs/0002790_0000144_02401_d_0000001.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        5
+      ]
+    },
+    {
+      "image_id": 2808,
+      "file_name": "9999977_00000_d_0000048.jpg",
+      "calib_file": "calib_imgs/0002808_9999977_00000_d_0000048.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 2891,
+      "file_name": "9999960_00000_d_0000015.jpg",
+      "calib_file": "calib_imgs/0002891_9999960_00000_d_0000015.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3
+      ]
+    },
+    {
+      "image_id": 2908,
+      "file_name": "0000331_02401_d_0000853.jpg",
+      "calib_file": "calib_imgs/0002908_0000331_02401_d_0000853.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 2923,
+      "file_name": "9999977_00000_d_0000073.jpg",
+      "calib_file": "calib_imgs/0002923_9999977_00000_d_0000073.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 2948,
+      "file_name": "9999981_00000_d_0000145.jpg",
+      "calib_file": "calib_imgs/0002948_9999981_00000_d_0000145.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 2963,
+      "file_name": "9999981_00000_d_0000051.jpg",
+      "calib_file": "calib_imgs/0002963_9999981_00000_d_0000051.png",
+      "dominant_class": 2,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 2972,
+      "file_name": "0000137_00960_d_0000160.jpg",
+      "calib_file": "calib_imgs/0002972_0000137_00960_d_0000160.png",
+      "dominant_class": 2,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 2998,
+      "file_name": "9999962_00000_d_0000012.jpg",
+      "calib_file": "calib_imgs/0002998_9999962_00000_d_0000012.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 3006,
+      "file_name": "9999955_00000_d_0000417.jpg",
+      "calib_file": "calib_imgs/0003006_9999955_00000_d_0000417.png",
+      "dominant_class": 5,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 3013,
+      "file_name": "9999998_00151_d_0000127.jpg",
+      "calib_file": "calib_imgs/0003013_9999998_00151_d_0000127.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 3020,
+      "file_name": "9999955_00000_d_0000073.jpg",
+      "calib_file": "calib_imgs/0003020_9999955_00000_d_0000073.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 3033,
+      "file_name": "9999942_00000_d_0000019.jpg",
+      "calib_file": "calib_imgs/0003033_9999942_00000_d_0000019.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3055,
+      "file_name": "9999948_00000_d_0000011.jpg",
+      "calib_file": "calib_imgs/0003055_9999948_00000_d_0000011.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 3067,
+      "file_name": "9999990_00000_d_0000038.jpg",
+      "calib_file": "calib_imgs/0003067_9999990_00000_d_0000038.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3068,
+      "file_name": "9999942_00000_d_0000261.jpg",
+      "calib_file": "calib_imgs/0003068_9999942_00000_d_0000261.png",
+      "dominant_class": 5,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 3093,
+      "file_name": "9999937_00000_d_0000058.jpg",
+      "calib_file": "calib_imgs/0003093_9999937_00000_d_0000058.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3106,
+      "file_name": "9999966_00000_d_0000080.jpg",
+      "calib_file": "calib_imgs/0003106_9999966_00000_d_0000080.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 3128,
+      "file_name": "9999982_00000_d_0000058.jpg",
+      "calib_file": "calib_imgs/0003128_9999982_00000_d_0000058.png",
+      "dominant_class": 1,
+      "classes_present": [
+        1,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 3132,
+      "file_name": "9999982_00000_d_0000250.jpg",
+      "calib_file": "calib_imgs/0003132_9999982_00000_d_0000250.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        2,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 3163,
+      "file_name": "0000076_01444_d_0000005.jpg",
+      "calib_file": "calib_imgs/0003163_0000076_01444_d_0000005.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 3176,
+      "file_name": "9999974_00000_d_0000044.jpg",
+      "calib_file": "calib_imgs/0003176_9999974_00000_d_0000044.png",
+      "dominant_class": 9,
+      "classes_present": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 3201,
+      "file_name": "9999942_00000_d_0000067.jpg",
+      "calib_file": "calib_imgs/0003201_9999942_00000_d_0000067.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3211,
+      "file_name": "9999997_00000_d_0000033.jpg",
+      "calib_file": "calib_imgs/0003211_9999997_00000_d_0000033.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "image_id": 3228,
+      "file_name": "9999937_00000_d_0000226.jpg",
+      "calib_file": "calib_imgs/0003228_9999937_00000_d_0000226.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "image_id": 3231,
+      "file_name": "9999982_00000_d_0000063.jpg",
+      "calib_file": "calib_imgs/0003231_9999982_00000_d_0000063.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 3233,
+      "file_name": "9999962_00000_d_0000048.jpg",
+      "calib_file": "calib_imgs/0003233_9999962_00000_d_0000048.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 3241,
+      "file_name": "9999953_00000_d_0000163.jpg",
+      "calib_file": "calib_imgs/0003241_9999953_00000_d_0000163.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "image_id": 3257,
+      "file_name": "9999998_00241_d_0000195.jpg",
+      "calib_file": "calib_imgs/0003257_9999998_00241_d_0000195.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 3266,
+      "file_name": "9999999_00289_d_0000127.jpg",
+      "calib_file": "calib_imgs/0003266_9999999_00289_d_0000127.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3286,
+      "file_name": "9999942_00000_d_0000056.jpg",
+      "calib_file": "calib_imgs/0003286_9999942_00000_d_0000056.png",
+      "dominant_class": 2,
+      "classes_present": [
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 3296,
+      "file_name": "0000072_03425_d_0000004.jpg",
+      "calib_file": "calib_imgs/0003296_0000072_03425_d_0000004.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 3318,
+      "file_name": "9999999_00805_d_0000368.jpg",
+      "calib_file": "calib_imgs/0003318_9999999_00805_d_0000368.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 3342,
+      "file_name": "9999985_00000_d_0000015.jpg",
+      "calib_file": "calib_imgs/0003342_9999985_00000_d_0000015.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 3357,
+      "file_name": "9999942_00000_d_0000173.jpg",
+      "calib_file": "calib_imgs/0003357_9999942_00000_d_0000173.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3372,
+      "file_name": "9999991_00000_d_0000014.jpg",
+      "calib_file": "calib_imgs/0003372_9999991_00000_d_0000014.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 3407,
+      "file_name": "0000256_04812_d_0000041.jpg",
+      "calib_file": "calib_imgs/0003407_0000256_04812_d_0000041.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 3441,
+      "file_name": "9999998_00090_d_0000073.jpg",
+      "calib_file": "calib_imgs/0003441_9999998_00090_d_0000073.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 3446,
+      "file_name": "9999937_00000_d_0000159.jpg",
+      "calib_file": "calib_imgs/0003446_9999937_00000_d_0000159.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3587,
+      "file_name": "9999945_00000_d_0000022.jpg",
+      "calib_file": "calib_imgs/0003587_9999945_00000_d_0000022.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 3633,
+      "file_name": "9999942_00000_d_0000231.jpg",
+      "calib_file": "calib_imgs/0003633_9999942_00000_d_0000231.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 3646,
+      "file_name": "9999998_00326_d_0000278.jpg",
+      "calib_file": "calib_imgs/0003646_9999998_00326_d_0000278.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 3699,
+      "file_name": "9999937_00000_d_0000219.jpg",
+      "calib_file": "calib_imgs/0003699_9999937_00000_d_0000219.png",
+      "dominant_class": 7,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3742,
+      "file_name": "9999937_00000_d_0000085.jpg",
+      "calib_file": "calib_imgs/0003742_9999937_00000_d_0000085.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3746,
+      "file_name": "9999990_00000_d_0000049.jpg",
+      "calib_file": "calib_imgs/0003746_9999990_00000_d_0000049.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3756,
+      "file_name": "9999940_00000_d_0000029.jpg",
+      "calib_file": "calib_imgs/0003756_9999940_00000_d_0000029.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 3806,
+      "file_name": "9999994_00000_d_0000102.jpg",
+      "calib_file": "calib_imgs/0003806_9999994_00000_d_0000102.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 3839,
+      "file_name": "9999965_00000_d_0000051.jpg",
+      "calib_file": "calib_imgs/0003839_9999965_00000_d_0000051.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 3842,
+      "file_name": "0000201_01484_d_0000178.jpg",
+      "calib_file": "calib_imgs/0003842_0000201_01484_d_0000178.png",
+      "dominant_class": 1,
+      "classes_present": [
+        1,
+        3,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 3863,
+      "file_name": "9999999_00857_d_0000392.jpg",
+      "calib_file": "calib_imgs/0003863_9999999_00857_d_0000392.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 3895,
+      "file_name": "9999955_00000_d_0000294.jpg",
+      "calib_file": "calib_imgs/0003895_9999955_00000_d_0000294.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 3901,
+      "file_name": "9999987_00000_d_0000069.jpg",
+      "calib_file": "calib_imgs/0003901_9999987_00000_d_0000069.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        9
+      ]
+    },
+    {
+      "image_id": 3912,
+      "file_name": "9999955_00000_d_0000117.jpg",
+      "calib_file": "calib_imgs/0003912_9999955_00000_d_0000117.png",
+      "dominant_class": 8,
+      "classes_present": [
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 3930,
+      "file_name": "9999985_00000_d_0000073.jpg",
+      "calib_file": "calib_imgs/0003930_9999985_00000_d_0000073.png",
+      "dominant_class": 2,
+      "classes_present": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "image_id": 3948,
+      "file_name": "9999966_00000_d_0000097.jpg",
+      "calib_file": "calib_imgs/0003948_9999966_00000_d_0000097.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 4020,
+      "file_name": "9999966_00000_d_0000044.jpg",
+      "calib_file": "calib_imgs/0004020_9999966_00000_d_0000044.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 4117,
+      "file_name": "9999982_00000_d_0000192.jpg",
+      "calib_file": "calib_imgs/0004117_9999982_00000_d_0000192.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 4130,
+      "file_name": "0000344_02745_d_0000307.jpg",
+      "calib_file": "calib_imgs/0004130_0000344_02745_d_0000307.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 4140,
+      "file_name": "9999960_00000_d_0000128.jpg",
+      "calib_file": "calib_imgs/0004140_9999960_00000_d_0000128.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 4151,
+      "file_name": "9999942_00000_d_0000158.jpg",
+      "calib_file": "calib_imgs/0004151_9999942_00000_d_0000158.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 4182,
+      "file_name": "9999987_00000_d_0000019.jpg",
+      "calib_file": "calib_imgs/0004182_9999987_00000_d_0000019.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        9
+      ]
+    },
+    {
+      "image_id": 4249,
+      "file_name": "9999987_00000_d_0000014.jpg",
+      "calib_file": "calib_imgs/0004249_9999987_00000_d_0000014.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        5
+      ]
+    },
+    {
+      "image_id": 4300,
+      "file_name": "9999964_00000_d_0000003.jpg",
+      "calib_file": "calib_imgs/0004300_9999964_00000_d_0000003.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 4395,
+      "file_name": "0000126_02904_d_0000127.jpg",
+      "calib_file": "calib_imgs/0004395_0000126_02904_d_0000127.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 4400,
+      "file_name": "9999977_00000_d_0000053.jpg",
+      "calib_file": "calib_imgs/0004400_9999977_00000_d_0000053.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 4415,
+      "file_name": "9999960_00000_d_0000169.jpg",
+      "calib_file": "calib_imgs/0004415_9999960_00000_d_0000169.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 4488,
+      "file_name": "9999991_00000_d_0000016.jpg",
+      "calib_file": "calib_imgs/0004488_9999991_00000_d_0000016.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 4528,
+      "file_name": "0000281_02201_d_0000638.jpg",
+      "calib_file": "calib_imgs/0004528_0000281_02201_d_0000638.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 4535,
+      "file_name": "0000179_00149_d_0000014.jpg",
+      "calib_file": "calib_imgs/0004535_0000179_00149_d_0000014.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 4543,
+      "file_name": "9999937_00000_d_0000224.jpg",
+      "calib_file": "calib_imgs/0004543_9999937_00000_d_0000224.png",
+      "dominant_class": 7,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 4566,
+      "file_name": "9999998_00380_d_0000332.jpg",
+      "calib_file": "calib_imgs/0004566_9999998_00380_d_0000332.png",
+      "dominant_class": 2,
+      "classes_present": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 4573,
+      "file_name": "9999966_00000_d_0000066.jpg",
+      "calib_file": "calib_imgs/0004573_9999966_00000_d_0000066.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1
+      ]
+    },
+    {
+      "image_id": 4607,
+      "file_name": "9999998_00009_d_0000006.jpg",
+      "calib_file": "calib_imgs/0004607_9999998_00009_d_0000006.png",
+      "dominant_class": 2,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 4639,
+      "file_name": "9999962_00000_d_0000081.jpg",
+      "calib_file": "calib_imgs/0004639_9999962_00000_d_0000081.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 4677,
+      "file_name": "9999945_00000_d_0000159.jpg",
+      "calib_file": "calib_imgs/0004677_9999945_00000_d_0000159.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3
+      ]
+    },
+    {
+      "image_id": 4680,
+      "file_name": "9999951_00000_d_0000038.jpg",
+      "calib_file": "calib_imgs/0004680_9999951_00000_d_0000038.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 4721,
+      "file_name": "9999955_00000_d_0000360.jpg",
+      "calib_file": "calib_imgs/0004721_9999955_00000_d_0000360.png",
+      "dominant_class": 4,
+      "classes_present": [
+        1,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 4725,
+      "file_name": "9999974_00000_d_0000049.jpg",
+      "calib_file": "calib_imgs/0004725_9999974_00000_d_0000049.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 4772,
+      "file_name": "9999955_00000_d_0000391.jpg",
+      "calib_file": "calib_imgs/0004772_9999955_00000_d_0000391.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 4777,
+      "file_name": "0000309_00801_d_0000337.jpg",
+      "calib_file": "calib_imgs/0004777_0000309_00801_d_0000337.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 4796,
+      "file_name": "9999955_00000_d_0000119.jpg",
+      "calib_file": "calib_imgs/0004796_9999955_00000_d_0000119.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 4837,
+      "file_name": "9999942_00000_d_0000168.jpg",
+      "calib_file": "calib_imgs/0004837_9999942_00000_d_0000168.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 4842,
+      "file_name": "9999982_00000_d_0000198.jpg",
+      "calib_file": "calib_imgs/0004842_9999982_00000_d_0000198.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        5
+      ]
+    },
+    {
+      "image_id": 4883,
+      "file_name": "9999999_00879_d_0000403.jpg",
+      "calib_file": "calib_imgs/0004883_9999999_00879_d_0000403.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "image_id": 4884,
+      "file_name": "9999937_00000_d_0000059.jpg",
+      "calib_file": "calib_imgs/0004884_9999937_00000_d_0000059.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 4927,
+      "file_name": "0000144_03776_d_0000001.jpg",
+      "calib_file": "calib_imgs/0004927_0000144_03776_d_0000001.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        6
+      ]
+    },
+    {
+      "image_id": 4976,
+      "file_name": "9999994_00000_d_0000024.jpg",
+      "calib_file": "calib_imgs/0004976_9999994_00000_d_0000024.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 5003,
+      "file_name": "9999937_00000_d_0000195.jpg",
+      "calib_file": "calib_imgs/0005003_9999937_00000_d_0000195.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 5016,
+      "file_name": "0000348_02941_d_0000421.jpg",
+      "calib_file": "calib_imgs/0005016_0000348_02941_d_0000421.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        7
+      ]
+    },
+    {
+      "image_id": 5024,
+      "file_name": "9999955_00000_d_0000306.jpg",
+      "calib_file": "calib_imgs/0005024_9999955_00000_d_0000306.png",
+      "dominant_class": 4,
+      "classes_present": [
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 5037,
+      "file_name": "9999937_00000_d_0000017.jpg",
+      "calib_file": "calib_imgs/0005037_9999937_00000_d_0000017.png",
+      "dominant_class": 5,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 5059,
+      "file_name": "9999990_00000_d_0000025.jpg",
+      "calib_file": "calib_imgs/0005059_9999990_00000_d_0000025.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 5093,
+      "file_name": "9999955_00000_d_0000226.jpg",
+      "calib_file": "calib_imgs/0005093_9999955_00000_d_0000226.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "image_id": 5112,
+      "file_name": "9999962_00000_d_0000022.jpg",
+      "calib_file": "calib_imgs/0005112_9999962_00000_d_0000022.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 5114,
+      "file_name": "9999951_00000_d_0000123.jpg",
+      "calib_file": "calib_imgs/0005114_9999951_00000_d_0000123.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        5
+      ]
+    },
+    {
+      "image_id": 5132,
+      "file_name": "0000260_01408_d_0000107.jpg",
+      "calib_file": "calib_imgs/0005132_0000260_01408_d_0000107.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 5139,
+      "file_name": "9999955_00000_d_0000429.jpg",
+      "calib_file": "calib_imgs/0005139_9999955_00000_d_0000429.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "image_id": 5159,
+      "file_name": "9999998_00386_d_0000338.jpg",
+      "calib_file": "calib_imgs/0005159_9999998_00386_d_0000338.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 5195,
+      "file_name": "0000179_00743_d_0000018.jpg",
+      "calib_file": "calib_imgs/0005195_0000179_00743_d_0000018.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 5206,
+      "file_name": "9999951_00000_d_0000249.jpg",
+      "calib_file": "calib_imgs/0005206_9999951_00000_d_0000249.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 5228,
+      "file_name": "0000008_03999_d_0000044.jpg",
+      "calib_file": "calib_imgs/0005228_0000008_03999_d_0000044.png",
+      "dominant_class": 5,
+      "classes_present": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "image_id": 5233,
+      "file_name": "9999981_00000_d_0000075.jpg",
+      "calib_file": "calib_imgs/0005233_9999981_00000_d_0000075.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 5248,
+      "file_name": "9999967_00000_d_0000033.jpg",
+      "calib_file": "calib_imgs/0005248_9999967_00000_d_0000033.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 5259,
+      "file_name": "9999951_00000_d_0000033.jpg",
+      "calib_file": "calib_imgs/0005259_9999951_00000_d_0000033.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 5262,
+      "file_name": "0000173_00801_d_0000001.jpg",
+      "calib_file": "calib_imgs/0005262_0000173_00801_d_0000001.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 5274,
+      "file_name": "9999937_00000_d_0000045.jpg",
+      "calib_file": "calib_imgs/0005274_9999937_00000_d_0000045.png",
+      "dominant_class": 6,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 5282,
+      "file_name": "9999955_00000_d_0000068.jpg",
+      "calib_file": "calib_imgs/0005282_9999955_00000_d_0000068.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 5318,
+      "file_name": "9999955_00000_d_0000361.jpg",
+      "calib_file": "calib_imgs/0005318_9999955_00000_d_0000361.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 5322,
+      "file_name": "0000224_00001_d_0000001.jpg",
+      "calib_file": "calib_imgs/0005322_0000224_00001_d_0000001.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 5334,
+      "file_name": "0000156_00554_d_0000079.jpg",
+      "calib_file": "calib_imgs/0005334_0000156_00554_d_0000079.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 5343,
+      "file_name": "9999937_00000_d_0000057.jpg",
+      "calib_file": "calib_imgs/0005343_9999937_00000_d_0000057.png",
+      "dominant_class": 6,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 5386,
+      "file_name": "9999945_00000_d_0000135.jpg",
+      "calib_file": "calib_imgs/0005386_9999945_00000_d_0000135.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 5395,
+      "file_name": "9999953_00000_d_0000175.jpg",
+      "calib_file": "calib_imgs/0005395_9999953_00000_d_0000175.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "image_id": 5432,
+      "file_name": "9999977_00000_d_0000049.jpg",
+      "calib_file": "calib_imgs/0005432_9999977_00000_d_0000049.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 5444,
+      "file_name": "0000273_04601_d_0000461.jpg",
+      "calib_file": "calib_imgs/0005444_0000273_04601_d_0000461.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        5
+      ]
+    },
+    {
+      "image_id": 5456,
+      "file_name": "9999981_00000_d_0000115.jpg",
+      "calib_file": "calib_imgs/0005456_9999981_00000_d_0000115.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 5486,
+      "file_name": "0000239_13100_d_0000033.jpg",
+      "calib_file": "calib_imgs/0005486_0000239_13100_d_0000033.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 5510,
+      "file_name": "9999955_00000_d_0000023.jpg",
+      "calib_file": "calib_imgs/0005510_9999955_00000_d_0000023.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "image_id": 5513,
+      "file_name": "9999999_00141_d_0000055.jpg",
+      "calib_file": "calib_imgs/0005513_9999999_00141_d_0000055.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 5517,
+      "file_name": "9999953_00000_d_0000100.jpg",
+      "calib_file": "calib_imgs/0005517_9999953_00000_d_0000100.png",
+      "dominant_class": 5,
+      "classes_present": [
+        3,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 5520,
+      "file_name": "9999955_00000_d_0000049.jpg",
+      "calib_file": "calib_imgs/0005520_9999955_00000_d_0000049.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 5542,
+      "file_name": "9999981_00000_d_0000152.jpg",
+      "calib_file": "calib_imgs/0005542_9999981_00000_d_0000152.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 5585,
+      "file_name": "9999994_00000_d_0000043.jpg",
+      "calib_file": "calib_imgs/0005585_9999994_00000_d_0000043.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 5589,
+      "file_name": "0000084_01959_d_0000006.jpg",
+      "calib_file": "calib_imgs/0005589_0000084_01959_d_0000006.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        9
+      ]
+    },
+    {
+      "image_id": 5613,
+      "file_name": "9999999_00370_d_0000161.jpg",
+      "calib_file": "calib_imgs/0005613_9999999_00370_d_0000161.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 5627,
+      "file_name": "9999955_00000_d_0000396.jpg",
+      "calib_file": "calib_imgs/0005627_9999955_00000_d_0000396.png",
+      "dominant_class": 4,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 5631,
+      "file_name": "9999942_00000_d_0000020.jpg",
+      "calib_file": "calib_imgs/0005631_9999942_00000_d_0000020.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 5633,
+      "file_name": "9999962_00000_d_0000005.jpg",
+      "calib_file": "calib_imgs/0005633_9999962_00000_d_0000005.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1
+      ]
+    },
+    {
+      "image_id": 5642,
+      "file_name": "0000107_01998_d_0000054.jpg",
+      "calib_file": "calib_imgs/0005642_0000107_01998_d_0000054.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 5651,
+      "file_name": "9999984_00000_d_0000103.jpg",
+      "calib_file": "calib_imgs/0005651_9999984_00000_d_0000103.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 5667,
+      "file_name": "9999984_00000_d_0000031.jpg",
+      "calib_file": "calib_imgs/0005667_9999984_00000_d_0000031.png",
+      "dominant_class": 5,
+      "classes_present": [
+        1,
+        2,
+        3,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 5688,
+      "file_name": "9999951_00000_d_0000184.jpg",
+      "calib_file": "calib_imgs/0005688_9999951_00000_d_0000184.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 5704,
+      "file_name": "9999975_00000_d_0000021.jpg",
+      "calib_file": "calib_imgs/0005704_9999975_00000_d_0000021.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 5724,
+      "file_name": "0000157_00651_d_0000083.jpg",
+      "calib_file": "calib_imgs/0005724_0000157_00651_d_0000083.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 5744,
+      "file_name": "9999951_00000_d_0000317.jpg",
+      "calib_file": "calib_imgs/0005744_9999951_00000_d_0000317.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "image_id": 5766,
+      "file_name": "9999964_00000_d_0000056.jpg",
+      "calib_file": "calib_imgs/0005766_9999964_00000_d_0000056.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 5770,
+      "file_name": "9999972_00000_d_0000057.jpg",
+      "calib_file": "calib_imgs/0005770_9999972_00000_d_0000057.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 5799,
+      "file_name": "9999951_00000_d_0000059.jpg",
+      "calib_file": "calib_imgs/0005799_9999951_00000_d_0000059.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 5845,
+      "file_name": "9999951_00000_d_0000297.jpg",
+      "calib_file": "calib_imgs/0005845_9999951_00000_d_0000297.png",
+      "dominant_class": 8,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 5851,
+      "file_name": "0000195_01040_d_0000131.jpg",
+      "calib_file": "calib_imgs/0005851_0000195_01040_d_0000131.png",
+      "dominant_class": 1,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 5875,
+      "file_name": "9999987_00000_d_0000063.jpg",
+      "calib_file": "calib_imgs/0005875_9999987_00000_d_0000063.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 5886,
+      "file_name": "9999955_00000_d_0000341.jpg",
+      "calib_file": "calib_imgs/0005886_9999955_00000_d_0000341.png",
+      "dominant_class": 4,
+      "classes_present": [
+        1,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 5918,
+      "file_name": "9999942_00000_d_0000040.jpg",
+      "calib_file": "calib_imgs/0005918_9999942_00000_d_0000040.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        2,
+        3,
+        4,
+        9
+      ]
+    },
+    {
+      "image_id": 5926,
+      "file_name": "9999998_00209_d_0000166.jpg",
+      "calib_file": "calib_imgs/0005926_9999998_00209_d_0000166.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 5939,
+      "file_name": "9999950_00000_d_0000017.jpg",
+      "calib_file": "calib_imgs/0005939_9999950_00000_d_0000017.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 5956,
+      "file_name": "9999951_00000_d_0000236.jpg",
+      "calib_file": "calib_imgs/0005956_9999951_00000_d_0000236.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 5965,
+      "file_name": "9999984_00000_d_0000026.jpg",
+      "calib_file": "calib_imgs/0005965_9999984_00000_d_0000026.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1
+      ]
+    },
+    {
+      "image_id": 6013,
+      "file_name": "0000263_05001_d_0000192.jpg",
+      "calib_file": "calib_imgs/0006013_0000263_05001_d_0000192.png",
+      "dominant_class": 3,
+      "classes_present": [
+        3,
+        5
+      ]
+    },
+    {
+      "image_id": 6020,
+      "file_name": "9999951_00000_d_0000296.jpg",
+      "calib_file": "calib_imgs/0006020_9999951_00000_d_0000296.png",
+      "dominant_class": 8,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 6072,
+      "file_name": "9999940_00000_d_0000088.jpg",
+      "calib_file": "calib_imgs/0006072_9999940_00000_d_0000088.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 6079,
+      "file_name": "9999950_00000_d_0000044.jpg",
+      "calib_file": "calib_imgs/0006079_9999950_00000_d_0000044.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 6083,
+      "file_name": "9999982_00000_d_0000077.jpg",
+      "calib_file": "calib_imgs/0006083_9999982_00000_d_0000077.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 6093,
+      "file_name": "0000256_01834_d_0000026.jpg",
+      "calib_file": "calib_imgs/0006093_0000256_01834_d_0000026.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 6177,
+      "file_name": "9999953_00000_d_0000044.jpg",
+      "calib_file": "calib_imgs/0006177_9999953_00000_d_0000044.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "image_id": 6184,
+      "file_name": "9999951_00000_d_0000186.jpg",
+      "calib_file": "calib_imgs/0006184_9999951_00000_d_0000186.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        9
+      ]
+    },
+    {
+      "image_id": 6205,
+      "file_name": "9999953_00000_d_0000158.jpg",
+      "calib_file": "calib_imgs/0006205_9999953_00000_d_0000158.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "image_id": 6263,
+      "file_name": "9999950_00000_d_0000054.jpg",
+      "calib_file": "calib_imgs/0006263_9999950_00000_d_0000054.png",
+      "dominant_class": 3,
+      "classes_present": [
+        1,
+        3,
+        4,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 6284,
+      "file_name": "9999951_00000_d_0000009.jpg",
+      "calib_file": "calib_imgs/0006284_9999951_00000_d_0000009.png",
+      "dominant_class": 0,
+      "classes_present": [
+        0,
+        1,
+        5
+      ]
+    },
+    {
+      "image_id": 6312,
+      "file_name": "9999943_00000_d_0000049.jpg",
+      "calib_file": "calib_imgs/0006312_9999943_00000_d_0000049.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 6364,
+      "file_name": "9999955_00000_d_0000364.jpg",
+      "calib_file": "calib_imgs/0006364_9999955_00000_d_0000364.png",
+      "dominant_class": 4,
+      "classes_present": [
+        1,
+        3,
+        4,
+        5,
+        8,
+        9
+      ]
+    },
+    {
+      "image_id": 6372,
+      "file_name": "9999937_00000_d_0000093.jpg",
+      "calib_file": "calib_imgs/0006372_9999937_00000_d_0000093.png",
+      "dominant_class": 5,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "image_id": 6380,
+      "file_name": "0000165_05725_d_0000112.jpg",
+      "calib_file": "calib_imgs/0006380_0000165_05725_d_0000112.png",
+      "dominant_class": 2,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 6413,
+      "file_name": "9999990_00000_d_0000036.jpg",
+      "calib_file": "calib_imgs/0006413_9999990_00000_d_0000036.png",
+      "dominant_class": 9,
+      "classes_present": [
+        0,
+        1,
+        3,
+        9
+      ]
+    },
+    {
+      "image_id": 6440,
+      "file_name": "9999937_00000_d_0000027.jpg",
+      "calib_file": "calib_imgs/0006440_9999937_00000_d_0000027.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9
+      ]
+    },
+    {
+      "image_id": 6459,
+      "file_name": "9999998_00142_d_0000119.jpg",
+      "calib_file": "calib_imgs/0006459_9999998_00142_d_0000119.png",
+      "dominant_class": 3,
+      "classes_present": [
+        0,
+        3,
+        4
+      ]
+    }
+  ],
+  "nonfinite_replaced": [
+    "calib_imgs/0000790_9999999_00576_d_0000260.png"
+  ]
+}

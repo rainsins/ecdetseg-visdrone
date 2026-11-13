@@ -1,0 +1,28 @@
+{
+  "schema": "ppt-master.source_to_md.profile.v1",
+  "converter": "ppt_to_md.py",
+  "conversion_type": "pptx",
+  "source": {
+    "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/sources/source.pptx",
+    "name": "source.pptx",
+    "suffix": ".pptx",
+    "kind": "file",
+    "exists": true,
+    "size_bytes": 1352518
+  },
+  "outputs": {
+    "markdown": "source_readback.md",
+    "asset_dir": "source_readback_files",
+    "image_manifest": "source_readback_files/image_manifest.json",
+    "image_count": 7
+  },
+  "markdown": {
+    "line_count": 830,
+    "char_count": 9131,
+    "heading_count": 57,
+    "table_count": 0,
+    "image_ref_count": 39,
+    "link_count": 8
+  },
+  "warnings": []
+}

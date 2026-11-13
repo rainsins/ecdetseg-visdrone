@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial" data-pptx-page-role="content">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#FFFFFF"/>
+<g id="header" data-pptx-bounds="56 30 1168 112"><text x="56" y="52" font-size="16" fill="#087E8B">02 / HBS · 分层背景平滑</text><text x="56" y="111" font-size="40" font-weight="bold" fill="#142D4E">HBS：保护前景，只平滑背景</text></g>
+<g id="hbs-panel" data-pptx-bounds="56 159 605 416"><image href="../images/hbs_detail.png" x="56" y="165" width="588" height="375" preserveAspectRatio="xMidYMid meet"/><text x="56" y="566" font-size="16" fill="#58677A">Fig.3局部：GT掩码分路 → 背景平滑 → 特征相加</text></g>
+<g id="mask-reading" data-pptx-bounds="700 168 524 238"><text x="700" y="202" font-size="28" font-weight="bold" fill="#087E8B">M：GT框内的二值掩码</text><text x="700" y="251" font-size="24" fill="#243447"><tspan x="700" dy="0">前景：原样保留细节。</tspan><tspan x="700" dy="42">背景：经平滑算子φ处理。</tspan><tspan x="700" dy="42">每一层FPN分别进行对应处理。</tspan></text><text x="700" y="391" font-size="20" fill="#BC5A24">注意：这是框掩码，不是像素级分割。</text></g>
+<g id="hbs-equation" data-pptx-replace-with="formula" data-pptx-x="690" data-pptx-y="432" data-pptx-width="534" data-pptx-height="105" data-pptx-bounds="690 432 534 105"><metadata type="application/json"><![CDATA[{"latex":"P_i^E=P_i\\odot M+\\phi_i(P_i\\odot\\neg M,r)","display":"block","font_size":28,"color":"#142D4E","align":"left"}]]></metadata><text x="700" y="489" font-size="28" fill="#142D4E">Pᵢᴱ = Pᵢ ⊙ M + φᵢ(Pᵢ ⊙ ¬M, r)</text></g>
+<g id="takeaway" data-pptx-bounds="56 590 1168 48"><text x="56" y="620" font-size="28" fill="#142D4E">核心不是“平滑一切”，而是用位置先验控制平滑范围。</text></g>
+<g id="footer" data-pptx-bounds="56 653 1168 34" font-size="16" fill="#58677A"><text x="56" y="675">来源：SET，PDF pp.3–4，Fig.3与式(2)；⊙表示逐元素乘法</text><text x="1189" y="675">06</text></g>
+</svg>

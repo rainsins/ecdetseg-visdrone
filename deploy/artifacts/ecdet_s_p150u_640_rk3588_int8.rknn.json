@@ -1,0 +1,36 @@
+{
+  "rknn_toolkit2_version": "2.5.0",
+  "target_platform": "rk3588",
+  "quantized_dtype": "w8a8",
+  "quantized_algorithm": "normal",
+  "quantized_method": "channel",
+  "optimization_level": 3,
+  "auto_hybrid": true,
+  "auto_hybrid_cos_thresh": 0.9999,
+  "mean_values_rgb_255": [
+    123.675,
+    116.28,
+    103.53
+  ],
+  "std_values_rgb_255": [
+    58.395,
+    57.12,
+    57.375
+  ],
+  "quant_img_RGB2BGR": false,
+  "onnx": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640.onnx",
+  "input_shape": [
+    1,
+    3,
+    640,
+    640
+  ],
+  "onnx_sha256": "3e2a20507eee52d0aafb3a5ca261d2333a5f352bb3a6696c247848554d551be8",
+  "calib_txt": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/calib.txt",
+  "calib_images": 300,
+  "rknn": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640_rk3588_int8.rknn",
+  "rknn_sha256": "ff61f31c8ef1dd565c613c1bb59a7c40fb17a5e955e44503db19f928ede35130",
+  "rknn_size_bytes": 49837410,
+  "repo_root": "/home/rainsin/Projects/Career/Paper/EdgeCrafter",
+  "export_metadata": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640_meta.json"
+}

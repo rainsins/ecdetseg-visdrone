@@ -1,0 +1,917 @@
+{
+  "date": "2026-11-07",
+  "scope": "one 640x640 image; 3 warmup + 8 measured per configuration; first-frame raw output checks",
+  "runs": [
+    {
+      "name": "auto_before",
+      "mask": 0,
+      "command": "timeout -k 3 40 /root/ecdet-diag-e94P1v/build/ec_infer --model /root/ecdet_cpp/model.rknn --image /root/ecdet_cpp/test.png --grid-sample-cpu --core-mask 0 --timing --warmup 3 --iters 8 --dump-raw /root/ecdet-diag-e94P1v/cm_auto_before",
+      "exit": 0,
+      "wall_s": 10.536098123993725,
+      "telemetry_before": "42538\n41615\n42538\n42538\n42538\n41615\n41615\n1000000000\n",
+      "telemetry_after": "43461\n43461\n44384\n43461\n43461\n43461\n43461\n1000000000\n",
+      "stages": {
+        "pre": {
+          "mean_ms": 2.177,
+          "median_ms": 1.577,
+          "p95_ms": 3.97,
+          "min_ms": 1.431,
+          "max_ms": 3.98
+        },
+        "infer": {
+          "mean_ms": 631.078,
+          "median_ms": 630.01,
+          "p95_ms": 643.176,
+          "min_ms": 619.09,
+          "max_ms": 644.661
+        },
+        "post": {
+          "mean_ms": 0.506,
+          "median_ms": 0.342,
+          "p95_ms": 1.054,
+          "min_ms": 0.301,
+          "max_ms": 1.071
+        },
+        "total": {
+          "mean_ms": 633.761,
+          "median_ms": 632.04,
+          "p95_ms": 647.324,
+          "min_ms": 620.877,
+          "max_ms": 648.912
+        }
+      },
+      "raw_output_parity": {
+        "logits": {
+          "elements": 3000,
+          "max_abs_diff": 0.0,
+          "bitwise_equal": true
+        },
+        "boxes": {
+          "elements": 1200,
+          "max_abs_diff": 0.0,
+          "bitwise_equal": true
+        }
+      }
+    },
+    {
+      "name": "three_cores",
+      "mask": 7,
+      "command": "timeout -k 3 40 /root/ecdet-diag-e94P1v/build/ec_infer --model /root/ecdet_cpp/model.rknn --image /root/ecdet_cpp/test.png --grid-sample-cpu --core-mask 7 --timing --warmup 3 --iters 8 --dump-raw /root/ecdet-diag-e94P1v/cm_three_cores",
+      "exit": 0,
+      "wall_s": 11.146539000998018,
+      "telemetry_before": "42538\n43461\n43461\n43461\n43461\n42538\n42538\n1000000000\n",
+      "telemetry_after": "44384\n44384\n44384\n44384\n44384\n44384\n44384\n1000000000\n",
+      "stages": {
+        "pre": {
+          "mean_ms": 2.213,
+          "median_ms": 1.578,
+          "p95_ms": 4.12,
+          "min_ms": 1.437,
+          "max_ms": 4.134
+        },
+        "infer": {
+          "mean_ms": 687.333,
+          "median_ms": 677.003,
+          "p95_ms": 736.671,
+          "min_ms": 647.071,
+          "max_ms": 744.358
+        },
+        "post": {
+          "mean_ms": 0.48,
+          "median_ms": 0.385,
+          "p95_ms": 0.857,
+          "min_ms": 0.341,
+          "max_ms": 1.082
+        },
+        "total": {
+          "mean_ms": 690.026,
+          "median_ms": 680.294,
+          "p95_ms": 740.219,
+          "min_ms": 649.034,
+          "max_ms": 748.834
+        }
+      },
+      "raw_output_parity": {
+        "logits": {
+          "elements": 3000,
+          "max_abs_diff": 0.0,
+          "bitwise_equal": true
+        },
+        "boxes": {
+          "elements": 1200,
+          "max_abs_diff": 0.0,
+          "bitwise_equal": true
+        }
+      }
+    },
+    {
+      "name": "core0",
+      "mask": 1,
+      "command": "timeout -k 3 40 /root/ecdet-diag-e94P1v/build/ec_infer --model /root/ecdet_cpp/model.rknn --image /root/ecdet_cpp/test.png --grid-sample-cpu --core-mask 1 --timing --warmup 3 --iters 8 --dump-raw /root/ecdet-diag-e94P1v/cm_core0",
+      "exit": 0,
+      "wall_s": 10.442329165001865,
+      "telemetry_before": "43461\n44384\n43461\n44384\n44384\n43461\n43461\n1000000000\n",
+      "telemetry_after": "44384\n44384\n44384\n45307\n44384\n44384\n44384\n1000000000\n",
+      "stages": {
+        "pre": {
+          "mean_ms": 3.122,
+          "median_ms": 3.957,
+          "p95_ms": 4.072,
+          "min_ms": 1.402,
+          "max_ms": 4.098
+        },
+        "infer": {
+          "mean_ms": 625.605,
+          "median_ms": 627.974,
+          "p95_ms": 631.955,
+          "min_ms": 615.575,
+          "max_ms": 632.048
+        },
+        "post": {
+          "mean_ms": 0.805,
+          "median_ms": 1.049,
+          "p95_ms": 1.088,
+          "min_ms": 0.308,
+          "max_ms": 1.093
+        },
+        "total": {
+          "mean_ms": 629.532,
+          "median_ms": 633.048,
+          "p95_ms": 636.968,
+          "min_ms": 617.49,
+          "max_ms": 637.048
+        }
+      },
+      "raw_output_parity": {
+        "logits": {
+          "elements": 3000,
+          "max_abs_diff": 0.0,
+          "bitwise_equal": true
+        },
+        "boxes": {
+          "elements": 1200,
+          "max_abs_diff": 0.0,
+          "bitwise_equal": true
+        }
+      }
+    },
+    {
+      "name": "auto_after",
+      "mask": 0,
+      "command": "timeout -k 3 40 /root/ecdet-diag-e94P1v/build/ec_infer --model /root/ecdet_cpp/model.rknn --image /root/ecdet_cpp/test.png --grid-sample-cpu --core-mask 0 --timing --warmup 3 --iters 8 --dump-raw /root/ecdet-diag-e94P1v/cm_auto_after",
+      "exit": 0,
+      "wall_s": 10.490208702991367,
+      "telemetry_before": "44384\n44384\n44384\n44384\n44384\n44384\n44384\n1000000000\n",
+      "telemetry_after": "45307\n45307\n45307\n45307\n45307\n45307\n45307\n1000000000\n",
+      "stages": {
+        "pre": {
+          "mean_ms": 1.698,
+          "median_ms": 1.659,
+          "p95_ms": 1.919,
+          "min_ms": 1.445,
+          "max_ms": 1.925
+        },
+        "infer": {
+          "mean_ms": 626.072,
+          "median_ms": 625.027,
+          "p95_ms": 637.513,
+          "min_ms": 618.436,
+          "max_ms": 642.04
+        },
+        "post": {
+          "mean_ms": 0.35,
+          "median_ms": 0.352,
+          "p95_ms": 0.377,
+          "min_ms": 0.309,
+          "max_ms": 0.388
+        },
+        "total": {
+          "mean_ms": 628.12,
+          "median_ms": 627.18,
+          "p95_ms": 639.365,
+          "min_ms": 620.331,
+          "max_ms": 643.92
+        }
+      },
+      "raw_output_parity": {
+        "logits": {
+          "elements": 3000,
+          "max_abs_diff": 0.0,
+          "bitwise_equal": true
+        },
+        "boxes": {
+          "elements": 1200,
+          "max_abs_diff": 0.0,
+          "bitwise_equal": true
+        }
+      }
+    }
+  ],
+  "separate_first_frame_perf": {
+    "previous_auto": {
+      "attention_groups": {
+        "backbone": {
+          "calls": 12,
+          "time_us": 292418
+        },
+        "encoder": {
+          "calls": 1,
+          "time_us": 4000
+        },
+        "decoder": {
+          "calls": 4,
+          "time_us": 9636
+        }
+      },
+      "attention_layers": [
+        {
+          "id": 27,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24315,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.0/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 55,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24465,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.1/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 83,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24311,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.2/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 111,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24294,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.3/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 139,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24464,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.4/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 167,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24340,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.5/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 195,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24397,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.6/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 223,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24214,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.7/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 251,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24414,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.8/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 279,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24477,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.9/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 307,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24309,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.10/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 336,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24418,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.11/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 362,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,1,400),(8,24,1,400),...",
+          "output_shape": "(8,24,1,400)",
+          "time_us": 4000,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/encoder/encoder.0/layers.0/self_attn/MatMul_4#1_2sdpa"
+        },
+        {
+          "id": 483,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,1,300),(8,24,1,300),...",
+          "output_shape": "(8,24,1,300)",
+          "time_us": 2368,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/decoder/decoder/layers.0/self_attn/MatMul_4#1_2sdpa"
+        },
+        {
+          "id": 534,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,1,300),(8,24,1,300),...",
+          "output_shape": "(8,24,1,300)",
+          "time_us": 2422,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/decoder/decoder/layers.1/self_attn/MatMul_4#1_2sdpa"
+        },
+        {
+          "id": 612,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,1,300),(8,24,1,300),...",
+          "output_shape": "(8,24,1,300)",
+          "time_us": 2398,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/decoder/decoder/layers.2/self_attn/MatMul_4#1_2sdpa"
+        },
+        {
+          "id": 685,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,1,300),(8,24,1,300),...",
+          "output_shape": "(8,24,1,300)",
+          "time_us": 2448,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/decoder/decoder/layers.3/self_attn/MatMul_4#1_2sdpa"
+        }
+      ],
+      "gather_elements": [
+        {
+          "id": 452,
+          "op": "GatherElements",
+          "dtype": "FLOAT",
+          "target": "CPU",
+          "input_shape": "(1,8400,1,4),(1,300,1,4)",
+          "output_shape": "(1,300,1,4)",
+          "time_us": 1083,
+          "workload": "0.0%/0.0%/0.0%",
+          "name": "GatherElements:/model/decoder/GatherElements"
+        },
+        {
+          "id": 454,
+          "op": "GatherElements",
+          "dtype": "FLOAT16",
+          "target": "CPU",
+          "input_shape": "(1,8400,1,192),(1,300,1,192)",
+          "output_shape": "(1,300,1,192)",
+          "time_us": 45603,
+          "workload": "0.0%/0.0%/0.0%",
+          "name": "GatherElements:/model/decoder/GatherElements_1"
+        }
+      ],
+      "transpose_top10": [
+        {
+          "id": 347,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "CPU",
+          "input_shape": "(1,192,2,1600)",
+          "output_shape": "(1,2,1600,192)",
+          "time_us": 26951,
+          "workload": "0.0%/0.0%/0.0%",
+          "name": "Transpose:/model/backbone/Concat_output_0_tp"
+        },
+        {
+          "id": 349,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(1,1,1600,192)",
+          "output_shape": "(1,192,1,1600)",
+          "time_us": 5533,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/backbone/Transpose"
+        },
+        {
+          "id": 507,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,300,12)",
+          "output_shape": "(8,12,300,24)",
+          "time_us": 4042,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.0/cross_attn/Mul_4_output_0_tp"
+        },
+        {
+          "id": 587,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,300,12)",
+          "output_shape": "(8,12,300,24)",
+          "time_us": 4036,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.1/cross_attn/Mul_4_output_0_tp"
+        },
+        {
+          "id": 733,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,300,12)",
+          "output_shape": "(8,12,300,24)",
+          "time_us": 4026,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.3/cross_attn/Mul_4_output_0_tp"
+        },
+        {
+          "id": 660,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,300,12)",
+          "output_shape": "(8,12,300,24)",
+          "time_us": 3989,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.2/cross_attn/Mul_4_output_0_tp"
+        },
+        {
+          "id": 447,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "CPU",
+          "input_shape": "(1,10,1,8400)",
+          "output_shape": "(1,8400,1,10)",
+          "time_us": 3372,
+          "workload": "0.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/enc_score_head/head/MatMul_output_0_mm_tp"
+        },
+        {
+          "id": 453,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(1,192,1,8400)",
+          "output_shape": "(1,8400,1,192)",
+          "time_us": 1311,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/Mul_output_0-rs_tp"
+        },
+        {
+          "id": 575,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(1,300,8,12)",
+          "output_shape": "(8,1,300,12)",
+          "time_us": 1126,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.1/cross_attn/Transpose_1"
+        },
+        {
+          "id": 505,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(1,300,8,12)",
+          "output_shape": "(8,1,300,12)",
+          "time_us": 1119,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.0/cross_attn/Transpose_1"
+        }
+      ]
+    },
+    "three_cores": {
+      "attention_groups": {
+        "backbone": {
+          "calls": 12,
+          "time_us": 291426
+        },
+        "encoder": {
+          "calls": 1,
+          "time_us": 4128
+        },
+        "decoder": {
+          "calls": 4,
+          "time_us": 9470
+        }
+      },
+      "attention_layers": [
+        {
+          "id": 27,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24220,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.0/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 55,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24430,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.1/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 83,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24397,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.2/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 111,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24267,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.3/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 139,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24300,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.4/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 167,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24378,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.5/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 195,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24207,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.6/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 223,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24191,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.7/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 251,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24350,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.8/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 279,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24254,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.9/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 307,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24208,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.10/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 336,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(3,64,1,1601),(3,64,1,1601),...",
+          "output_shape": "(3,64,1,1601)",
+          "time_us": 24224,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/backbone/backbone/blocks.11/attn/MatMul_1_2sdpa"
+        },
+        {
+          "id": 362,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,1,400),(8,24,1,400),...",
+          "output_shape": "(8,24,1,400)",
+          "time_us": 4128,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/encoder/encoder.0/layers.0/self_attn/MatMul_4#1_2sdpa"
+        },
+        {
+          "id": 483,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,1,300),(8,24,1,300),...",
+          "output_shape": "(8,24,1,300)",
+          "time_us": 2416,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/decoder/decoder/layers.0/self_attn/MatMul_4#1_2sdpa"
+        },
+        {
+          "id": 534,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,1,300),(8,24,1,300),...",
+          "output_shape": "(8,24,1,300)",
+          "time_us": 2377,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/decoder/decoder/layers.1/self_attn/MatMul_4#1_2sdpa"
+        },
+        {
+          "id": 612,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,1,300),(8,24,1,300),...",
+          "output_shape": "(8,24,1,300)",
+          "time_us": 2337,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/decoder/decoder/layers.2/self_attn/MatMul_4#1_2sdpa"
+        },
+        {
+          "id": 685,
+          "op": "exSDPAttention",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,1,300),(8,24,1,300),...",
+          "output_shape": "(8,24,1,300)",
+          "time_us": 2340,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "exSDPAttention:/model/decoder/decoder/layers.3/self_attn/MatMul_4#1_2sdpa"
+        }
+      ],
+      "gather_elements": [
+        {
+          "id": 452,
+          "op": "GatherElements",
+          "dtype": "FLOAT",
+          "target": "CPU",
+          "input_shape": "(1,8400,1,4),(1,300,1,4)",
+          "output_shape": "(1,300,1,4)",
+          "time_us": 883,
+          "workload": "0.0%/0.0%/0.0%",
+          "name": "GatherElements:/model/decoder/GatherElements"
+        },
+        {
+          "id": 454,
+          "op": "GatherElements",
+          "dtype": "FLOAT16",
+          "target": "CPU",
+          "input_shape": "(1,8400,1,192),(1,300,1,192)",
+          "output_shape": "(1,300,1,192)",
+          "time_us": 44981,
+          "workload": "0.0%/0.0%/0.0%",
+          "name": "GatherElements:/model/decoder/GatherElements_1"
+        }
+      ],
+      "transpose_top10": [
+        {
+          "id": 347,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "CPU",
+          "input_shape": "(1,192,2,1600)",
+          "output_shape": "(1,2,1600,192)",
+          "time_us": 29864,
+          "workload": "0.0%/0.0%/0.0%",
+          "name": "Transpose:/model/backbone/Concat_output_0_tp"
+        },
+        {
+          "id": 349,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(1,1,1600,192)",
+          "output_shape": "(1,192,1,1600)",
+          "time_us": 5707,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/backbone/Transpose"
+        },
+        {
+          "id": 447,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "CPU",
+          "input_shape": "(1,10,1,8400)",
+          "output_shape": "(1,8400,1,10)",
+          "time_us": 4799,
+          "workload": "0.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/enc_score_head/head/MatMul_output_0_mm_tp"
+        },
+        {
+          "id": 660,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,300,12)",
+          "output_shape": "(8,12,300,24)",
+          "time_us": 4032,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.2/cross_attn/Mul_4_output_0_tp"
+        },
+        {
+          "id": 587,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,300,12)",
+          "output_shape": "(8,12,300,24)",
+          "time_us": 4011,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.1/cross_attn/Mul_4_output_0_tp"
+        },
+        {
+          "id": 507,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,300,12)",
+          "output_shape": "(8,12,300,24)",
+          "time_us": 3986,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.0/cross_attn/Mul_4_output_0_tp"
+        },
+        {
+          "id": 733,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(8,24,300,12)",
+          "output_shape": "(8,12,300,24)",
+          "time_us": 3950,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.3/cross_attn/Mul_4_output_0_tp"
+        },
+        {
+          "id": 453,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(1,192,1,8400)",
+          "output_shape": "(1,8400,1,192)",
+          "time_us": 1315,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/Mul_output_0-rs_tp"
+        },
+        {
+          "id": 575,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(1,300,8,12)",
+          "output_shape": "(8,1,300,12)",
+          "time_us": 1077,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.1/cross_attn/Transpose_1"
+        },
+        {
+          "id": 505,
+          "op": "Transpose",
+          "dtype": "FLOAT16",
+          "target": "NPU",
+          "input_shape": "(1,300,8,12)",
+          "output_shape": "(8,1,300,12)",
+          "time_us": 1072,
+          "workload": "100.0%/0.0%/0.0%",
+          "name": "Transpose:/model/decoder/decoder/layers.0/cross_attn/Transpose_1"
+        }
+      ]
+    }
+  },
+  "limits": [
+    "Short sequential screening, not randomized repeated benchmark or full-val AP.",
+    "Perf reports use separate first frames, not measured timing loops.",
+    "Boundary telemetry does not establish continuous frequency or exclude transient throttling.",
+    "WorkLoad is runtime-reported distribution, not independent hardware tracing."
+  ],
+  "decision": "Keep default AUTO; no measured benefit from mask=7. Next isolate backbone attention compilation, then decoder feature GatherElements.",
+  "evidence_sha256": {
+    "auto_before.log": "0b2c12b073d7673ef614a270a84f62018784dac342cdff1b9533883ad35b6c6b",
+    "auto_before.logits.f32": "95f7ed9a8cc4c6b6095b336e102dca0942bcc76f7805809f506ddec45b30c1a5",
+    "auto_before.boxes.f32": "9c7c681545d3508f01bb8d84176a725ec4052843c605cd54fd9f69026adfd83e",
+    "three_cores.log": "6797f1d0c0d1435d07c96d41417ec0b4f28fe14b4d31a6d9868246b7e347a16d",
+    "three_cores.logits.f32": "95f7ed9a8cc4c6b6095b336e102dca0942bcc76f7805809f506ddec45b30c1a5",
+    "three_cores.boxes.f32": "9c7c681545d3508f01bb8d84176a725ec4052843c605cd54fd9f69026adfd83e",
+    "core0.log": "79e83b5945d50bfcbce08c43d5c26b90a693ac24548aa4ddad5e8165375ed72f",
+    "core0.logits.f32": "95f7ed9a8cc4c6b6095b336e102dca0942bcc76f7805809f506ddec45b30c1a5",
+    "core0.boxes.f32": "9c7c681545d3508f01bb8d84176a725ec4052843c605cd54fd9f69026adfd83e",
+    "auto_after.log": "5d61adc22a6cdf24dbc34672f3bc8c74b2cc711646c1747495f4fcb08030d910",
+    "auto_after.logits.f32": "95f7ed9a8cc4c6b6095b336e102dca0942bcc76f7805809f506ddec45b30c1a5",
+    "auto_after.boxes.f32": "9c7c681545d3508f01bb8d84176a725ec4052843c605cd54fd9f69026adfd83e",
+    "three_cores_perf.log": "0ced4f4268184c41d04784bd8890a1156f08f7eaa261e7c8794299912b525d8d",
+    "three_cores.perf.txt": "c2b82f986d205b85eca87e12840dc8bbac12f45a8eeafee0540678b169264381"
+  }
+}

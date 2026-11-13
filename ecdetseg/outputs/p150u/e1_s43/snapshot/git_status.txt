@@ -1,0 +1,16 @@
+ M ecdetseg/audit.md
+ M ecdetseg/ecosystem.config.js
+ M ecdetseg/engine/solver/ec_engine.py
+ M ecdetseg/engine/solver/ec_solver.py
+ M ecdetseg/outputs/p74u/e2_s42/log.txt
+ M ecdetseg/outputs/p74u/e2_s42/summary/events.out.tfevents.1791865547.rainsin.373975.0
+ M ecdetseg/scripts/polt.py
+ M ecdetseg/train.py
+?? ecdetseg/configs/ecdet/ecdet_s_p150u.yml
+?? ecdetseg/configs/ecdet/protocol/p150u.yml
+?? ecdetseg/engine/early_stop.py
+?? ecdetseg/outputs/p150u/
+?? ecdetseg/outputs/p74u/e2_s42/dfine_curve.png
+?? ecdetseg/scripts/bench_throughput.sh
+?? ecdetseg/scripts/clean_ckpts.sh
+?? ecdetseg/scripts/test_early_stop.py

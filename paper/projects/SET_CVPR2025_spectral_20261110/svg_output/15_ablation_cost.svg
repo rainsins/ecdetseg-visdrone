@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial" data-pptx-page-role="content">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#FFFFFF"/>
+<g id="header" data-pptx-bounds="56 30 1168 112"><text x="56" y="52" font-size="16" fill="#087E8B">03 / 消融与训练成本</text><text x="56" y="111" font-size="40" font-weight="bold" fill="#142D4E">联合效果最好，训练成本不能忽略</text></g>
+<g id="ablation-evidence" data-pptx-bounds="56 156 1168 293"><image href="../images/table5.png" x="56" y="156" width="1140" height="292.42" preserveAspectRatio="xMidYMid meet"/></g>
+<g id="accuracy-ablation" data-pptx-bounds="56 470 588 173"><text x="56" y="502" font-size="24" font-weight="bold" fill="#087E8B">12.0 → 12.7 / 13.9 / 13.2 / 14.2 AP</text><text x="56" y="537" font-size="20" fill="#58677A">基线 → 全图平滑 / HBS / API / SET</text><text x="56" y="579" font-size="24" fill="#243447">联合优于单模块，但1.9+1.2 ≠ 2.2。</text><text x="56" y="620" font-size="20" fill="#58677A">不能据此声称增益可加，或证明两个模块无冗余。</text></g>
+<g id="training-cost" data-pptx-bounds="690 470 534 173"><text x="690" y="506" font-size="30" font-weight="bold" fill="#BC5A24">SET耗时约2.47×（+147%）</text><text x="690" y="547" font-size="20" fill="#243447"><tspan x="690" dy="0">基线 / HBS / API / SET：</tspan><tspan x="690" dy="31">0.17 / 0.20 / 0.39 / 0.42秒每batch</tspan><tspan x="690" dy="40">参数和GFLOPs不是实测峰值显存。</tspan></text></g>
+<g id="footer" data-pptx-bounds="56 653 1168 34" font-size="16" fill="#58677A"><text x="56" y="675">来源：SET，PDF p.8，Table 5；全图平滑的正文增益与表不一致，此处采用表值</text><text x="1189" y="675">15</text></g>
+</svg>

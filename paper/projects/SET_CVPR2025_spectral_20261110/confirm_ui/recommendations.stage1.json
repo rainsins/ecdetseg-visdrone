@@ -1,0 +1,14 @@
+{
+  "stage": "stage1",
+  "lang": "zh",
+  "primary_language": "zh-CN",
+  "recommend": {"canvas": "ppt169"},
+  "audience": {"value": "熟悉目标检测基础的导师和课题组同学，关注微小目标检测机制及可复现实验。"},
+  "communication_intent": {"value": "依据用户提供的14页Markdown顺序，解释SET的频域诊断、HBS/API机制、实验收益与训练代价，并提出VisDrone与EdgeCrafter的研究启发。"},
+  "audience_outcome": {"value": "听众能解释为何区分背景与前景、理解两个模块的实现和证据，区分论文已验证结果与后续研究设想。"},
+  "core_message": {"value": "从频谱视角定位微小目标检测痛点，以HBS抑制背景高频噪声、API增强关键区域显著性；推理不增加模块，但训练时间明显增加。"},
+  "delivery_context": {"value": "中文论文组会现场汇报，约18—20分钟；14页内容，16:9。汇报人和日期沿用XXX及202X年X月X日占位。"},
+  "artifact_afterlife": {"value": "可编辑PPTX供会后复习及后续修改；论文原图标明图号/页码，排练讲稿放演讲者备注。"},
+  "content_divergence": {"value": "用这个md生成ppt,使用ppt-master, 不要用那个模板了，pdf文件在paper中的那个Sun_SET的文件"},
+  "template_options": {"schema_version": 1, "phase": "template", "lang": "zh", "default_mode": "free_design", "explicit_workspace_roots": []}
+}

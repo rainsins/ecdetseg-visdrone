@@ -28,6 +28,10 @@ def train_one_epoch(self_lr_scheduler, lr_scheduler, model: torch.nn.Module, cri
     criterion.train()
     metric_logger = MetricLogger(delimiter="  ")
     metric_logger.add_meter('lr', SmoothedValue(window_size=1, fmt='{value:.6f}'))
+    # Log EVERY optimizer param group (previously only pg0=backbone was logged, so the
+    # main LR group (5e-4) was missing from log.txt / LR curves).
+    for _pg_idx in range(len(optimizer.param_groups)):
+        metric_logger.add_meter(f'lr_pg{_pg_idx}', SmoothedValue(window_size=1, fmt='{value:.6f}'))
     header = 'Epoch: [{}]'.format(epoch)
 
     print_freq = kwargs.get('print_freq', 10)
@@ -107,7 +111,8 @@ def train_one_epoch(self_lr_scheduler, lr_scheduler, model: torch.nn.Module, cri
             sys.exit(1)
 
         metric_logger.update(loss=loss_value, **loss_dict_reduced)
-        metric_logger.update(lr=optimizer.param_groups[0]["lr"])
+        metric_logger.update(lr=optimizer.param_groups[0]["lr"],
+                             **{f'lr_pg{j}': pg["lr"] for j, pg in enumerate(optimizer.param_groups)})
 
         if writer and dist_utils.is_main_process() and global_step % 10 == 0:
             writer.add_scalar('Loss/total', loss_value.item(), global_step)

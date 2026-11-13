@@ -1,0 +1,11 @@
+# ============================================================
+# ECDet-S @ P30u + Mosaic@0.25  (ablation entry)
+# Same as ecdet_s_p30u.yml but with protocol/aug_mosaic025.yml included LAST.
+# ============================================================
+__include__:
+  - '../../dataset/visdrone.yml'
+  - '../../ecdet/ecdet.yml'
+  - '../../ecdet/struct_s.yml'
+  - '../../ecdet/protocol/res640.yml'
+  - '../../ecdet/protocol/p30u.yml'            # default: Mosaic OFF
+  - '../../ecdet/protocol/aug_mosaic025.yml'   # LAST -> re-enable Mosaic@0.25

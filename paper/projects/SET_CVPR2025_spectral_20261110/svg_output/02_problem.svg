@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial" data-pptx-page-role="content">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#FFFFFF" />
+<g id="header" data-pptx-bounds="56 30 1168 112"><text x="56" y="52" font-size="16" fill="#087E8B">01 / 问题与诊断</text><text x="56" y="111" font-size="40" font-weight="bold" fill="#142D4E">微小目标难在弱信号与强背景</text></g>
+<g id="problem-explanation" data-pptx-bounds="56 166 470 292"><text x="56" y="202" font-size="30" font-weight="bold" fill="#142D4E">目标小，信息预算更少</text><text x="56" y="252" font-size="24" fill="#243447"><tspan x="56" dy="0">tiny：通常不超过16×16像素。</tspan><tspan x="56" dy="38">AI-TOD平均尺寸仅12.8像素，</tspan><tspan x="56" dy="38">COCO平均为99.5像素。</tspan></text><text x="56" y="395" font-size="24" fill="#243447"><tspan x="56" dy="0">下采样损失细节；背景杂波</tspan><tspan x="56" dy="38">进一步掩盖微弱目标信号。</tspan></text></g>
+<g id="frequency-evidence" data-pptx-bounds="552 167 672 370"><image href="../images/fig2.png" x="562" y="174" width="652" height="337" preserveAspectRatio="xMidYMid meet" /><text x="562" y="531" font-size="16" fill="#58677A">Fig.2：不同目标经过特征编码后的频谱表现</text></g>
+<g id="performance-gap" data-pptx-bounds="56 553 1168 88"><rect x="56" y="553" width="1168" height="88" fill="#F1F5F9" /><text x="78" y="586" font-size="24" fill="#142D4E">DINO：中等目标37.6 AP → 极微小9.9 AP；FCOS极微小仅2.5 AP</text><text x="78" y="622" font-size="20" fill="#58677A">问题不只在“能不能看见”，还在“特征是否足够可分”。</text></g>
+<g id="footer" data-pptx-bounds="56 653 1168 34" fill="#58677A" font-size="16"><text x="56" y="675">来源：SET，CVPR 2025，PDF pp.1–2，Fig.2；Table 1</text><text x="1189" y="675">02</text></g>
+</svg>

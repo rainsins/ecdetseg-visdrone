@@ -1,0 +1,356 @@
+{
+  "schemaVersion": 1,
+  "source": "答辩2.pptx",
+  "mode": "tolerant",
+  "summary": {
+    "slides": 28,
+    "warnings": 35
+  },
+  "artifacts": {
+    "animationConfig": "animations.json",
+    "animationMedia": [],
+    "resources": [
+      "images/image1.jpeg",
+      "images/image2.png",
+      "images/image3.png",
+      "images/image4.png",
+      "images/image5.png",
+      "images/image6.png",
+      "images/image7.png"
+    ],
+    "notes": [],
+    "sourceTemplate": "sources/source.pptx",
+    "nativeStructure": "analysis/native_structure.json",
+    "roundtripManifest": "analysis/roundtrip_manifest.json"
+  },
+  "sourceDocument": {
+    "canvasPx": {
+      "width": 960.0,
+      "height": 540.0
+    },
+    "theme": {
+      "colors": {
+        "dk1": "#7F7F7F",
+        "lt1": "#FFFFFF",
+        "dk2": "#000000",
+        "lt2": "#FFFFFF",
+        "accent1": "#45888E",
+        "accent2": "#2E2E35",
+        "accent3": "#9F9EA2",
+        "accent4": "#D7D5D4",
+        "accent5": "#2E2E35",
+        "accent6": "#9F9EA2",
+        "hlink": "#CC3232",
+        "folHlink": "#FFC000"
+      },
+      "fonts": {
+        "majorLatin": "字魂59号-创粗黑",
+        "majorEastAsia": "字魂59号-创粗黑",
+        "minorLatin": "字魂59号-创粗黑",
+        "minorEastAsia": "字魂59号-创粗黑"
+      },
+      "ooxml": {
+        "encoding": "base64",
+        "sha256": "4911345ae8f2be8e9af82bdec745aa3f98cff8039b820a1b506ba9bebf7458a4",
+        "payload": "PGE6dGhlbWUgeG1sbnM6YT0iaHR0cDovL3NjaGVtYXMub3BlbnhtbGZvcm1hdHMub3JnL2RyYXdpbmdtbC8yMDA2L21haW4iIHhtbG5zOm5zMT0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9vZmZpY2UvdGhlbWVtbC8yMDEyL21haW4iIG5hbWU9IjNfT2ZmaWNlIOS4u+mimOKAi+KAiyI+PGE6dGhlbWVFbGVtZW50cz48YTpjbHJTY2hlbWUgbmFtZT0i6Ieq5a6a5LmJIDY2NCI+PGE6ZGsxPjxhOnNyZ2JDbHIgdmFsPSI3RjdGN0YiIC8+PC9hOmRrMT48YTpsdDE+PGE6c3JnYkNsciB2YWw9IkZGRkZGRiIgLz48L2E6bHQxPjxhOmRrMj48YTpzcmdiQ2xyIHZhbD0iMDAwMDAwIiAvPjwvYTpkazI+PGE6bHQyPjxhOnNyZ2JDbHIgdmFsPSJGRkZGRkYiIC8+PC9hOmx0Mj48YTphY2NlbnQxPjxhOnNyZ2JDbHIgdmFsPSI0NTg4OEUiIC8+PC9hOmFjY2VudDE+PGE6YWNjZW50Mj48YTpzcmdiQ2xyIHZhbD0iMkUyRTM1IiAvPjwvYTphY2NlbnQyPjxhOmFjY2VudDM+PGE6c3JnYkNsciB2YWw9IjlGOUVBMiIgLz48L2E6YWNjZW50Mz48YTphY2NlbnQ0PjxhOnNyZ2JDbHIgdmFsPSJEN0Q1RDQiIC8+PC9hOmFjY2VudDQ+PGE6YWNjZW50NT48YTpzcmdiQ2xyIHZhbD0iMkUyRTM1IiAvPjwvYTphY2NlbnQ1PjxhOmFjY2VudDY+PGE6c3JnYkNsciB2YWw9IjlGOUVBMiIgLz48L2E6YWNjZW50Nj48YTpobGluaz48YTpzcmdiQ2xyIHZhbD0iQ0MzMjMyIiAvPjwvYTpobGluaz48YTpmb2xIbGluaz48YTpzcmdiQ2xyIHZhbD0iRkZDMDAwIiAvPjwvYTpmb2xIbGluaz48L2E6Y2xyU2NoZW1lPjxhOmZvbnRTY2hlbWUgbmFtZT0ia3J6YXpic2UiPjxhOm1ham9yRm9udD48YTpsYXRpbiB0eXBlZmFjZT0i5a2X6a2CNTnlj7ct5Yib57KX6buRIiAvPjxhOmVhIHR5cGVmYWNlPSLlrZfprYI1OeWPty3liJvnspfpu5EiIC8+PGE6Y3MgdHlwZWZhY2U9IiIgLz48L2E6bWFqb3JGb250PjxhOm1pbm9yRm9udD48YTpsYXRpbiB0eXBlZmFjZT0i5a2X6a2CNTnlj7ct5Yib57KX6buRIiAvPjxhOmVhIHR5cGVmYWNlPSLlrZfprYI1OeWPty3liJvnspfpu5EiIC8+PGE6Y3MgdHlwZWZhY2U9IiIgLz48L2E6bWlub3JGb250PjwvYTpmb250U2NoZW1lPjxhOmZtdFNjaGVtZSBuYW1lPSJPZmZpY2Ug5Li76aKY4oCL4oCLIj48YTpmaWxsU3R5bGVMc3Q+PGE6c29saWRGaWxsPjxhOnNjaGVtZUNsciB2YWw9InBoQ2xyIiAvPjwvYTpzb2xpZEZpbGw+PGE6Z3JhZEZpbGwgcm90V2l0aFNoYXBlPSIxIj48YTpnc0xzdD48YTpncyBwb3M9IjAiPjxhOnNjaGVtZUNsciB2YWw9InBoQ2xyIj48YTpsdW1Nb2QgdmFsPSIxMTAwMDAiIC8+PGE6c2F0TW9kIHZhbD0iMTA1MDAwIiAvPjxhOnRpbnQgdmFsPSI2NzAwMCIgLz48L2E6c2NoZW1lQ2xyPjwvYTpncz48YTpncyBwb3M9IjUwMDAwIj48YTpzY2hlbWVDbHIgdmFsPSJwaENsciI+PGE6bHVtTW9kIHZhbD0iMTA1MDAwIiAvPjxhOnNhdE1vZCB2YWw9IjEwMzAwMCIgLz48YTp0aW50IHZhbD0iNzMwMDAiIC8+PC9hOnNjaGVtZUNscj48L2E6Z3M+PGE6Z3MgcG9zPSIxMDAwMDAiPjxhOnNjaGVtZUNsciB2YWw9InBoQ2xyIj48YTpsdW1Nb2QgdmFsPSIxMDUwMDAiIC8+PGE6c2F0TW9kIHZhbD0iMTA5MDAwIiAvPjxhOnRpbnQgdmFsPSI4MTAwMCIgLz48L2E6c2NoZW1lQ2xyPjwvYTpncz48L2E6Z3NMc3Q+PGE6bGluIGFuZz0iNTQwMDAwMCIgc2NhbGVkPSIwIiAvPjwvYTpncmFkRmlsbD48YTpncmFkRmlsbCByb3RXaXRoU2hhcGU9IjEiPjxhOmdzTHN0PjxhOmdzIHBvcz0iMCI+PGE6c2NoZW1lQ2xyIHZhbD0icGhDbHIiPjxhOnNhdE1vZCB2YWw9IjEwMzAwMCIgLz48YTpsdW1Nb2QgdmFsPSIxMDIwMDAiIC8+PGE6dGludCB2YWw9Ijk0MDAwIiAvPjwvYTpzY2hlbWVDbHI+PC9hOmdzPjxhOmdzIHBvcz0iNTAwMDAiPjxhOnNjaGVtZUNsciB2YWw9InBoQ2xyIj48YTpzYXRNb2QgdmFsPSIxMTAwMDAiIC8+PGE6bHVtTW9kIHZhbD0iMTAwMDAwIiAvPjxhOnNoYWRlIHZhbD0iMTAwMDAwIiAvPjwvYTpzY2hlbWVDbHI+PC9hOmdzPjxhOmdzIHBvcz0iMTAwMDAwIj48YTpzY2hlbWVDbHIgdmFsPSJwaENsciI+PGE6bHVtTW9kIHZhbD0iOTkwMDAiIC8+PGE6c2F0TW9kIHZhbD0iMTIwMDAwIiAvPjxhOnNoYWRlIHZhbD0iNzgwMDAiIC8+PC9hOnNjaGVtZUNscj48L2E6Z3M+PC9hOmdzTHN0PjxhOmxpbiBhbmc9IjU0MDAwMDAiIHNjYWxlZD0iMCIgLz48L2E6Z3JhZEZpbGw+PC9hOmZpbGxTdHlsZUxzdD48YTpsblN0eWxlTHN0PjxhOmxuIHc9IjYzNTAiIGNhcD0iZmxhdCIgY21wZD0ic25nIiBhbGduPSJjdHIiPjxhOnNvbGlkRmlsbD48YTpzY2hlbWVDbHIgdmFsPSJwaENsciIgLz48L2E6c29saWRGaWxsPjxhOnByc3REYXNoIHZhbD0ic29saWQiIC8+PGE6bWl0ZXIgbGltPSI4MDAwMDAiIC8+PC9hOmxuPjxhOmxuIHc9IjEyNzAwIiBjYXA9ImZsYXQiIGNtcGQ9InNuZyIgYWxnbj0iY3RyIj48YTpzb2xpZEZpbGw+PGE6c2NoZW1lQ2xyIHZhbD0icGhDbHIiIC8+PC9hOnNvbGlkRmlsbD48YTpwcnN0RGFzaCB2YWw9InNvbGlkIiAvPjxhOm1pdGVyIGxpbT0iODAwMDAwIiAvPjwvYTpsbj48YTpsbiB3PSIxOTA1MCIgY2FwPSJmbGF0IiBjbXBkPSJzbmciIGFsZ249ImN0ciI+PGE6c29saWRGaWxsPjxhOnNjaGVtZUNsciB2YWw9InBoQ2xyIiAvPjwvYTpzb2xpZEZpbGw+PGE6cHJzdERhc2ggdmFsPSJzb2xpZCIgLz48YTptaXRlciBsaW09IjgwMDAwMCIgLz48L2E6bG4+PC9hOmxuU3R5bGVMc3Q+PGE6ZWZmZWN0U3R5bGVMc3Q+PGE6ZWZmZWN0U3R5bGU+PGE6ZWZmZWN0THN0IC8+PC9hOmVmZmVjdFN0eWxlPjxhOmVmZmVjdFN0eWxlPjxhOmVmZmVjdExzdCAvPjwvYTplZmZlY3RTdHlsZT48YTplZmZlY3RTdHlsZT48YTplZmZlY3RMc3Q+PGE6b3V0ZXJTaGR3IGJsdXJSYWQ9IjU3MTUwIiBkaXN0PSIxOTA1MCIgZGlyPSI1NDAwMDAwIiBhbGduPSJjdHIiIHJvdFdpdGhTaGFwZT0iMCI+PGE6c3JnYkNsciB2YWw9IjAwMDAwMCI+PGE6YWxwaGEgdmFsPSI2MzAwMCIgLz48L2E6c3JnYkNscj48L2E6b3V0ZXJTaGR3PjwvYTplZmZlY3RMc3Q+PC9hOmVmZmVjdFN0eWxlPjwvYTplZmZlY3RTdHlsZUxzdD48YTpiZ0ZpbGxTdHlsZUxzdD48YTpzb2xpZEZpbGw+PGE6c2NoZW1lQ2xyIHZhbD0icGhDbHIiIC8+PC9hOnNvbGlkRmlsbD48YTpzb2xpZEZpbGw+PGE6c2NoZW1lQ2xyIHZhbD0icGhDbHIiPjxhOnRpbnQgdmFsPSI5NTAwMCIgLz48YTpzYXRNb2QgdmFsPSIxNzAwMDAiIC8+PC9hOnNjaGVtZUNscj48L2E6c29saWRGaWxsPjxhOmdyYWRGaWxsIHJvdFdpdGhTaGFwZT0iMSI+PGE6Z3NMc3Q+PGE6Z3MgcG9zPSIwIj48YTpzY2hlbWVDbHIgdmFsPSJwaENsciI+PGE6dGludCB2YWw9IjkzMDAwIiAvPjxhOnNhdE1vZCB2YWw9IjE1MDAwMCIgLz48YTpzaGFkZSB2YWw9Ijk4MDAwIiAvPjxhOmx1bU1vZCB2YWw9IjEwMjAwMCIgLz48L2E6c2NoZW1lQ2xyPjwvYTpncz48YTpncyBwb3M9IjUwMDAwIj48YTpzY2hlbWVDbHIgdmFsPSJwaENsciI+PGE6dGludCB2YWw9Ijk4MDAwIiAvPjxhOnNhdE1vZCB2YWw9IjEzMDAwMCIgLz48YTpzaGFkZSB2YWw9IjkwMDAwIiAvPjxhOmx1bU1vZCB2YWw9IjEwMzAwMCIgLz48L2E6c2NoZW1lQ2xyPjwvYTpncz48YTpncyBwb3M9IjEwMDAwMCI+PGE6c2NoZW1lQ2xyIHZhbD0icGhDbHIiPjxhOnNoYWRlIHZhbD0iNjMwMDAiIC8+PGE6c2F0TW9kIHZhbD0iMTIwMDAwIiAvPjwvYTpzY2hlbWVDbHI+PC9hOmdzPjwvYTpnc0xzdD48YTpsaW4gYW5nPSI1NDAwMDAwIiBzY2FsZWQ9IjAiIC8+PC9hOmdyYWRGaWxsPjwvYTpiZ0ZpbGxTdHlsZUxzdD48L2E6Zm10U2NoZW1lPjwvYTp0aGVtZUVsZW1lbnRzPjxhOm9iamVjdERlZmF1bHRzIC8+PGE6ZXh0cmFDbHJTY2hlbWVMc3QgLz48YTpleHRMc3Q+PGE6ZXh0IHVyaT0iezA1QTRDMjVDLTA4NUUtNDM0MC04NUEzLUE1NTMxRTUxMERCMn0iPjxuczE6dGhlbWVGYW1pbHkgbmFtZT0iT2ZmaWNlIFRoZW1lIiBpZD0iezYyRjkzOUI2LTkzQUYtNERCOC05QzZCLUQ2QzdERkRDNTg5Rn0iIHZpZD0iezRBM0M0NkU4LTYxQ0MtNDYwMy1BNTg5LTc0MjJBNDdBOEU0QX0iIC8+PC9hOmV4dD48L2E6ZXh0THN0PjwvYTp0aGVtZT4="
+      }
+    }
+  },
+  "diagnostics": [
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide1.xml",
+      "slide_index": 1,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide2.xml",
+      "slide_index": 2,
+      "severity": "warning"
+    },
+    {
+      "code": "animation-not-reconstructed",
+      "message": "Object animation timing was not reconstructed: unsupported timing feature(s): bldLst, bldP",
+      "fallback": "keep this timing in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide2.xml",
+      "slide_index": 2,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide3.xml",
+      "slide_index": 3,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide4.xml",
+      "slide_index": 4,
+      "severity": "warning"
+    },
+    {
+      "code": "geometry-degenerate-frame",
+      "message": "Source geometry has a missing or degenerate frame: 449.96147473 376.96270454 81.18737395 0",
+      "fallback": "retain evaluated geometry and the exact source frame",
+      "part_path": "ppt/slides/slide4.xml",
+      "slide_index": 4,
+      "shape_id": "89",
+      "shape_name": "任意多边形 88",
+      "shape_kind": "sp",
+      "severity": "warning"
+    },
+    {
+      "code": "geometry-degenerate-frame",
+      "message": "Source geometry has a missing or degenerate frame: 370.15004625 378.36001625 79.81142848 0",
+      "fallback": "retain evaluated geometry and the exact source frame",
+      "part_path": "ppt/slides/slide4.xml",
+      "slide_index": 4,
+      "shape_id": "91",
+      "shape_name": "任意多边形 90",
+      "shape_kind": "sp",
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide5.xml",
+      "slide_index": 5,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide6.xml",
+      "slide_index": 6,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide7.xml",
+      "slide_index": 7,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide8.xml",
+      "slide_index": 8,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide9.xml",
+      "slide_index": 9,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide10.xml",
+      "slide_index": 10,
+      "severity": "warning"
+    },
+    {
+      "code": "animation-not-reconstructed",
+      "message": "Object animation timing was not reconstructed: p:bldP shape id 26 must reference a text-bearing p:sp; found sp",
+      "fallback": "keep this timing in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide10.xml",
+      "slide_index": 10,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide11.xml",
+      "slide_index": 11,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide12.xml",
+      "slide_index": 12,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide13.xml",
+      "slide_index": 13,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide14.xml",
+      "slide_index": 14,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide15.xml",
+      "slide_index": 15,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide16.xml",
+      "slide_index": 16,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide17.xml",
+      "slide_index": 17,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide18.xml",
+      "slide_index": 18,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide19.xml",
+      "slide_index": 19,
+      "severity": "warning"
+    },
+    {
+      "code": "effect-unsupported",
+      "message": "unsupported-effect:innerShdw",
+      "fallback": "retain the base object and record blocking effect metadata",
+      "part_path": "ppt/slides/slide19.xml",
+      "slide_index": 19,
+      "shape_id": "53",
+      "shape_name": "椭圆 52",
+      "shape_kind": "sp",
+      "severity": "warning"
+    },
+    {
+      "code": "effect-unsupported",
+      "message": "unsupported-effect:innerShdw",
+      "fallback": "retain the base object and record blocking effect metadata",
+      "part_path": "ppt/slides/slide19.xml",
+      "slide_index": 19,
+      "shape_id": "56",
+      "shape_name": "椭圆 55",
+      "shape_kind": "sp",
+      "severity": "warning"
+    },
+    {
+      "code": "effect-unsupported",
+      "message": "unsupported-effect:innerShdw",
+      "fallback": "retain the base object and record blocking effect metadata",
+      "part_path": "ppt/slides/slide19.xml",
+      "slide_index": 19,
+      "shape_id": "59",
+      "shape_name": "椭圆 58",
+      "shape_kind": "sp",
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide20.xml",
+      "slide_index": 20,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide21.xml",
+      "slide_index": 21,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide22.xml",
+      "slide_index": 22,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide23.xml",
+      "slide_index": 23,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide24.xml",
+      "slide_index": 24,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide25.xml",
+      "slide_index": 25,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide26.xml",
+      "slide_index": 26,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide27.xml",
+      "slide_index": 27,
+      "severity": "warning"
+    },
+    {
+      "code": "transition-not-reconstructed",
+      "message": "Slide transition was not reconstructed: legacy p:transition@spd cannot be represented exactly by animations.json duration",
+      "fallback": "keep this transition in the source PPTX through direct native preservation",
+      "part_path": "ppt/slides/slide28.xml",
+      "slide_index": 28,
+      "severity": "warning"
+    }
+  ]
+}

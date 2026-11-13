@@ -1,0 +1,28 @@
+{
+  "schema": "ppt-master.source_to_md.profile.v1",
+  "converter": "pdf_to_md.py",
+  "conversion_type": "pdf",
+  "source": {
+    "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/Sun_SET_Spectral_Enhancement_for_Tiny_Object_Detection_CVPR_2025_paper.pdf",
+    "name": "Sun_SET_Spectral_Enhancement_for_Tiny_Object_Detection_CVPR_2025_paper.pdf",
+    "suffix": ".pdf",
+    "kind": "file",
+    "exists": true,
+    "size_bytes": 1684001
+  },
+  "outputs": {
+    "markdown": "Sun_SET_Spectral_Enhancement_for_Tiny_Object_Detection_CVPR_2025_paper.md",
+    "asset_dir": "Sun_SET_Spectral_Enhancement_for_Tiny_Object_Detection_CVPR_2025_paper_files",
+    "image_manifest": "Sun_SET_Spectral_Enhancement_for_Tiny_Object_Detection_CVPR_2025_paper_files/image_manifest.json",
+    "image_count": 38
+  },
+  "markdown": {
+    "line_count": 671,
+    "char_count": 57448,
+    "heading_count": 11,
+    "table_count": 4,
+    "image_ref_count": 38,
+    "link_count": 0
+  },
+  "warnings": []
+}

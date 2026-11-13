@@ -1,0 +1,426 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/FOdk56tHZBTzQSWTiDvgkJ/kq9s</id>
+  <title>arXiv Query: search_query=&amp;id_list=2607.05176,2604.26806,2604.14884,2601.18597,2512.07078,2510.26630,2507.00825,2504.11470,2601.02747,2602.22712,2601.02837,2509.23056,2603.22841,2510.15385,2609.14383&amp;start=0&amp;max_results=15</title>
+  <updated>2026-11-13T13:03:06Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=15&amp;id_list=2607.05176,2604.26806,2604.14884,2601.18597,2512.07078,2510.26630,2507.00825,2504.11470,2601.02747,2602.22712,2601.02837,2509.23056,2603.22841,2510.15385,2609.14383" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>15</opensearch:itemsPerPage>
+  <opensearch:totalResults>15</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2602.22712v2</id>
+    <title>UFO-DETR: Frequency-Guided End-to-End Detector for UAV Tiny Objects</title>
+    <updated>2026-08-27T10:26:35Z</updated>
+    <link href="https://arxiv.org/abs/2602.22712v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.22712v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Small target detection in UAV imagery faces significant challenges such as scale variations, dense distribution, and the dominance of small targets. Existing algorithms rely on manually designed components, and general-purpose detectors are not optimized for UAV images, making it difficult to balance accuracy and complexity. To address these challenges, this paper proposes an end-to-end object detection framework, UFO-DETR, which integrates an LSKNet-based backbone network to optimize the receptive field and reduce the number of parameters. By combining the DAttention and AIFI modules, the model flexibly models multi-scale spatial relationships, improving multi-scale target detection performance. Additionally, the DynFreq-C3 module is proposed to enhance small target detection capability through cross-space frequency feature enhancement. Experimental results show that, compared to RT-DETR-L, the proposed method offers significant advantages in both detection performance and computational efficiency, providing an efficient solution for UAV edge computing.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-26T07:37:45Z</published>
+    <arxiv:comment>Accepted at CSCWD 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuankai Chen</name>
+    </author>
+    <author>
+      <name>Kai Lin</name>
+    </author>
+    <author>
+      <name>Qihong Wu</name>
+    </author>
+    <author>
+      <name>Xinxuan Yang</name>
+    </author>
+    <author>
+      <name>Jiashuo Lai</name>
+    </author>
+    <author>
+      <name>Ruoen Chen</name>
+    </author>
+    <author>
+      <name>Haonan Shi</name>
+    </author>
+    <author>
+      <name>Minfan He</name>
+    </author>
+    <author>
+      <name>Meihua Wang</name>
+    </author>
+    <arxiv:doi>10.1109/CSCWD68734.2026.11581572</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/CSCWD68734.2026.11581572" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.14383v1</id>
+    <title>Contour-Guided Spectral Routing for Robust Real-Time Pedestrian Detection</title>
+    <updated>2026-09-13T08:38:54Z</updated>
+    <link href="https://arxiv.org/abs/2609.14383v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.14383v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Real-time pedestrian detection in driving scenes is constrained by three coupled failure modes: tiny targets lose discriminative evidence, occlusion weakens geometric support, and weather or illumination changes distort appearance statistics. We formulate the detector through a unified \emph{contour-guided spectral routing} view rather than treating frequency processing, attention, and boundary reasoning as independent add-ons. The detector routes information in a prescribed order: spatial evidence is first augmented with global spectral context, deep representations then exchange spatial and spectral cues, and cross-scale fusion is finally conditioned on boundary--semantic disagreement. This ordering yields a compact representation pipeline in which low-frequency context stabilizes global structure while high-frequency evidence protects small-object contours. We further retain a wavelet-subband training transformation that perturbs low- and high-frequency coefficients independently, targeting appearance shifts caused by fog, rain, snow, and low illumination. The formulation exposes a single routing variable at each stage and distinguishes reusable signal transforms from the task-specific policy that decides where each signal is injected. On CityPersons, the proposed detector obtains 70.4 AP$_{50}$ and 44.2 AP$_{50:95}$, compared with 68.1 and 42.2 for RT-DETR, while the full wavelet-augmented configuration reaches 71.1 and 44.6.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-13T08:38:54Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sam Williams</name>
+    </author>
+    <author>
+      <name>Yuan Xiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.23056v3</id>
+    <title>FMC-DETR: Frequency-Decoupled Multi-Domain Coordination for Aerial-View Object Detection</title>
+    <updated>2026-10-26T02:46:42Z</updated>
+    <link href="https://arxiv.org/abs/2509.23056v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.23056v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Remote sensing object detection is a critical technology for real-world applications such as natural resource monitoring, traffic management, and UAV-based rescue. Detecting tiny objects in high-resolution aerial imagery remains challenging due to weak visual cues and insufficient global context modeling in complex scenes. Existing methods often suffer from delayed contextual interaction and limited nonlinear reasoning, which restrict their ability to effectively refine shallow representations and ultimately lead to suboptimal performance. To address these challenges, we propose FMC-DETR, a frequency-decoupled fusion framework for aerial-view object detection. First, we propose the Wavelet Kolmogorov-Arnold Transformer (WeKat) backbone, which employs cascaded wavelet transforms to enhance global low-frequency structure perception in shallow features while preserving fine-grained details, and further leverages Kolmogorov-Arnold networks for adaptive nonlinear modeling of multi-scale dependencies. Second, we introduce the Multi-Domain Feature Coordination (MDFC) module, which refines cross-scale fused representations through partial-channel spatial, spectral, and structural coordination, thereby strengthening small-object-related feature responses in cluttered scenes. Finally, we design the Compact Partial Fusion (CPF) module, which performs compact multi-branch aggregation with progressive partial refinement to improve feature diversity and multi-scale interaction while preserving stable information flow and reducing redundant perturbation. Extensive experiments across multiple remote sensing benchmarks demonstrate that FMC-DETR achieves state-of-the-art performance and significantly outperforming the baseline detector. Code is available at https://github.com/bloomingvision/FMC-DETR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-27T02:28:22Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ben Liang</name>
+    </author>
+    <author>
+      <name>Hongguang Wei</name>
+    </author>
+    <author>
+      <name>Yuan Liu</name>
+    </author>
+    <author>
+      <name>Bingwen Qiu</name>
+    </author>
+    <author>
+      <name>Yihong Wang</name>
+    </author>
+    <author>
+      <name>Xiubao Sui</name>
+    </author>
+    <author>
+      <name>Qian Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.15385v1</id>
+    <title>FreqPDE: Rethinking Positional Depth Embedding for Multi-View 3D Object Detection Transformers</title>
+    <updated>2025-10-17T07:36:54Z</updated>
+    <link href="https://arxiv.org/abs/2510.15385v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.15385v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Detecting 3D objects accurately from multi-view 2D images is a challenging yet essential task in the field of autonomous driving. Current methods resort to integrating depth prediction to recover the spatial information for object query decoding, which necessitates explicit supervision from LiDAR points during the training phase. However, the predicted depth quality is still unsatisfactory such as depth discontinuity of object boundaries and indistinction of small objects, which are mainly caused by the sparse supervision of projected points and the use of high-level image features for depth prediction. Besides, cross-view consistency and scale invariance are also overlooked in previous methods. In this paper, we introduce Frequency-aware Positional Depth Embedding (FreqPDE) to equip 2D image features with spatial information for 3D detection transformer decoder, which can be obtained through three main modules. Specifically, the Frequency-aware Spatial Pyramid Encoder (FSPE) constructs a feature pyramid by combining high-frequency edge clues and low-frequency semantics from different levels respectively. Then the Cross-view Scale-invariant Depth Predictor (CSDP) estimates the pixel-level depth distribution with cross-view and efficient channel attention mechanism. Finally, the Positional Depth Encoder (PDE) combines the 2D image features and 3D position embeddings to generate the 3D depth-aware features for query decoding. Additionally, hybrid depth supervision is adopted for complementary depth learning from both metric and distribution aspects. Extensive experiments conducted on the nuScenes dataset demonstrate the effectiveness and superiority of our proposed method.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-17T07:36:54Z</published>
+    <arxiv:comment>Accepted to ICCV2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haisheng Su</name>
+    </author>
+    <author>
+      <name>Junjie Zhang</name>
+    </author>
+    <author>
+      <name>Feixiang Song</name>
+    </author>
+    <author>
+      <name>Sanping Zhou</name>
+    </author>
+    <author>
+      <name>Wei Wu</name>
+    </author>
+    <author>
+      <name>Nanning Zheng</name>
+    </author>
+    <author>
+      <name>Junchi Yan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.18597v2</id>
+    <title>EFSI-DETR: Efficient Frequency-Semantic Integration for Real-Time Small Object Detection in UAV Imagery</title>
+    <updated>2026-05-25T05:33:03Z</updated>
+    <link href="https://arxiv.org/abs/2601.18597v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.18597v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Real-time small object detection in Unmanned Aerial Vehicle (UAV) imagery remains challenging due to limited feature representation and ineffective multi-scale fusion. Existing methods underutilize frequency information and rely on static convolutional operations, which constrain the capacity to obtain rich feature representations and hinder the effective exploitation of deep semantic features. To address these issues, we propose EFSI-DETR, a novel detection framework that integrates efficient semantic feature enhancement with dynamic frequency-spatial guidance. EFSI-DETR comprises two main components: (1) a Dynamic Frequency-Spatial Unified Synergy Network (DyFusNet) that jointly exploits frequency and spatial cues for robust multi-scale feature fusion, (2) an Efficient Semantic Feature Concentrator (ESFC) that enables deep semantic extraction with minimal computational cost. Furthermore, a Fine-grained Feature Retention (FFR) strategy is adopted to incorporate spatially rich shallow features during fusion to preserve fine-grained details, crucial for small object detection in UAV imagery. Extensive experiments on VisDrone and CODrone benchmarks demonstrate that our EFSI-DETR achieves the state-of-the-art performance with real-time efficiency, yielding improvement of \textbf{1.6}\% and \textbf{5.8}\% in AP and AP$_{s}$ on VisDrone, while obtaining \textbf{188} FPS inference speed on a single RTX 4090 GPU.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-26T15:41:37Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yu Xia</name>
+    </author>
+    <author>
+      <name>Chang Liu</name>
+    </author>
+    <author>
+      <name>Tianqi Xiang</name>
+    </author>
+    <author>
+      <name>Zhigang Tu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.02837v2</id>
+    <title>Breaking Self-Attention Failure: Rethinking Query Initialization for Infrared Small Target Detection</title>
+    <updated>2026-08-03T06:34:16Z</updated>
+    <link href="https://arxiv.org/abs/2601.02837v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.02837v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Infrared small target detection (IRSTD) faces significant challenges due to low signal-to-noise ratios, extremely small target sizes, and complex cluttered backgrounds. Although DETR-based detectors benefit from global context modeling, their query initialization can become unreliable in IRSTD because only a few encoder tokens correspond to targets, while the majority describe the background. We revisit this phenomenon and reveal that the target-relevant embeddings of IRST are inevitably overwhelmed by dominant background features due to the self-attention mechanism, leading to unreliable query initialization and inaccurate target localization. To address this issue, we propose SEF-DETR, a novel framework that refines query initialization through Patch-wise Spectral Screening (PSS), Frequency-Routed Examination (FRE), and Reliability-Consistency-aware Fusion (RCF). PSS encodes the radial and directional energy distributions of local Fourier spectra and aggregates overlapping patch predictions into a target-relevant density map. Guided by this map, FRE performs sparse deformable re-examination after each encoder layer, while retaining content-driven sampling to distinguish true targets from frequency-domain false alarms. RCF further re-ranks candidate queries according to spatial-frequency consistency and frequency reliability. Extensive experiments on three public IRSTD datasets demonstrate that SEF-DETR achieves superior detection performance over state-of-the-art methods with low computational overhead, providing a robust and efficient DETR-based solution for IRSTD.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-06T09:14:01Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuteng Liu</name>
+    </author>
+    <author>
+      <name>Duanni Meng</name>
+    </author>
+    <author>
+      <name>Yimian Dai</name>
+    </author>
+    <author>
+      <name>Maoxun Yuan</name>
+    </author>
+    <author>
+      <name>Xingxing Wei</name>
+    </author>
+    <author>
+      <name>Bo li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.22841v1</id>
+    <title>UAV-DETR: DETR for Anti-Drone Target Detection</title>
+    <updated>2026-03-24T06:29:51Z</updated>
+    <link href="https://arxiv.org/abs/2603.22841v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.22841v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Drone detection is pivotal in numerous security and counter-UAV applications. However, existing deep learning-based methods typically struggle to balance robust feature representation with computational efficiency. This challenge is particularly acute when detecting miniature drones against complex backgrounds under severe environmental interference. To address these issues, we introduce UAV-DETR, a novel framework that integrates a small-target-friendly architecture with real-time detection capabilities. Specifically, UAV-DETR features a WTConv-enhanced backbone and a Sliding Window Self-Attention (SWSA-IFI) encoder, capturing the high-frequency structural details of tiny targets while drastically reducing parameter overhead. Furthermore, we propose an Efficient Cross-Scale Feature Recalibration and Fusion Network (ECFRFN) to suppress background noise and aggregate multi-scale semantics. To further enhance accuracy, UAV-DETR incorporates a hybrid Inner-CIoU and NWD loss strategy, mitigating the extreme sensitivity of standard IoU metrics to minor positional deviations in small objects. Extensive experiments demonstrate that UAV-DETR significantly outperforms the baseline RT-DETR on our custom UAV dataset (+6.61% in mAP50:95, with a 39.8% reduction in parameters) and the public DUT-ANTI-UAV benchmark (+1.4% in Precision, +1.0% in F1-Score). These results establish UAV-DETR as a superior trade-off between efficiency and precision in counter-UAV object detection. The code is available at https://github.com/wd-sir/UAVDETR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-24T06:29:51Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jun Yang</name>
+    </author>
+    <author>
+      <name>Dong Wang</name>
+    </author>
+    <author>
+      <name>Hongxu Yin</name>
+    </author>
+    <author>
+      <name>Hongpeng Li</name>
+    </author>
+    <author>
+      <name>Jianxiong Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.14884v1</id>
+    <title>FSDETR: Frequency-Spatial Feature Enhancement for Small Object Detection</title>
+    <updated>2026-04-16T11:22:13Z</updated>
+    <link href="https://arxiv.org/abs/2604.14884v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.14884v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Small object detection remains a significant challenge due to feature degradation from downsampling, mutual occlusion in dense clusters, and complex background interference. To address these issues, this paper proposes FSDETR, a frequency-spatial feature enhancement framework built upon the RT-DETR baseline. By establishing a collaborative modeling mechanism, the method effectively leverages complementary structural information. Specifically, a Spatial Hierarchical Attention Block (SHAB) captures both local details and global dependencies to strengthen semantic representation. Furthermore, to mitigate occlusion in dense scenes, the Deformable Attention-based Intra-scale Feature Interaction (DA-AIFI) focuses on informative regions via dynamic sampling. Finally, the Frequency-Spatial Feature Pyramid Network (FSFPN) integrates frequency filtering with spatial edge extraction via the Cross-domain Frequency-Spatial Block (CFSB) to preserve fine-grained details. Experimental results show that with only 14.7M parameters, FSDETR achieves 13.9% APS on VisDrone 2019 and 48.95% AP50 tiny on TinyPerson, showing strong performance on small-object benchmarks. The code and models are available at https://github.com/YT3DVision/FSDETR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-16T11:22:13Z</published>
+    <arxiv:comment>6 pages, 6 figures,accepted to IJCNN 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jianchao Huang</name>
+    </author>
+    <author>
+      <name>Fengming Zhang</name>
+    </author>
+    <author>
+      <name>Haibo Zhu</name>
+    </author>
+    <author>
+      <name>Tao Yan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.02747v1</id>
+    <title>D$^3$R-DETR: DETR with Dual-Domain Density Refinement for Tiny Object Detection in Aerial Images</title>
+    <updated>2026-01-06T06:21:50Z</updated>
+    <link href="https://arxiv.org/abs/2601.02747v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.02747v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Detecting tiny objects plays a vital role in remote sensing intelligent interpretation, as these objects often carry critical information for downstream applications. However, due to the extremely limited pixel information and significant variations in object density, mainstream Transformer-based detectors often suffer from slow convergence and inaccurate query-object matching. To address these challenges, we propose D$^3$R-DETR, a novel DETR-based detector with Dual-Domain Density Refinement. By fusing spatial and frequency domain information, our method refines low-level feature maps and utilizes their rich details to predict more accurate object density map, thereby guiding the model to precisely localize tiny objects. Extensive experiments on the AI-TOD-v2 dataset demonstrate that D$^3$R-DETR outperforms existing state-of-the-art detectors for tiny object detection.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-06T06:21:50Z</published>
+    <arxiv:comment>This work has been submitted to the IEEE for possible publication</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zixiao Wen</name>
+    </author>
+    <author>
+      <name>Zhen Yang</name>
+    </author>
+    <author>
+      <name>Xianjie Bao</name>
+    </author>
+    <author>
+      <name>Lei Zhang</name>
+    </author>
+    <author>
+      <name>Xiantai Xiang</name>
+    </author>
+    <author>
+      <name>Wenshuai Li</name>
+    </author>
+    <author>
+      <name>Yuhan Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.00825v3</id>
+    <title>High-Frequency Semantics and Geometric Priors for End-to-End Detection Transformers in Challenging UAV Imagery</title>
+    <updated>2025-11-10T07:51:21Z</updated>
+    <link href="https://arxiv.org/abs/2507.00825v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.00825v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Object detection in Unmanned Aerial Vehicle (UAV) imagery is fundamentally challenged by a prevalence of small, densely packed, and occluded objects within cluttered backgrounds. Conventional detectors struggle with this domain, as they rely on hand-crafted components like pre-defined anchors and heuristic-based Non-Maximum Suppression (NMS), creating a well-known performance bottleneck in dense scenes. Even recent end-to-end frameworks have not been purpose-built to overcome these specific aerial challenges, resulting in a persistent performance gap. To bridge this gap, we introduce HEDS-DETR, a holistically enhanced real-time Detection Transformer tailored for aerial scenes. Our framework features three key innovations. First, we propose a novel High-Frequency Enhanced Semantics Network (HFESNet) backbone, which yields highly discriminative features by preserving critical high-frequency details alongside robust semantic context. Second, our Efficient Small Object Pyramid (ESOP) counteracts information loss by efficiently fusing high-resolution features, significantly boosting small object detection. Finally, we enhance decoder stability and localization precision with two synergistic components: Selective Query Recollection (SQR) and Geometry-Aware Positional Encoding (GAPE), which stabilize optimization and provide explicit spatial priors for dense object arrangements. On the VisDrone dataset, HEDS-DETR achieves a +3.8% AP and +5.1% AP50 gain over its baseline while reducing parameters by 4M and maintaining real-time speeds. This demonstrates a highly competitive accuracy-efficiency balance, especially for detecting dense and small objects in aerial scenes.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-01T14:56:56Z</published>
+    <arxiv:comment>12 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hongxing Peng</name>
+    </author>
+    <author>
+      <name>Lide Chen</name>
+    </author>
+    <author>
+      <name>Hui Zhu</name>
+    </author>
+    <author>
+      <name>Yan Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.07078v4</id>
+    <title>DFIR-DETR: Frequency-Domain Iterative Refinement and Dynamic Feature Aggregation for Small Object Detection</title>
+    <updated>2026-05-22T17:42:16Z</updated>
+    <link href="https://arxiv.org/abs/2512.07078v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.07078v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Small object detection in complex scenes exposes a fundamental tension in neural network design: backbone attention distributes computation uniformly regardless of content, pyramid necks inflate activation magnitudes during upsampling without norm compensation, and bottleneck convolutions progressively smooth high-frequency edge components through accumulated spatial filtering. In response, we develop DFIR-DETR by tracing each proposed module back to a specific, measurable deficiency in the RT-DETR baseline: uniform attention that ignores spatial complexity, norm drift that destabilises upsampled features, and spatial convolutions that progressively suppress the high-frequency components small objects depend on. On NEU-DET and VisDrone, DFIR-DETR achieves 92.9% and 51.6% mAP50 with only 11.7M parameters and 47.2 GFLOPs, demonstrating consistent gains across two qualitatively different detection domains.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-08T01:25:10Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bo Gao</name>
+    </author>
+    <author>
+      <name>Jingcheng Tong</name>
+    </author>
+    <author>
+      <name>Xingsheng Chen</name>
+    </author>
+    <author>
+      <name>Han Yu</name>
+    </author>
+    <author>
+      <name>Zichen Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.05176v3</id>
+    <title>FSDC-DETR: A Frequency-Spatial Domain Collaborative DETR for Small Object Detection</title>
+    <updated>2026-08-24T05:46:18Z</updated>
+    <link href="https://arxiv.org/abs/2607.05176v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.05176v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Small object detection (SOD) remains a challenging task in real-world applications. Despite recent advances, existing detectors remain limited by rigid processing that entangle spatial aggregation with implicit frequency aliasing and truncation, leading to inadequate preservation of high-frequency components for SOD. To tackle these limitations, we propose a Frequency-Spatial Domain Collaborative Detection Transformer (FSDC-DETR), a novel collaborative framework that explicitly models complementary spatial and frequency representations. Specifically, we first introduce Dual-Branch Frequency-Spatial Adaptive Fusion (DBFSAF) to enhance frequency diversity and adaptively capture frequency-spatial domain discriminative representations. Building on these representations, a frequency-spatial interaction scheme is further explored within the hybrid encoder to enable progressive feature propagation to the decoder. In particular, structure-aware frequency-spatial aggregation is achieved through Shunt Frequency-Spatial Feature Fusion (SFS-FF), establishing bidirectional interaction and progressive cross-scale propagation between frequency and spatial representations for coherent discriminative modeling. Meanwhile, informative high-frequency responses are preserved during scale transitions through Frequency-Spatial Dynamic Downsampling (FSD-Down), thereby minimizing frequency degradation throughout multi-scale fusion for the precise SOD. Experimental results demonstrate that FSDC-DETR achieves state-of-the-art performance, improving AP by 6.4 on VisDrone-DET2019 and 6.6 on AITODv2, with gains of 6.8 and 6.9 AP for small objects. The code is available at github.com/nevereverinsomnia/FSDC-DETR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-06T14:57:33Z</published>
+    <arxiv:comment>Accepted by ECCV 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Aiwen Liu</name>
+    </author>
+    <author>
+      <name>Chengguang Zhu</name>
+    </author>
+    <author>
+      <name>Gang Wang</name>
+    </author>
+    <author>
+      <name>Dandan Zhu</name>
+    </author>
+    <author>
+      <name>Haodong Lin</name>
+    </author>
+    <author>
+      <name>Yan Wang</name>
+    </author>
+    <author>
+      <name>Huiyu Zhou</name>
+    </author>
+    <author>
+      <name>Zhengyi Pan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.26630v1</id>
+    <title>PT-DETR: Small Target Detection Based on Partially-Aware Detail Focus</title>
+    <updated>2025-10-30T15:57:20Z</updated>
+    <link href="https://arxiv.org/abs/2510.26630v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.26630v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To address the challenges in UAV object detection, such as complex backgrounds, severe occlusion, dense small objects, and varying lighting conditions,this paper proposes PT-DETR based on RT-DETR, a novel detection algorithm specifically designed for small objects in UAV imagery. In the backbone network, we introduce the Partially-Aware Detail Focus (PADF) Module to enhance feature extraction for small objects. Additionally,we design the Median-Frequency Feature Fusion (MFFF) module,which effectively improves the model's ability to capture small-object details and contextual information. Furthermore,we incorporate Focaler-SIoU to strengthen the model's bounding box matching capability and increase its sensitivity to small-object features, thereby further enhancing detection accuracy and robustness. Compared with RT-DETR, our PT-DETR achieves mAP improvements of 1.6% and 1.7% on the VisDrone2019 dataset with lower computational complexity and fewer parameters, demonstrating its robustness and feasibility for small-object detection tasks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-30T15:57:20Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bingcong Huo</name>
+    </author>
+    <author>
+      <name>Zhiming Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.11470v1</id>
+    <title>SO-DETR: Leveraging Dual-Domain Features and Knowledge Distillation for Small Object Detection</title>
+    <updated>2025-04-11T13:47:37Z</updated>
+    <link href="https://arxiv.org/abs/2504.11470v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.11470v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Detection Transformer-based methods have achieved significant advancements in general object detection. However, challenges remain in effectively detecting small objects. One key difficulty is that existing encoders struggle to efficiently fuse low-level features. Additionally, the query selection strategies are not effectively tailored for small objects. To address these challenges, this paper proposes an efficient model, Small Object Detection Transformer (SO-DETR). The model comprises three key components: a dual-domain hybrid encoder, an enhanced query selection mechanism, and a knowledge distillation strategy. The dual-domain hybrid encoder integrates spatial and frequency domains to fuse multi-scale features effectively. This approach enhances the representation of high-resolution features while maintaining relatively low computational overhead. The enhanced query selection mechanism optimizes query initialization by dynamically selecting high-scoring anchor boxes using expanded IoU, thereby improving the allocation of query resources. Furthermore, by incorporating a lightweight backbone network and implementing a knowledge distillation strategy, we develop an efficient detector for small objects. Experimental results on the VisDrone-2019-DET and UAVVaste datasets demonstrate that SO-DETR outperforms existing methods with similar computational demands. The project page is available at https://github.com/ValiantDiligent/SO_DETR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-11T13:47:37Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Huaxiang Zhang</name>
+    </author>
+    <author>
+      <name>Hao Zhang</name>
+    </author>
+    <author>
+      <name>Aoran Mei</name>
+    </author>
+    <author>
+      <name>Zhongxue Gan</name>
+    </author>
+    <author>
+      <name>Guo-Niu Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.26806v1</id>
+    <title>ViCrop-Det: Spatial Attention Entropy Guided Cropping for Training-Free Small-Object Detection</title>
+    <updated>2026-04-29T15:35:03Z</updated>
+    <link href="https://arxiv.org/abs/2604.26806v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.26806v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Transformer-based architectures have established a dominant paradigm in global semantic perception; however, they remain fundamentally constrained by the profound spatial heterogeneity inherent in natural images. Specifically, the imposition of a uniform global receptive field across regions of varying information density inevitably leads to local feature degradation, particularly in dense conflict zones populated by microscopic targets. To address this mechanistic limitation, we propose ViCrop-Det, a training-free inference framework that introduces adaptive spatial trust region shrinkage. Inspired by the use of attention entropy in anomaly segmentation, ViCrop-Det leverages the detection decoder's cross-attention distribution as an endogenous probe. By utilizing Spatial Attention Entropy (SAE) to heuristically evaluate local spatial ambiguity, the framework executes dynamic spatial routing, allocating a fixed computational budget exclusively to regions exhibiting both high target saliency and high cognitive uncertainty. By shrinking the spatial trust region and injecting high-frequency localized observations, ViCrop-Det actively resolves spatial ambiguity and recovers fine-grained features without requiring architectural modifications. Extensive evaluations on VisDrone and DOTA-v1.5 demonstrate that ViCrop-Det yields competitive performance enhancements, consistently adding +1-3 mAP@50 to RT-DETR-R50 and Deformable DETR with a marginal 20-23\% latency overhead. On MS COCO, $AP_{S}$ improves while $AP_{M}/AP_{L}$ remains stable, indicating precise fine-scale refinement without compromising the global spatial prior. Under compute-matched settings, our adaptive routing strategy comprehensively surpasses uniform slicing baselines, achieving a highly optimized accuracy-speed trade-off.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-29T15:35:03Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hui Wang</name>
+    </author>
+    <author>
+      <name>Hongze Li</name>
+    </author>
+    <author>
+      <name>Wei Chen</name>
+    </author>
+    <author>
+      <name>Xiaojin Zhang</name>
+    </author>
+  </entry>
+</feed>

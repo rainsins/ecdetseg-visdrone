@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # ============================================================
-# P30u experiment launcher / guardian  (EdgeCrafter ecdetseg)
+# P150u-default experiment launcher / guardian (legacy overrides supported)
 #
 #   run_exp.sh <init: e1|e2|e3> <seed> [extra -u overrides...]
 #
 # Responsibilities:
 #   * one place for the E1/E2/E3 init table
-#   * fixed output dir  outputs/p30u/<init>_s<seed>/
+#   * fixed output dir  outputs/p150u/<init>_s<seed>/
 #   * start snapshot (config dump, git hash/diff, pixi.lock hash, cmd, time)
 #   * crash-resilient resume  (last.pth -> newest good checkpoint -> cold)
 #   * progress-aware retry    (stop after N attempts with no new checkpoint)
@@ -17,13 +17,12 @@
 # Env (required/optional):
 #   VISDRONE_ROOT   required; dataset root (paths are injected via -u)
 #   WEIGHTS_DIR     optional; dir holding ecdet_s.pth / ecdet_s_o3652coco.pth (default: ecdetseg/)
-#   P30U_CONFIG     optional; entry config (default P30u). P74U_CONFIG also honoured
-#                   (74-epoch baseline); P30U_CONFIG takes precedence.
-#   P30U_OUT_ROOT   optional; outputs root (default ecdetseg/outputs/p30u).
-#                   P74U_OUT_ROOT also honoured; P30U_OUT_ROOT takes precedence.
-#   P30U_RES        optional; input resolution (default 640). P74U_RES also honoured
-#                   (P74U_RES takes precedence).
+#   EXP_CONFIG / P150U_CONFIG     entry config (default P150u)
+#   EXP_OUT_ROOT / P150U_OUT_ROOT output root (default outputs/p150u)
+#   EXP_RES / P150U_RES           resolution (default 640)
+#   Legacy P30U/P74U variables remain lower-priority compatibility aliases.
 #   NO_PROGRESS_LIMIT, RETRY_WAIT  optional tunables
+#   EXP_DEVICE      optional train/eval device (default xpu; e.g. cuda:0)
 #   PYTHON_BIN      optional test hook: replace `pixi run python train.py`
 #   SKIP_FINAL_EVAL / SKIP_PLOT / FORCE_FINAL_EVAL  optional toggles
 #   FAKE_CKPT_OK, FAKE_*  test hooks (see scripts/fake_train.sh)
@@ -36,7 +35,7 @@ Usage: run_exp.sh <e1|e2|e3> <seed> [extra -u key=value ...]
   e1 : cold start, no tuning checkpoint (backbone from ViTAdapter.weights_path)
   e2 : -t $WEIGHTS_DIR/ecdet_s.pth
   e3 : -t $WEIGHTS_DIR/ecdet_s_o3652coco.pth
-Env: VISDRONE_ROOT (required), WEIGHTS_DIR, P30U_RES/P74U_RES, NO_PROGRESS_LIMIT, RETRY_WAIT
+Env: VISDRONE_ROOT (required), WEIGHTS_DIR, EXP_CONFIG, EXP_OUT_ROOT, EXP_RES, NO_PROGRESS_LIMIT, RETRY_WAIT
 EOF
 }
 
@@ -60,12 +59,13 @@ GIT_ROOT="$(cd "$REPO_ROOT" && git rev-parse --show-toplevel 2>/dev/null || echo
 # dir that already carries a snapshot (its data paths are reused).
 : "${VISDRONE_ROOT:=}"
 WEIGHTS_DIR="${WEIGHTS_DIR:-$PROJECT_DIR}"
-# Protocol selection: P30U_* (default) or P74U_* (74-epoch baseline).
-CONFIG="${P30U_CONFIG:-${P74U_CONFIG:-configs/ecdet/ecdet_s_p30u.yml}}"
-# Input resolution: P74U_RES wins, else P30U_RES, else 640.
-RES="${P74U_RES:-${P30U_RES:-640}}"
+# Protocol selection: canonical EXP_* > P150U_* > legacy aliases.
+CONFIG="${EXP_CONFIG:-${P150U_CONFIG:-${P30U_CONFIG:-${P74U_CONFIG:-configs/ecdet/ecdet_s_p150u.yml}}}}"
+# Resolution: EXP_RES > P150U_RES > P74U_RES > P30U_RES > 640.
+RES="${EXP_RES:-${P150U_RES:-${P74U_RES:-${P30U_RES:-640}}}}"
 NO_PROGRESS_LIMIT="${NO_PROGRESS_LIMIT:-3}"
 RETRY_WAIT="${RETRY_WAIT:-30}"
+DEVICE="${EXP_DEVICE:-xpu}"
 
 # ----- init table (single source of truth) -----
 case "$INIT" in
@@ -74,12 +74,19 @@ case "$INIT" in
   e3) TUNING="$WEIGHTS_DIR/ecdet_s_o3652coco.pth" ;;
 esac
 
-if [ -n "${P30U_OUT_ROOT:-}" ]; then
+if [ -n "${EXP_OUT_ROOT:-}" ]; then
+  OUT_ROOT="$EXP_OUT_ROOT"
+elif [ -n "${P150U_OUT_ROOT:-}" ]; then
+  OUT_ROOT="$P150U_OUT_ROOT"
+elif [ -n "${P30U_OUT_ROOT:-}" ]; then
   OUT_ROOT="$P30U_OUT_ROOT"
 elif [ -n "${P74U_OUT_ROOT:-}" ]; then
   OUT_ROOT="$P74U_OUT_ROOT"
 else
-  OUT_ROOT="$PROJECT_DIR/outputs/p30u"
+  case "$CONFIG" in
+    *p30u*|*p74u*) echo 'run_exp: archived config requires an explicit output root' >&2; exit 2 ;;
+  esac
+  OUT_ROOT="$PROJECT_DIR/outputs/p150u"
 fi
 OUT_DIR="$OUT_ROOT/${INIT}_s${SEED}"
 export OUT_DIR                       # visible to train hook / fake_train.sh
@@ -278,7 +285,7 @@ forward_signal() {
 trap forward_signal INT TERM
 
 build_cmd() {   # $@ = mode args (-r ckpt | -t ckpt | nothing)
-  TRAIN_ARGS=( -c "$CONFIG" -d xpu "$@" -u "${OVERRIDES[@]}" )
+  TRAIN_ARGS=( -c "$CONFIG" -d "$DEVICE" "$@" -u "${OVERRIDES[@]}" )
   if [ -n "${PYTHON_BIN:-}" ]; then
     CMD=( "$PYTHON_BIN" "${TRAIN_ARGS[@]}" )
   else
@@ -313,12 +320,12 @@ do_final_eval() {
     local out="$OUT_DIR/eval_${label}.json"
     [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 0; }
     if [ -n "${EVAL_BIN:-}" ]; then                    # test hook (no XPU)
-      "$EVAL_BIN" -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" --weights "$weights" \
+      "$EVAL_BIN" -c "$CONFIG" -d "$DEVICE" -r "$ckpt" -o "$out" --weights "$weights" \
         -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" >> "$TRAIN_LOG" 2>&1
     else
       ( cd "$PROJECT_DIR" && \
         pixi run --manifest-path "$MANIFEST" python scripts/eval_final.py \
-          -c "$CONFIG" -d xpu -r "$ckpt" -o "$out" --weights "$weights" \
+          -c "$CONFIG" -d "$DEVICE" -r "$ckpt" -o "$out" --weights "$weights" \
           -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1
     fi
     if [ -f "$out" ]; then
@@ -353,14 +360,14 @@ do_plot() {
 
 # ============================================================
 snapshot
-log "=== P30u guardian start | init=$INIT seed=$SEED out=$OUT_DIR ==="
+log "=== experiment guardian start | init=$INIT seed=$SEED out=$OUT_DIR ==="
 log "config=$CONFIG tuning=${TUNING:-<none>} res=${RES}"
 
 if [ -f "$DONE_FILE" ]; then
   log "DONE marker already present -> training complete; running final eval only. (delete $DONE_FILE to retrain)"
   do_final_eval
   do_plot
-  log "=== P30u guardian done ==="
+  log "=== experiment guardian done ==="
   exit 0
 fi
 
@@ -427,4 +434,4 @@ done
 do_final_eval
 do_plot
 
-log "=== P30u guardian done ==="
+log "=== experiment guardian done ==="

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial" data-pptx-page-role="content">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#FFFFFF" />
+<g id="header" data-pptx-bounds="56 30 1168 112"><text x="56" y="52" font-size="16" fill="#087E8B">03 / 跨数据集验证</text><text x="56" y="111" font-size="40" font-weight="bold" fill="#142D4E">跨数据集有效，但结论要保留边界</text></g>
+<g id="visdrone-results" data-pptx-bounds="56 154 558 353"><text x="56" y="184" font-size="28" font-weight="bold" fill="#087E8B">VisDrone · FCOS +2.0 AP</text><image href="../images/table2.png" x="56" y="208" width="542" height="264" preserveAspectRatio="xMidYMid meet" /><text x="56" y="500" font-size="20" fill="#243447">19.9 → 21.9；RFLA：27.2 → 28.5</text></g>
+<g id="dota-results" data-pptx-bounds="666 154 558 353"><text x="666" y="184" font-size="28" font-weight="bold" fill="#087E8B">DOTA · FCOS +2.9 AP</text><image href="../images/table3.png" x="666" y="208" width="542" height="237" preserveAspectRatio="xMidYMid meet" /><text x="666" y="500" font-size="20" fill="#243447">31.8 → 34.7；航拍场景仍有增益</text></g>
+<g id="coco-table" data-pptx-bounds="56 531 558 110"><text x="56" y="556" font-size="20" font-weight="bold" fill="#142D4E">COCO总体AP：36.4 → 37.4（+1.0）</text><image href="../images/table4.png" x="56" y="570" width="435" height="70.45" preserveAspectRatio="xMidYMid meet" /></g>
+<g id="coco-inconsistency" data-pptx-bounds="666 531 558 111" font-size="20"><text x="666" y="556" font-weight="bold" fill="#BC5A24">原论文存在一处数值矛盾</text><text x="666" y="588" fill="#243447"><tspan x="666" dy="0">APt表值19.6 → 23.3，算术差为3.7；</tspan><tspan x="666" dy="30">正文和上标却写+1.7。因此主看总体AP。</tspan></text></g>
+<g id="footer" data-pptx-bounds="56 653 1168 34" font-size="16" fill="#58677A"><text x="56" y="675">来源：SET，PDF p.7，Tables 2–4；有效性限定于论文测试的数据集和框架</text><text x="1189" y="675">14</text></g>
+</svg>

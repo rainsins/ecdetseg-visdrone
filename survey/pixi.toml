@@ -1,0 +1,23 @@
+[workspace]
+name = "tod-survey"
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[dependencies]
+python = "3.11.*"
+requests = "*"
+
+[pypi-dependencies]
+# pure-python friendly, avoid heavy wheels
+pandas = "*"
+matplotlib = "*"
+
+[tasks]
+crawl = "python -m crawler.crawl_arxiv"
+crawl-openalex = "python -m crawler.crawl_openalex"
+analyze = "python -m analysis.analyze"
+plot = "python -m analysis.plot"
+report = "python -m analysis.rank"
+verify = "python -m crawler.verify_sources"
+test = "python -m unittest discover -s tests -v"

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="960" height="540" viewBox="0 0 960 540" font-family="&quot;字魂59号-创粗黑&quot;, sans-serif"><rect x="0" y="0" width="960" height="540" fill="#FFFFFF"/>
+<g id="shape-17" data-pptx-object="shape" data-pptx-frame="160.82 303.38 86.06 119.74" data-pptx-geometry-kind="custom" transform="translate(203.86 363.25) scale(1 -1) translate(-203.86 -363.25)" data-pptx-source-ref="slide:17" data-pptx-semantic-object="shape">
+<path d="M 171.71 409.14 L 172.63 337.82 C 173.19 325.06 177.61 324.85 185.18 324.65 L 227.24 323.84 L 227.24 335.79 L 246.89 318.88 L 226.5 303.38 L 226.69 312.7 C 226.69 312.7 198.28 312.9 182.41 312.9 C 166.36 313.1 161.01 319.18 160.82 333.57 L 160.82 410.56 C 162.67 423.12 169.4 421.9 171.71 409.14 Z" data-pptx-part="geometry" fill="#A6A6A6" stroke="none"/>
+
+</g>
+<g id="shape-18" data-pptx-object="shape" data-pptx-frame="183.5 253.54 25.58 102.3" data-pptx-geometry-kind="custom" transform="rotate(270 196.29 304.69)" data-pptx-source-ref="slide:18" data-pptx-semantic-object="shape">
+<path d="M 190.17 253.71 L 191.61 333.49 L 183.5 333.83 L 196.47 355.84 L 209.08 333.83 L 201.52 333.83 L 201.34 253.54 L 190.17 253.71 Z" data-pptx-part="geometry" fill="#A6A6A6" stroke="none"/>
+
+</g>
+<g id="shape-19" data-pptx-object="shape" data-pptx-frame="160.27 172.57 86.06 138.71" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:19" data-pptx-semantic-object="shape">
+<path d="M 171.16 295.09 L 172.08 212.47 C 172.63 197.69 177.06 197.45 184.62 197.22 L 226.69 196.28 L 226.69 210.13 L 246.34 190.53 L 225.95 172.57 L 226.13 183.37 C 226.13 183.37 197.72 183.6 181.86 183.6 C 165.81 183.84 160.46 190.88 160.27 207.54 L 160.27 296.73 C 162.12 311.28 168.85 309.87 171.16 295.09 Z" data-pptx-part="geometry" fill="#A6A6A6" stroke="none"/>
+
+</g>
+<g id="shape-20" data-pptx-object="shape" data-pptx-frame="354.67 141.96 465.52 94.17" data-pptx-prst="roundRect" data-pptx-av-adj="val 11505" data-pptx-source-ref="slide:20" data-pptx-semantic-object="shape">
+<path d="M 354.67 152.8 A 10.83 10.83 0 0 1 365.51 141.96 L 809.36 141.96 A 10.83 10.83 0 0 1 820.2 152.8 L 820.2 225.3 A 10.83 10.83 0 0 1 809.36 236.14 L 365.51 236.14 A 10.83 10.83 0 0 1 354.67 225.3 Z" fill="none" stroke-width="1.66667" stroke-linecap="butt" stroke="#006EA0" data-pptx-part="geometry"/>
+
+
+<text x="361.2" y="183.34346457" text-anchor="start" xml:space="preserve" font-size="16" fill="#9F9F9F" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="23.04"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">按 GT mask </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">拆分为前景与背景特征。</tspan></tspan></text>
+</g>
+<g id="shape-21" data-pptx-object="shape" data-pptx-frame="256.83 141.48 97.84 94.65" data-pptx-prst="roundRect" data-pptx-av-adj="val 11921" data-pptx-source-ref="slide:21" data-pptx-semantic-object="shape">
+<path d="M 256.83 152.77 A 11.28 11.28 0 0 1 268.11 141.48 L 343.39 141.48 A 11.28 11.28 0 0 1 354.67 152.77 L 354.67 224.85 A 11.28 11.28 0 0 1 343.39 236.14 L 268.11 236.14 A 11.28 11.28 0 0 1 256.83 224.85 Z" fill="#006EA0" stroke-width="2.66667" stroke-linecap="butt" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="305.75" y="195.36918635" text-anchor="middle" xml:space="preserve" font-size="18.67" fill="#F2F2F2" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">特征解耦</tspan></text>
+</g>
+<g id="shape-22" data-pptx-object="shape" data-pptx-frame="354.67 256.4 465.52 93.86" data-pptx-prst="roundRect" data-pptx-av-adj="val 11505" data-pptx-source-ref="slide:22" data-pptx-semantic-object="shape">
+<path d="M 354.67 267.2 A 10.8 10.8 0 0 1 365.47 256.4 L 809.4 256.4 A 10.8 10.8 0 0 1 820.2 267.2 L 820.2 339.47 A 10.8 10.8 0 0 1 809.4 350.26 L 365.47 350.26 A 10.8 10.8 0 0 1 354.67 339.47 Z" fill="none" stroke-width="1.66667" stroke-linecap="butt" stroke="#006EA0" data-pptx-part="geometry"/>
+
+
+<text x="361.2" y="297.62692913" text-anchor="start" xml:space="preserve" font-size="16" fill="#9F9F9F" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="23.04"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">背景做尺度自适应压缩-扩张，</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">抑制高频噪声。</tspan></tspan></text>
+</g>
+<g id="shape-23" data-pptx-object="shape" data-pptx-frame="256.83 256.4 97.84 93.86" data-pptx-prst="roundRect" data-pptx-av-adj="val 11921" data-pptx-source-ref="slide:23" data-pptx-semantic-object="shape">
+<path d="M 256.83 267.59 A 11.19 11.19 0 0 1 268.02 256.4 L 343.48 256.4 A 11.19 11.19 0 0 1 354.67 267.59 L 354.67 339.07 A 11.19 11.19 0 0 1 343.48 350.26 L 268.02 350.26 A 11.19 11.19 0 0 1 256.83 339.07 Z" fill="#006EA0" stroke-width="2.66667" stroke-linecap="butt" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="305.75" y="309.8935958" text-anchor="middle" xml:space="preserve" font-size="18.67" fill="#F2F2F2" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">HBS 平滑</tspan></text>
+</g>
+<g id="shape-24" data-pptx-object="shape" data-pptx-frame="354.67 369.87 465.52 93.02" data-pptx-prst="roundRect" data-pptx-av-adj="val 11505" data-pptx-source-ref="slide:24" data-pptx-semantic-object="shape">
+<path d="M 354.67 380.58 A 10.7 10.7 0 0 1 365.38 369.87 L 809.49 369.87 A 10.7 10.7 0 0 1 820.2 380.58 L 820.2 452.19 A 10.7 10.7 0 0 1 809.49 462.9 L 365.38 462.9 A 10.7 10.7 0 0 1 354.67 452.19 Z" fill="none" stroke-width="1.66667" stroke-linecap="butt" stroke="#006EA0" data-pptx-part="geometry"/>
+
+
+<text x="361.2" y="410.67847769" text-anchor="start" xml:space="preserve" font-size="16" fill="#9F9F9F" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="23.04"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">训练期注入特征级对抗扰动，</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">提升关键区域显著度。</tspan></tspan></text>
+</g>
+<g id="shape-25" data-pptx-object="shape" data-pptx-frame="256.83 369.87 97.84 93.02" data-pptx-prst="roundRect" data-pptx-av-adj="val 11921" data-pptx-source-ref="slide:25" data-pptx-semantic-object="shape">
+<path d="M 256.83 380.96 A 11.09 11.09 0 0 1 267.92 369.87 L 343.58 369.87 A 11.09 11.09 0 0 1 354.67 380.96 L 354.67 451.81 A 11.09 11.09 0 0 1 343.58 462.9 L 267.92 462.9 A 11.09 11.09 0 0 1 256.83 451.81 Z" fill="#006EA0" stroke-width="2.66667" stroke-linecap="butt" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="305.75" y="422.94514436" text-anchor="middle" xml:space="preserve" font-size="18.67" fill="#F2F2F2" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">API 扰动</tspan></text>
+</g>
+<g id="shape-26" data-pptx-object="shape" data-pptx-frame="116.74 256.4 93.74 93.86" data-pptx-prst="ellipse" data-pptx-source-ref="slide:26" data-pptx-semantic-object="shape">
+<path d="M 116.74 303.33 A 46.87 46.93 0 0 1 163.61 256.4 A 46.87 46.93 0 0 1 210.48 303.33 A 46.87 46.93 0 0 1 163.61 350.26 A 46.87 46.93 0 0 1 116.74 303.33 Z" fill="#006EA0" stroke-width="1" stroke="none" stroke-linejoin="round" data-pptx-part="geometry"/>
+
+
+<text x="163.61" y="313.0935958" text-anchor="middle" xml:space="preserve" font-size="25.33" fill="#FFFFFF" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">SET</tspan></text>
+</g>
+<g id="shape-12" data-pptx-object="shape" data-pptx-frame="285.58 38.93 388.84 43.62" data-pptx-prst="rect" data-pptx-source-ref="slide:12" data-pptx-semantic-object="shape">
+<path d="M 285.58 38.93 L 674.42 38.93 L 674.42 82.55 L 285.58 82.55 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="480" y="70.39433071" text-anchor="middle" xml:space="preserve" font-size="28" fill="#000000" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">SET 总览：一个训练期插件</tspan></text>
+</g>
+<g id="shape-14" data-pptx-object="group" data-pptx-frame="701.82 4.11 245.07 72.55" data-pptx-source-ref="slide:14">
+<g id="shape-15" data-pptx-object="picture" data-pptx-frame="701.82 4.11 86.18 72.55" data-pptx-source-ref="slide:15">
+<image data-pptx-object="picture" data-pptx-frame="701.82 4.11 86.18 72.55" href="../images/image3.png" x="701.82" y="4.11" width="86.18" height="72.55" preserveAspectRatio="none"/>
+</g>
+<g id="shape-16" data-pptx-object="shape" data-pptx-frame="778.38 21.75 168.51 38.78" data-pptx-prst="rect" data-pptx-source-ref="slide:16" data-pptx-semantic-object="shape">
+<path d="M 778.38 21.75 L 946.89 21.75 L 946.89 60.53 L 778.38 60.53 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="787.98" y="49.21847769" text-anchor="start" xml:space="preserve" font-family="&quot;华文行楷&quot;, sans-serif" font-size="24" fill="#2E2E35" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">兰州理工大学</tspan></text>
+</g>
+</g></svg>

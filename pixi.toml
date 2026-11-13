@@ -1,5 +1,5 @@
 [workspace]
-authors = ["rainsins <1820278582@qq.com>"]
+authors = ["尉旭胜 <1820278582@qq.com>"]
 channels = ["conda-forge"]
 name = "EdgeCrafter"
 platforms = ["linux-64"]
@@ -34,3 +34,35 @@ onnxruntime = "*"
 
 [tasks]
 start = "python main.py"
+
+# ============================================================================
+# RK3588 deployment environment (host-side converter + x86 simulator).
+# This environment is intentionally isolated from the XPU training environment:
+# rknn-toolkit2 requires numpy<2 and a much older torch than the training stack.
+# ============================================================================
+[feature.rknn]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[feature.rknn.dependencies]
+python = ">=3.10,<3.12"
+
+[feature.rknn.pypi-dependencies]
+rknn-toolkit2 = ">=2.3.0,<3"
+numpy = ">=1.26,<2"
+# rknn-toolkit2 2.5 calls pkg_resources; setuptools>=81 no longer ships it.
+setuptools = "<80.1.0"
+opencv-python = "*"
+pillow = "*"
+pycocotools = "*"
+onnx = "==1.16.1"
+onnxruntime = "*"
+
+[feature.rknn.tasks]
+convert = "python deploy/convert.py"
+sim-eval = "python deploy/sim_eval.py"
+accuracy = "python deploy/accuracy_analysis.py"
+
+[environments]
+# no-default-feature keeps torch/XPU out of the conversion environment.
+rknn = { features = ["rknn"], no-default-feature = true, solve-group = "rknn" }

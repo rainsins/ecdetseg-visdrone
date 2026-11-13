@@ -1,0 +1,1 @@
+在读结果之前，先对齐实验条件。论文使用AI-TOD、VisDrone2019、DOTA-v2.0和COCO 2017，覆盖微小目标、无人机、航拍和通用检测场景。CNN检测器使用ImageNet预训练的ResNet-50骨干，以SGD训练十二轮，batch size为二，初始学习率零点零零五；AI-TOD图像固定到八百乘八百。Transformer部分使用五尺度特征的DINO，训练三十六轮，采用Adam，并遵循DETR的随机裁剪和尺度增强策略。平台为RTX 3090，核心代码基于PyTorch和MMDetection。注意CNN和DINO的训练预算不同，不能把它们当成一个严格控制所有条件的横向实验。主表里的星号还表示改用P2到P6特征，所以每项提升都应与自己的对应基线比较。

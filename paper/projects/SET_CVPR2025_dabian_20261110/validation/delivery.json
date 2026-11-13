@@ -1,0 +1,398 @@
+{
+  "schema": "ppt-master.pptx-delivery-check.v1",
+  "status": "passed-with-advisories",
+  "file": {
+    "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/paper/projects/SET_CVPR2025_dabian_20261110/exports/SET_CVPR2025_dabian_20261110_20261110_221509.pptx",
+    "bytes": 1286114
+  },
+  "package": {
+    "zip_integrity": "passed",
+    "corrupt_member": null,
+    "duplicate_parts": [],
+    "canonical_part_collisions": [],
+    "parts": {
+      "entries": 113,
+      "unique": 113,
+      "slides": 18,
+      "notes": 18,
+      "masters": 1,
+      "layouts": 2,
+      "media": 7
+    },
+    "relationships": {
+      "problems": []
+    }
+  },
+  "slides": {
+    "count": 18,
+    "hidden_count": 0,
+    "hidden": []
+  },
+  "fonts": {
+    "theme": {
+      "title": {
+        "latin": "字魂59号-创粗黑",
+        "ea": "字魂59号-创粗黑"
+      },
+      "body": {
+        "latin": "字魂59号-创粗黑",
+        "ea": "字魂59号-创粗黑"
+      }
+    },
+    "declared": {
+      "latin": [
+        {
+          "value": "字魂59号-创粗黑",
+          "count": 234
+        },
+        {
+          "value": "+mn-lt",
+          "count": 101
+        },
+        {
+          "value": "Calibri",
+          "count": 45
+        },
+        {
+          "value": "华文行楷",
+          "count": 34
+        },
+        {
+          "value": "Agency FB",
+          "count": 3
+        },
+        {
+          "value": "+mj-lt",
+          "count": 1
+        },
+        {
+          "value": "等线",
+          "count": 1
+        },
+        {
+          "value": "等线 Light",
+          "count": 1
+        }
+      ],
+      "ea": [
+        {
+          "value": "Microsoft YaHei",
+          "count": 179
+        },
+        {
+          "value": "+mn-ea",
+          "count": 101
+        },
+        {
+          "value": "字魂59号-创粗黑",
+          "count": 55
+        },
+        {
+          "value": "宋体",
+          "count": 45
+        },
+        {
+          "value": "华文行楷",
+          "count": 34
+        },
+        {
+          "value": "微软雅黑",
+          "count": 3
+        },
+        {
+          "value": "+mj-ea",
+          "count": 1
+        }
+      ],
+      "cs": [
+        {
+          "value": "字魂59号-创粗黑",
+          "count": 232
+        },
+        {
+          "value": "+mn-ea",
+          "count": 99
+        },
+        {
+          "value": "+mn-cs",
+          "count": 90
+        },
+        {
+          "value": "+mj-cs",
+          "count": 1
+        }
+      ]
+    },
+    "embedded_parts": [],
+    "portability_advisory_faces": [
+      "Agency FB",
+      "华文行楷",
+      "字魂59号-创粗黑",
+      "微软雅黑"
+    ]
+  },
+  "media": {
+    "embedded_count": 7,
+    "external_count": 0,
+    "embedded": [
+      {
+        "part": "ppt/media/image2.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 466660,
+        "compressed_bytes": 465081,
+        "reference_count": 2,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image7.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 174112,
+        "compressed_bytes": 172338,
+        "reference_count": 1,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image4.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 160882,
+        "compressed_bytes": 159363,
+        "reference_count": 1,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image6.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 158647,
+        "compressed_bytes": 157389,
+        "reference_count": 1,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image5.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 153080,
+        "compressed_bytes": 151883,
+        "reference_count": 1,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image3.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 32982,
+        "compressed_bytes": 32959,
+        "reference_count": 17,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image1.jpeg",
+        "kind": "image",
+        "content_type": "image/jpeg",
+        "bytes": 31429,
+        "compressed_bytes": 28926,
+        "reference_count": 6,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      }
+    ],
+    "external": [],
+    "uncompressed_bytes": 1177792,
+    "archive_compressed_bytes": 1167939,
+    "share_of_archive": 0.908115,
+    "share_of_uncompressed_parts": 0.672706,
+    "top_contributors": [
+      {
+        "part": "ppt/media/image2.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 466660,
+        "compressed_bytes": 465081,
+        "reference_count": 2,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image7.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 174112,
+        "compressed_bytes": 172338,
+        "reference_count": 1,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image4.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 160882,
+        "compressed_bytes": 159363,
+        "reference_count": 1,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image6.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 158647,
+        "compressed_bytes": 157389,
+        "reference_count": 1,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image5.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 153080,
+        "compressed_bytes": 151883,
+        "reference_count": 1,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image3.png",
+        "kind": "image",
+        "content_type": "image/png",
+        "bytes": 32982,
+        "compressed_bytes": 32959,
+        "reference_count": 17,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      },
+      {
+        "part": "ppt/media/image1.jpeg",
+        "kind": "image",
+        "content_type": "image/jpeg",
+        "bytes": 31429,
+        "compressed_bytes": 28926,
+        "reference_count": 6,
+        "relationship_types": [
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        ]
+      }
+    ]
+  },
+  "motion": {
+    "transitions": {
+      "carrier_slide_count": 18,
+      "visual_effect_slide_count": 18,
+      "timed_advance_slide_count": 18,
+      "carrier_slides": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "visual_effect_slides": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "timed_advance_slides": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "effects": {
+        "fade": 18
+      }
+    },
+    "object_animations": {
+      "timing_slide_count": 2,
+      "object_animation_slide_count": 2,
+      "audio_timing_slide_count": 0,
+      "timing_slides": [
+        2,
+        15
+      ],
+      "object_animation_slides": [
+        2,
+        15
+      ],
+      "audio_timing_slides": []
+    }
+  },
+  "errors": [],
+  "advisories": [
+    {
+      "code": "font_portability",
+      "message": "Some fonts declared or referenced by the presentation are outside the common Office/OS portability set; target-system availability was not verified.",
+      "faces": [
+        "Agency FB",
+        "华文行楷",
+        "字魂59号-创粗黑",
+        "微软雅黑"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,343 @@
+{
+  "date": "2026-11-07",
+  "host": "topeet",
+  "board_directory": "/root/ecdet-diag-e94P1v",
+  "model_path": "/root/ecdet_cpp/model.rknn",
+  "model_sha256_checked_now": "ff61f31c8ef1dd565c613c1bb59a7c40fb17a5e955e44503db19f928ede35130",
+  "scope": "one 640x640 test.png, 5 warmup + 20 measured iterations; not full-val AP or resize parity",
+  "profile": {
+    "frames": 20,
+    "calls": 240,
+    "failures": 0,
+    "infer_ms": 626.982,
+    "callback_sum_ms": 41.392,
+    "sampling_sum_ms": 41.347,
+    "callback_sum_over_infer_percent": 6.601784421243354
+  },
+  "baseline_infer_ms": 627.606,
+  "raw_output_parity_against_existing_binary": {
+    "logits": {
+      "elements": 3000,
+      "max_abs_diff": 0.0,
+      "bitwise_equal": true
+    },
+    "boxes": {
+      "elements": 1200,
+      "max_abs_diff": 0.0,
+      "bitwise_equal": true
+    }
+  },
+  "per_op_ranking": [
+    {
+      "op": "exSDPAttention",
+      "calls": 17,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 306054,
+      "total_us": 306054,
+      "percent": 43.24
+    },
+    {
+      "op": "GridSample",
+      "calls": 12,
+      "cpu_us": 99691,
+      "gpu_us": 0,
+      "npu_us": 0,
+      "total_us": 99691,
+      "percent": 14.08
+    },
+    {
+      "op": "Transpose",
+      "calls": 45,
+      "cpu_us": 30323,
+      "gpu_us": 0,
+      "npu_us": 33455,
+      "total_us": 63778,
+      "percent": 9.01
+    },
+    {
+      "op": "GatherElements",
+      "calls": 2,
+      "cpu_us": 46686,
+      "gpu_us": 0,
+      "npu_us": 0,
+      "total_us": 46686,
+      "percent": 6.6
+    },
+    {
+      "op": "Conv",
+      "calls": 121,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 30752,
+      "total_us": 30752,
+      "percent": 4.34
+    },
+    {
+      "op": "exNorm",
+      "calls": 38,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 23256,
+      "total_us": 23256,
+      "percent": 3.29
+    },
+    {
+      "op": "ConvExGelu",
+      "calls": 12,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 19528,
+      "total_us": 19528,
+      "percent": 2.76
+    },
+    {
+      "op": "Mul",
+      "calls": 95,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 19020,
+      "total_us": 19020,
+      "percent": 2.69
+    },
+    {
+      "op": "Add",
+      "calls": 90,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 16165,
+      "total_us": 16165,
+      "percent": 2.28
+    },
+    {
+      "op": "ConvExSwish",
+      "calls": 52,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 15286,
+      "total_us": 15286,
+      "percent": 2.16
+    },
+    {
+      "op": "ConvAdd",
+      "calls": 34,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 13223,
+      "total_us": 13223,
+      "percent": 1.87
+    },
+    {
+      "op": "Concat",
+      "calls": 44,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 12677,
+      "total_us": 12677,
+      "percent": 1.79
+    },
+    {
+      "op": "Split",
+      "calls": 66,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 11296,
+      "total_us": 11296,
+      "percent": 1.6
+    },
+    {
+      "op": "Reshape",
+      "calls": 103,
+      "cpu_us": 5037,
+      "gpu_us": 0,
+      "npu_us": 2065,
+      "total_us": 7102,
+      "percent": 1.0
+    },
+    {
+      "op": "TopK",
+      "calls": 2,
+      "cpu_us": 4479,
+      "gpu_us": 0,
+      "npu_us": 0,
+      "total_us": 4479,
+      "percent": 0.63
+    },
+    {
+      "op": "ConvRelu",
+      "calls": 3,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 4434,
+      "total_us": 4434,
+      "percent": 0.63
+    },
+    {
+      "op": "exSoftmax13",
+      "calls": 9,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 2598,
+      "total_us": 2598,
+      "percent": 0.37
+    },
+    {
+      "op": "ReduceMax",
+      "calls": 1,
+      "cpu_us": 2148,
+      "gpu_us": 0,
+      "npu_us": 0,
+      "total_us": 2148,
+      "percent": 0.3
+    },
+    {
+      "op": "Sub",
+      "calls": 17,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 2086,
+      "total_us": 2086,
+      "percent": 0.29
+    },
+    {
+      "op": "Resize",
+      "calls": 4,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 2003,
+      "total_us": 2003,
+      "percent": 0.28
+    },
+    {
+      "op": "Clip",
+      "calls": 5,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 1194,
+      "total_us": 1194,
+      "percent": 0.17
+    },
+    {
+      "op": "Expand",
+      "calls": 2,
+      "cpu_us": 1087,
+      "gpu_us": 0,
+      "npu_us": 0,
+      "total_us": 1087,
+      "percent": 0.15
+    },
+    {
+      "op": "Log",
+      "calls": 1,
+      "cpu_us": 713,
+      "gpu_us": 0,
+      "npu_us": 0,
+      "total_us": 713,
+      "percent": 0.1
+    },
+    {
+      "op": "Slice",
+      "calls": 2,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 640,
+      "total_us": 640,
+      "percent": 0.09
+    },
+    {
+      "op": "ConvSigmoid",
+      "calls": 4,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 626,
+      "total_us": 626,
+      "percent": 0.09
+    },
+    {
+      "op": "BatchNormalization",
+      "calls": 4,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 567,
+      "total_us": 567,
+      "percent": 0.08
+    },
+    {
+      "op": "ConvClip",
+      "calls": 2,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 452,
+      "total_us": 452,
+      "percent": 0.06
+    },
+    {
+      "op": "Sigmoid",
+      "calls": 2,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 142,
+      "total_us": 142,
+      "percent": 0.02
+    },
+    {
+      "op": "Div",
+      "calls": 1,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 117,
+      "total_us": 117,
+      "percent": 0.02
+    },
+    {
+      "op": "OutputOperator",
+      "calls": 2,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 4,
+      "total_us": 4,
+      "percent": 0.0
+    },
+    {
+      "op": "InputOperator",
+      "calls": 1,
+      "cpu_us": 0,
+      "gpu_us": 0,
+      "npu_us": 3,
+      "total_us": 3,
+      "percent": 0.0
+    }
+  ],
+  "per_op_scope": "separate first-frame run with perf collection enabled; cannot subtract from uninstrumented means to infer transfer time",
+  "gpu_probe": {
+    "compiler_target": "FLOAT16 GPU",
+    "board_runtime": "2.5.0 (74ea630ce8@2026-09-30)",
+    "runtime_sha256": "4b6cc575bedf8952b13db4b1190fa3b3d2ac213f00be774ff6ccd19d651970c0",
+    "log": "gpu_probe_v2.log",
+    "init_return": 0,
+    "inputs_set_return": 0,
+    "ssh_exit": 255,
+    "run_return_logged": false,
+    "output_verified": false,
+    "diagnostic": "Unsupport GPU op: GridSample in this librknnrt.so",
+    "interpretation": "explicit GPU routing compiled; current runtime reports implementation unsupported; no successful GPU execution"
+  },
+  "limits": [
+    "callback sums are not wall time if callbacks overlap",
+    "remaining infer time is not a transfer measurement",
+    "new binary only single-image output parity; 548-image AP belongs to previous validated callback build"
+  ],
+  "evidence_sha256": {
+    "profile.log": "2763fa769344fac18def98284e9241b412091c93143250f0383079d3befc0168",
+    "perf.log": "3c65ffe8e993c829636d93f3aaa63944286b3ce11c6ca290eca8c3c3f60e7a09",
+    "baseline.log": "ae7c79216f78bafa95b8c4dbd3150f9c5a8bb1cb47e2bfc2aec93354b9ca7788",
+    "old.log": "12e8447249c71753dd0574f4e7230c88d10dc5df57b9cde7130e63d7a9a540c0",
+    "runtime.perf.txt": "b971fae69bcc2a0ac65b3b4ae95474120f54282532d7cfa176bea10f5688f6c4",
+    "new.logits.f32": "95f7ed9a8cc4c6b6095b336e102dca0942bcc76f7805809f506ddec45b30c1a5",
+    "new.boxes.f32": "9c7c681545d3508f01bb8d84176a725ec4052843c605cd54fd9f69026adfd83e",
+    "old.logits.f32": "95f7ed9a8cc4c6b6095b336e102dca0942bcc76f7805809f506ddec45b30c1a5",
+    "old.boxes.f32": "9c7c681545d3508f01bb8d84176a725ec4052843c605cd54fd9f69026adfd83e",
+    "gpu_probe.log": "dfdb1f6f65107d3542909eabc8a3c86d698f08866aa704eaa79814075352ad96",
+    "gpu_probe_v2.log": "c1b02d10c80d2864c6336e373082efc15188d1271e8f42b04ee2ed8f5eebf6d1"
+  }
+}

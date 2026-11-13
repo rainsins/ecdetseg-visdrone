@@ -1,0 +1,90 @@
+# ============================================================
+# P150u training protocol — VisDrone long-schedule baseline (P74u extended).
+# Derived from protocol/p74u.yml; ONLY the keys below differ (all else verbatim).
+#   epochs            : 74  -> 150
+#   train batch       : 8   -> 10      (throughput-validated; see scripts/bench_throughput.sh)
+#   val batch         : 16  -> 32      (eval speed only; unrelated to training)
+#   mosaic_epoch      : 36  -> 72      (~49% of 150, keeps the aug/mixup phase ratio)
+#   mixup_epoch       : 36  -> 72
+#   flat_epoch        : 36  -> 72      (LR plateau end aligned with aug-off point)
+#   stop_epoch        : 72  -> 148 ; no_aug_epoch: 2  (reset_cfg needs [145,150])
+#   early_stop        : NEW, enabled (P74u and earlier stay disabled)
+# Optimizer / EMA / num_workers unchanged (single-variable: batch changed, LR not).
+# NOTE: if bench_throughput.sh does NOT reach the >=1.15x bar, set
+#       train_dataloader.total_batch_size back to 8 (documented in audit.md).
+# ============================================================
+epochs: 150
+no_aug_epoch: 2
+flat_epoch: 72
+warmup_iter: 2000
+lr_gamma: 0.5
+
+sync_bn: False
+find_unused_parameters: False
+use_amp: True
+scaler:
+  type: GradScaler
+eval_maxDets: 300
+
+# Early-stop fuse (monitors EMA mAP@0.5:0.95 = test_coco_eval_bbox[0]).
+early_stop:
+  enabled: true
+  start_epoch: 100
+  patience: 20
+  min_delta: 0.001
+
+use_ema: True
+ema:
+  type: ModelEMA
+  decay: 0.9999
+  warmups: 1000
+  start: 0
+
+optimizer:
+  type: AdamW
+  lr: 0.0005
+  betas: [0.9, 0.999]
+  weight_decay: 0.0001
+  params:
+    -                                   # backbone, except norm/bn/bias
+      params: '^(?=.*.backbone)(?!.*(?:norm|bn|bias)).*$'
+      lr: 0.000025
+    -                                   # backbone norm/bn/bias
+      params: '^(?=.*.backbone)(?=.*(?:norm|bn|bias)).*$'
+      lr: 0.000025
+      weight_decay: 0.
+    -                                   # non-backbone norm/bn/bias
+      params: '^(?!.*\.backbone)(?=.*(?:norm|bn|bias)).*$'
+      weight_decay: 0.
+
+train_dataloader:
+  shuffle: True
+  total_batch_size: 10
+  num_workers: 4                        # dependency: data pipeline is NOT the bottleneck
+  dataset:
+    transforms:
+      policy: stop_epoch
+      stop_epoch: 148
+      mosaic_prob: 0.75
+      mosaic_epoch: 72
+      remove_ops: ['Mosaic', 'RandomPhotometricDistort', 'RandomZoomOut', 'RandomIoUCrop']
+      ops:
+        - {type: Mosaic, output_size: 320, rotation_range: 10, translation_range: [0.1, 0.1], scaling_range: [0.5, 1.5], fill_value: 0, max_cached_images: 50, random_pop: True}
+        - {type: RandomPhotometricDistort, p: 0.5}
+        - {type: RandomZoomOut, fill: 0}
+        - {type: RandomIoUCrop, p: 0.8}
+        - {type: SanitizeBoundingBoxes, min_size: 1}
+        - {type: RandomHorizontalFlip}
+        - {type: Resize, size: [640, 640]}
+        - {type: SanitizeBoundingBoxes, min_size: 1}
+        - {type: ConvertPILImage, dtype: 'float32', scale: True}
+        - {type: Normalize, mean: [0.485, 0.456, 0.406], std: [0.229, 0.224, 0.225]}
+        - {type: ConvertBoxes, fmt: 'cxcywh', normalize: True}
+  collate_fn:
+    type: BatchImageCollateFunction
+    mixup_prob: 0.75
+    mixup_epoch: 72
+
+val_dataloader:
+  total_batch_size: 32
+  num_workers: 4

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial" data-pptx-page-role="cover">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#142D4E" />
+<g id="publication" data-pptx-bounds="64 44 1120 55"><text x="64" y="78" font-size="24" fill="#FFFFFF">CVPR 2025 · 论文阅读</text><text x="1030" y="78" font-size="20" fill="#D5DFE8">Sun et al.</text></g>
+<g id="title" data-pptx-bounds="64 141 1140 217"><text x="64" y="210" font-size="64" font-weight="bold" fill="#FFFFFF">SET</text><text x="64" y="282" font-size="40" font-weight="bold" fill="#FFFFFF">面向微小目标检测的频谱增强</text><text x="64" y="332" font-size="24" fill="#D5DFE8">Spectral Enhancement for Tiny Object Detection</text></g>
+<g id="two-mechanisms" data-pptx-bounds="64 399 1150 140"><rect x="64" y="405" width="544" height="125" fill="#087E8B" /><rect x="632" y="405" width="576" height="125" fill="#BC5A24" /><text x="90" y="452" font-size="30" font-weight="bold" fill="#FFFFFF">压背景 · HBS</text><text x="90" y="499" font-size="24" fill="#FFFFFF">减少背景高频干扰</text><text x="658" y="452" font-size="30" font-weight="bold" fill="#FFFFFF">抬前景 · API</text><text x="658" y="499" font-size="24" fill="#FFFFFF">增强关键区域的特征响应</text></g>
+<g id="training-boundary" data-pptx-bounds="64 558 1140 54"><text x="64" y="591" font-size="28" fill="#FFFFFF">训练期增强表征，推理不增加模块。</text></g>
+<g id="footer" data-pptx-bounds="64 644 1144 45" fill="#D5DFE8" font-size="16"><text x="64" y="674">汇报人：XXX　｜　202X年X月X日　｜　依据 CVPR 2025 论文原文</text><text x="1164" y="674">01</text></g>
+</svg>

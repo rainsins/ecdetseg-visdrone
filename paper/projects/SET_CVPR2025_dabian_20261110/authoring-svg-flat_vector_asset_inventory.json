@@ -1,0 +1,98 @@
+{
+  "schema": "vector_asset_inventory.v2",
+  "svg_dir": "authoring-svg-flat",
+  "icons_dir": "icons",
+  "icon_namespace": "imported",
+  "asset_role": "decoration",
+  "rewritten_dir": null,
+  "reuse_inventory": null,
+  "min_drawables": 2,
+  "min_bytes": 512,
+  "min_decoration_bytes": 512,
+  "extracted_count": 4,
+  "reused_count": 0,
+  "asset_count": 4,
+  "stale_removed": [],
+  "assets": [
+    {
+      "svg": "slide_09.svg",
+      "id": "imported/flat_slide_09_ill01",
+      "icon": "imported/flat_slide_09_ill01",
+      "asset": "imported/flat_slide_09_ill01.svg",
+      "source": "extracted",
+      "role": "decoration",
+      "source_sha256": "c37386903938f1e4f603a744d450b6090eebd302dea5c02b2199388b84bda5ae",
+      "asset_sha256": "0e6b8c900cef1286b8fd6a6a58d28ecf203b79b0c0a2f5117e6eed6d9e129919",
+      "drawable_count": 0,
+      "byte_count": 1030,
+      "source_refs": [
+        "slide:10",
+        "slide:11",
+        "slide:8"
+      ],
+      "dependencies": [],
+      "external_hrefs_rewritten": 2,
+      "elements": {}
+    },
+    {
+      "svg": "slide_16.svg",
+      "id": "imported/flat_slide_16_ill01",
+      "icon": "imported/flat_slide_16_ill01",
+      "asset": "imported/flat_slide_16_ill01.svg",
+      "source": "extracted",
+      "role": "decoration",
+      "source_sha256": "284830249ee52e6938f2fb50bb37c2c754937fc803f5cc11ebe12aa3299f2e2d",
+      "asset_sha256": "f3de6280fe8a9dab31b0373a92e59b61f44011aebbe24e95e0f48cda58901d3b",
+      "drawable_count": 0,
+      "byte_count": 994,
+      "source_refs": [
+        "slide:10",
+        "slide:11",
+        "slide:8"
+      ],
+      "dependencies": [],
+      "external_hrefs_rewritten": 2,
+      "elements": {}
+    },
+    {
+      "svg": "slide_20.svg",
+      "id": "imported/flat_slide_20_ill01",
+      "icon": "imported/flat_slide_20_ill01",
+      "asset": "imported/flat_slide_20_ill01.svg",
+      "source": "extracted",
+      "role": "decoration",
+      "source_sha256": "ed2dcacf4d00affbb65f1e961322796de1e2b4ce630eceff72fd50b36c729157",
+      "asset_sha256": "0e19f41e8287862c840889a14efe088fdebcb310b1e1364171096b6afd130996",
+      "drawable_count": 0,
+      "byte_count": 1049,
+      "source_refs": [
+        "slide:10",
+        "slide:11",
+        "slide:8"
+      ],
+      "dependencies": [],
+      "external_hrefs_rewritten": 2,
+      "elements": {}
+    },
+    {
+      "svg": "slide_28.svg",
+      "id": "imported/flat_slide_28_ill01",
+      "icon": "imported/flat_slide_28_ill01",
+      "asset": "imported/flat_slide_28_ill01.svg",
+      "source": "extracted",
+      "role": "decoration",
+      "source_sha256": "fc900f01d5f19f513722d02518908d152d2c888c09b93ae26de45726ed763426",
+      "asset_sha256": "47628a0fbb5c1934d7dece2c9b016c4ed18141c537bd76e858d27c79d1a9cf31",
+      "drawable_count": 0,
+      "byte_count": 1025,
+      "source_refs": [
+        "slide:12",
+        "slide:13",
+        "slide:14"
+      ],
+      "dependencies": [],
+      "external_hrefs_rewritten": 2,
+      "elements": {}
+    }
+  ]
+}

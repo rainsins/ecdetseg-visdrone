@@ -1,0 +1,229 @@
+{
+  "model": "ECDet-S / D-FINE (ViTAdapter + HybridEncoder + ECTransformer)",
+  "config": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/configs/ecdet/ecdet_s_p150u.yml",
+  "checkpoint": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/outputs/p150u/e3_s42/best.pth",
+  "checkpoint_container": "ema",
+  "checkpoint_info": {
+    "chosen_container": "ema",
+    "chosen_container_keys": [
+      "module",
+      "updates"
+    ]
+  },
+  "opset": 17,
+  "input_name": "images",
+  "input_shape": [
+    1,
+    3,
+    640,
+    640
+  ],
+  "input_dtype": "float32 (ONNX); uint8 RGB NCHW at RKNN runtime",
+  "output_names": [
+    "pred_logits",
+    "pred_boxes"
+  ],
+  "output_shapes": [
+    [
+      1,
+      300,
+      10
+    ],
+    [
+      1,
+      300,
+      4
+    ]
+  ],
+  "num_classes": 10,
+  "num_queries": 300,
+  "class_names": [
+    "pedestrian",
+    "people",
+    "bicycle",
+    "car",
+    "van",
+    "truck",
+    "tricycle",
+    "awning-tricycle",
+    "bus",
+    "motor"
+  ],
+  "preprocess": {
+    "resize": "stretch",
+    "resize_backend": "PIL bilinear (torchvision Resize-compatible)",
+    "letterbox": false,
+    "input_size": 640,
+    "pad_value": 0,
+    "color_order": "RGB",
+    "layout": "NCHW",
+    "normalized_in_python": false
+  },
+  "rknn_normalization": {
+    "mean_values_rgb_255": [
+      123.675,
+      116.28,
+      103.53
+    ],
+    "std_values_rgb_255": [
+      58.395,
+      57.12,
+      57.375
+    ],
+    "quant_img_RGB2BGR": false
+  },
+  "postprocess_location": "numpy (deploy/postprocess.py); final topk excluded from ONNX",
+  "lqe_disabled": false,
+  "score_clamp": 30.0,
+  "score_input_clamp": 10.0,
+  "lqe_note": "LQE's regression-bin TopK/Softmax is quantised incorrectly by RKNN 2.5; the deployment graph uses the raw decoder score head.",
+  "pytorch_reference_percent": {
+    "AP": 28.82,
+    "AP50": 48.54,
+    "AP75": 28.63
+  },
+  "onnx_graph_info": {
+    "num_nodes": 3916,
+    "GridSample": 0
+  },
+  "grid_sample_rewrite": {
+    "source": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640.onnx",
+    "source_sha256": "3e2a20507eee52d0aafb3a5ca261d2333a5f352bb3a6696c247848554d551be8",
+    "output_sha256": "ee28ee139a131d2cec0dcea86b6ccfce46f5630c476c56e3fb159047ef0e9d23",
+    "replaced_count": 12,
+    "nodes": [
+      {
+        "name": "/model/decoder/decoder/layers.0/cross_attn/GridSample",
+        "feature_shape": [
+          8,
+          24,
+          80,
+          80
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.0/cross_attn/GridSample_1",
+        "feature_shape": [
+          8,
+          24,
+          40,
+          40
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.0/cross_attn/GridSample_2",
+        "feature_shape": [
+          8,
+          24,
+          20,
+          20
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.1/cross_attn/GridSample",
+        "feature_shape": [
+          8,
+          24,
+          80,
+          80
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.1/cross_attn/GridSample_1",
+        "feature_shape": [
+          8,
+          24,
+          40,
+          40
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.1/cross_attn/GridSample_2",
+        "feature_shape": [
+          8,
+          24,
+          20,
+          20
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.2/cross_attn/GridSample",
+        "feature_shape": [
+          8,
+          24,
+          80,
+          80
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.2/cross_attn/GridSample_1",
+        "feature_shape": [
+          8,
+          24,
+          40,
+          40
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.2/cross_attn/GridSample_2",
+        "feature_shape": [
+          8,
+          24,
+          20,
+          20
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.3/cross_attn/GridSample",
+        "feature_shape": [
+          8,
+          24,
+          80,
+          80
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.3/cross_attn/GridSample_1",
+        "feature_shape": [
+          8,
+          24,
+          40,
+          40
+        ],
+        "align_corners": 0
+      },
+      {
+        "name": "/model/decoder/decoder/layers.3/cross_attn/GridSample_2",
+        "feature_shape": [
+          8,
+          24,
+          20,
+          20
+        ],
+        "align_corners": 0
+      }
+    ],
+    "board_verified": false
+  },
+  "onnxruntime_parity_before_rewrite": {
+    "pred_logits": {
+      "max_abs_diff": 0.00034046173095703125
+    },
+    "pred_boxes": {
+      "max_abs_diff": 9.119510650634766e-06
+    }
+  },
+  "onnxruntime_parity": {
+    "pending": true
+  }
+}

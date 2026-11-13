@@ -1,0 +1,129 @@
+{
+  "source": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640.onnx",
+  "source_sha256": "3e2a20507eee52d0aafb3a5ca261d2333a5f352bb3a6696c247848554d551be8",
+  "output_sha256": "ee28ee139a131d2cec0dcea86b6ccfce46f5630c476c56e3fb159047ef0e9d23",
+  "replaced_count": 12,
+  "nodes": [
+    {
+      "name": "/model/decoder/decoder/layers.0/cross_attn/GridSample",
+      "feature_shape": [
+        8,
+        24,
+        80,
+        80
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.0/cross_attn/GridSample_1",
+      "feature_shape": [
+        8,
+        24,
+        40,
+        40
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.0/cross_attn/GridSample_2",
+      "feature_shape": [
+        8,
+        24,
+        20,
+        20
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.1/cross_attn/GridSample",
+      "feature_shape": [
+        8,
+        24,
+        80,
+        80
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.1/cross_attn/GridSample_1",
+      "feature_shape": [
+        8,
+        24,
+        40,
+        40
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.1/cross_attn/GridSample_2",
+      "feature_shape": [
+        8,
+        24,
+        20,
+        20
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.2/cross_attn/GridSample",
+      "feature_shape": [
+        8,
+        24,
+        80,
+        80
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.2/cross_attn/GridSample_1",
+      "feature_shape": [
+        8,
+        24,
+        40,
+        40
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.2/cross_attn/GridSample_2",
+      "feature_shape": [
+        8,
+        24,
+        20,
+        20
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.3/cross_attn/GridSample",
+      "feature_shape": [
+        8,
+        24,
+        80,
+        80
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.3/cross_attn/GridSample_1",
+      "feature_shape": [
+        8,
+        24,
+        40,
+        40
+      ],
+      "align_corners": 0
+    },
+    {
+      "name": "/model/decoder/decoder/layers.3/cross_attn/GridSample_2",
+      "feature_shape": [
+        8,
+        24,
+        20,
+        20
+      ],
+      "align_corners": 0
+    }
+  ],
+  "board_verified": false
+}

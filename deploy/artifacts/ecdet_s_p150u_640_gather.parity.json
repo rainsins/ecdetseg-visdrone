@@ -1,0 +1,62 @@
+[
+  {
+    "input": "random",
+    "outputs": [
+      {
+        "index": 0,
+        "max_abs": 0.0,
+        "finite": true
+      },
+      {
+        "index": 1,
+        "max_abs": 0.0,
+        "finite": true
+      }
+    ]
+  },
+  {
+    "input": "0000008_0000338_01569_d_0000146.png",
+    "outputs": [
+      {
+        "index": 0,
+        "max_abs": 0.0,
+        "finite": true
+      },
+      {
+        "index": 1,
+        "max_abs": 0.0,
+        "finite": true
+      }
+    ]
+  },
+  {
+    "input": "0000036_9999955_00000_d_0000177.png",
+    "outputs": [
+      {
+        "index": 0,
+        "max_abs": 0.0,
+        "finite": true
+      },
+      {
+        "index": 1,
+        "max_abs": 0.0,
+        "finite": true
+      }
+    ]
+  },
+  {
+    "input": "0000050_9999937_00000_d_0000111.png",
+    "outputs": [
+      {
+        "index": 0,
+        "max_abs": 0.0,
+        "finite": true
+      },
+      {
+        "index": 1,
+        "max_abs": 0.0,
+        "finite": true
+      }
+    ]
+  }
+]

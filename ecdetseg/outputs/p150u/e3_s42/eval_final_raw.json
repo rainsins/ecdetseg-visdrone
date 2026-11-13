@@ -1,0 +1,12 @@
+{
+  "weights_type": "raw",
+  "epoch": 149,
+  "AP": 0.2769776129612279,
+  "AP50": 0.472467765042319,
+  "AP75": 0.27090441450440367,
+  "APS": 0.1783304263880695,
+  "APM": 0.4018174039014049,
+  "APL": 0.5785888296934676,
+  "params": 9803112,
+  "ckpt": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/outputs/p150u/e3_s42/final.pth"
+}

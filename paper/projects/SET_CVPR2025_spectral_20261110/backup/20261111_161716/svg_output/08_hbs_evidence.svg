@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial" data-pptx-page-role="content">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#FFFFFF" />
+<g id="header" data-pptx-bounds="56 30 1168 112"><text x="56" y="52" font-size="16" fill="#087E8B">02 / HBS · 机制证据</text><text x="56" y="111" font-size="40" font-weight="bold" fill="#142D4E">可视化与频谱统计指向同一个变化</text></g>
+<g id="pca-evidence" data-pptx-bounds="56 157 404 484"><image href="../images/fig4.png" x="72" y="158" width="345" height="453" preserveAspectRatio="xMidYMid meet" /><text x="56" y="634" font-size="16" fill="#58677A">Fig.4：原图 / FCOS / HBS，P3特征PCA</text></g>
+<g id="spectrum-evidence" data-pptx-bounds="504 161 720 324"><text x="504" y="193" font-size="24" font-weight="bold" fill="#087E8B">VisDrone训练集随机1000张图</text><image href="../images/fig7.png" x="514" y="218" width="690" height="256" preserveAspectRatio="xMidYMid meet" /></g>
+<g id="spectrum-readout" data-pptx-bounds="504 500 720 137" font-size="24"><text x="504" y="531" fill="#243447"><tspan x="504" dy="0">低频平均幅值：0.3787 → <tspan font-weight="bold" fill="#087E8B">0.5205</tspan></tspan><tspan x="504" dy="38">中频：0.5340 → 0.4249；高频：0.6265 → 0.4518</tspan></text><text x="504" y="619" font-weight="bold" fill="#142D4E">背景更平滑，前景与背景更容易区分。</text></g>
+<g id="footer" data-pptx-bounds="56 653 1168 34" font-size="16" fill="#58677A"><text x="56" y="675">来源：SET，PDF p.4 Fig.4、p.8 Fig.7；频谱平均幅值不等于AP提升</text><text x="1189" y="675">08</text></g>
+</svg>

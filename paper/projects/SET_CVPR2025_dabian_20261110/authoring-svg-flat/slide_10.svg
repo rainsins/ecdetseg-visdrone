@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="960" height="540" viewBox="0 0 960 540" font-family="&quot;字魂59号-创粗黑&quot;, sans-serif"><rect x="0" y="0" width="960" height="540" fill="#FFFFFF"/>
+<g id="shape-15" data-pptx-object="shape" data-pptx-frame="305.60 38.93 348.80 43.62" data-pptx-prst="rect" data-pptx-source-ref="slide:15" data-pptx-semantic-object="shape">
+<path d="M 305.60 38.93 L 654.40 38.93 L 654.40 82.55 L 305.60 82.55 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="480" y="70.39433071" text-anchor="middle" xml:space="preserve" font-size="28" fill="#000000" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">四个数据集上的一致增益</tspan></text>
+</g>
+<g id="shape-17" data-pptx-object="group" data-pptx-frame="515.06 190.62 116.44 116.33" data-pptx-source-ref="slide:17">
+<g id="shape-18" data-pptx-object="shape" data-pptx-frame="515.06 190.62 116.49 116.38" data-pptx-prst="ellipse" data-pptx-source-ref="slide:18" data-pptx-semantic-object="shape">
+<path d="M 515.06 248.81 A 58.25 58.19 0 0 1 573.31 190.62 A 58.25 58.19 0 0 1 631.56 248.81 A 58.25 58.19 0 0 1 573.31 307 A 58.25 58.19 0 0 1 515.06 248.81 Z" fill="#006EA0" stroke="none" data-pptx-part="geometry"/>
+
+
+</g>
+<g id="shape-19" data-pptx-object="shape" data-pptx-frame="552.16 224.51 42.35 41.52" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:19" data-pptx-semantic-object="shape">
+<path d="M 553.94 249.08 L 553.94 228.93 C 553.94 227.51 555.07 226.37 556.5 226.37 L 590.11 226.37 C 591.53 226.37 592.66 227.51 592.66 228.93 L 592.66 249.08 C 592.66 250.51 591.53 251.65 590.11 251.65 L 556.5 251.65 C 555.07 251.65 553.94 250.51 553.94 249.08 Z M 590.11 253.43 C 592.52 253.43 594.51 251.51 594.51 249.08 L 594.51 228.93 C 594.51 226.51 592.52 224.51 590.11 224.51 L 556.5 224.51 C 554.08 224.51 552.16 226.51 552.16 228.93 L 552.16 249.08 C 552.16 251.51 554.08 253.43 556.5 253.43 L 569.57 253.43 L 569.57 257.42 L 556.5 257.42 C 554.08 257.42 552.16 259.41 552.16 261.83 L 552.16 265.11 C 552.16 265.61 552.52 266.04 553.01 266.04 L 593.59 266.04 C 594.09 266.04 594.51 265.61 594.51 265.11 L 594.51 261.83 C 594.51 259.41 592.52 257.42 590.11 257.42 L 577.1 257.42 L 577.1 253.43 L 590.11 253.43 Z M 590.82 249.08 L 590.82 228.93 C 590.82 228.5 590.53 228.22 590.11 228.22 L 556.5 228.22 C 556.14 228.22 555.79 228.5 555.79 228.93 L 555.79 249.08 C 555.79 249.44 556.14 249.8 556.5 249.8 L 590.11 249.8 C 590.53 249.8 590.82 249.44 590.82 249.08 Z" data-pptx-part="geometry" fill="#FFFFFF" stroke="none"/>
+
+</g>
+</g>
+<g id="shape-20" data-pptx-object="group" data-pptx-frame="42.45 183.01 116.44 116.33" data-pptx-source-ref="slide:20">
+<g id="shape-21" data-pptx-object="shape" data-pptx-frame="42.45 183.01 116.49 116.38" data-pptx-prst="ellipse" data-pptx-source-ref="slide:21" data-pptx-semantic-object="shape">
+<path d="M 42.45 241.2 A 58.25 58.19 0 0 1 100.7 183.01 A 58.25 58.19 0 0 1 158.94 241.2 A 58.25 58.19 0 0 1 100.7 299.39 A 58.25 58.19 0 0 1 42.45 241.2 Z" fill="none" stroke-width="1" stroke="#000000" stroke-linejoin="round" data-pptx-part="geometry"/>
+
+
+</g>
+<g id="shape-22" data-pptx-object="shape" data-pptx-frame="75.18 221.65 46 42.41" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:22" data-pptx-semantic-object="shape">
+<path d="M 121.18 232.27 C 121.18 232.27 120.97 229.21 117.98 228.64 C 115.84 228.21 95.26 225.5 95.26 225.5 L 95.26 224.65 C 95.26 224.65 95.33 222.87 93.62 222.44 C 91.84 222.08 87.5 221.65 87.5 221.65 L 85.86 222.51 L 89.71 222.94 C 89.71 222.94 91.7 223.08 92.27 225 C 92.84 226.93 92.84 226.93 92.84 226.93 L 115.7 229.85 C 115.7 229.85 118.48 229.85 119.12 233.34 C 119.4 235.12 118.26 252.44 118.55 259.43 L 116.13 236.34 C 116.13 236.34 116.05 233.34 113.21 232.99 C 110.29 232.63 91.27 230.06 91.27 230.06 C 91.27 230.06 90.63 226.07 88.28 225.86 C 85.93 225.65 80.59 224.86 80.59 224.86 C 80.59 224.86 78.67 224.65 80.02 229.14 L 75.18 228.71 L 79.45 257.86 L 119.47 264.06 L 121.18 232.27 Z" data-pptx-part="geometry" fill="#006EA0" stroke="none"/>
+
+</g>
+</g>
+<g id="shape-23" data-pptx-object="group" data-pptx-frame="512.07 384.75 116.55 116.33" data-pptx-source-ref="slide:23">
+<g id="shape-24" data-pptx-object="shape" data-pptx-frame="512.07 384.75 116.55 116.38" data-pptx-prst="ellipse" data-pptx-source-ref="slide:24" data-pptx-semantic-object="shape">
+<path d="M 512.07 442.94 A 58.27 58.19 0 0 1 570.35 384.75 A 58.27 58.19 0 0 1 628.62 442.94 A 58.27 58.19 0 0 1 570.35 501.13 A 58.27 58.19 0 0 1 512.07 442.94 Z" fill="none" stroke-width="1" stroke="#000000" stroke-linejoin="round" data-pptx-part="geometry"/>
+
+
+</g>
+<g id="shape-25" data-pptx-object="shape" data-pptx-frame="543.03 421.51 54.57 42.9" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:25" data-pptx-semantic-object="shape">
+<path d="M 570.89 435.46 L 563.12 443.25 C 563.91 443.68 564.62 444.18 565.26 444.82 L 570.89 439.25 L 576.94 445.32 L 585.49 436.74 L 586.77 440.03 L 589.48 430.74 L 580.22 433.45 L 583.64 434.81 L 576.94 441.53 L 570.89 435.46 Z M 597.6 427.23 L 597.6 427.23 L 597.6 423.8 L 576.16 423.8 L 576.16 421.51 L 574.17 421.51 L 574.17 423.8 L 554 423.8 L 554 427.23 L 555.5 427.23 L 555.5 430.24 C 556.57 430.38 557.49 430.67 558.42 431.17 L 558.42 427.23 L 593.33 427.23 L 593.33 449.69 L 568.32 449.69 C 568.39 450.04 568.54 450.4 568.61 450.83 L 593.33 450.83 L 593.33 452.05 L 568.75 452.05 C 568.75 452.26 568.82 452.55 568.82 452.83 L 568.82 455.69 L 574.17 455.69 L 574.17 464.06 L 576.16 464.06 L 576.16 455.69 L 582.93 455.69 L 585.99 463.84 L 587.99 463.34 L 585.14 455.69 L 597.6 455.69 L 597.6 452.05 L 596.25 452.05 L 596.25 427.23 L 597.6 427.23 Z M 554.5 443.68 L 554.5 443.68 C 557.42 443.68 559.77 441.32 559.77 438.39 C 559.77 435.38 557.42 433.02 554.5 433.02 C 551.51 433.02 549.16 435.38 549.16 438.39 C 549.16 441.32 551.51 443.68 554.5 443.68 Z M 557.85 444.75 L 557.85 444.75 L 555.93 444.75 L 556.21 444.97 C 556.43 445.18 556.57 445.54 556.43 445.75 L 555.71 447.61 L 557 457.98 L 554.65 460.13 L 552.22 457.98 L 553.51 447.61 L 552.79 445.75 C 552.65 445.54 552.79 445.18 553.01 444.97 L 553.36 444.75 L 551.01 444.75 C 546.6 444.75 543.03 448.4 543.03 452.83 L 543.03 464.42 L 547.74 464.42 L 547.74 452.4 L 549.37 452.4 L 549.37 464.42 L 559.42 464.42 L 559.42 452.4 L 561.06 452.4 L 561.06 464.42 L 565.9 464.42 L 565.9 452.83 C 565.9 448.4 562.34 444.75 557.85 444.75 Z" data-pptx-part="geometry" fill="#006EA0" stroke="none"/>
+
+</g>
+</g>
+<g id="shape-26" data-pptx-object="shape" data-pptx-frame="42.37 370.71 116.55 116.38" data-pptx-prst="ellipse" data-pptx-source-ref="slide:26" data-pptx-semantic-object="shape">
+<path d="M 42.37 428.91 A 58.27 58.19 0 0 1 100.64 370.71 A 58.27 58.19 0 0 1 158.92 428.91 A 58.27 58.19 0 0 1 100.64 487.1 A 58.27 58.19 0 0 1 42.37 428.91 Z" fill="#006EA0" stroke="none" data-pptx-part="geometry"/>
+
+
+</g>
+<g id="shape-27" data-pptx-object="group" data-pptx-frame="161.59 205.09 286.34 97.81" data-pptx-source-ref="slide:27">
+<g id="shape-28" data-pptx-object="shape" data-pptx-frame="161.59 205.09 95.65 32.18" data-pptx-prst="rect" data-pptx-source-ref="slide:28" data-pptx-semantic-object="shape">
+<path d="M 161.59 205.09 L 257.24 205.09 L 257.24 237.27 L 161.59 237.27 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="171.19" y="232.56094488" text-anchor="start" xml:space="preserve" font-size="24" fill="#404040" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">AI-TOD</tspan></text>
+</g>
+<g id="shape-29" data-pptx-object="shape" data-pptx-frame="161.59 237.27 286.34 65.63" data-pptx-prst="rect" data-pptx-source-ref="slide:29" data-pptx-semantic-object="shape">
+<path d="M 161.59 237.27 L 447.93 237.27 L 447.93 302.9 L 161.59 302.9 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="171.19" y="263.40548329" text-anchor="start" xml:space="preserve" font-size="16" fill="#7F7F7F" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="29.12"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">RFLA +3.2 </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">/ DINO +3.4</tspan></tspan></text>
+</g>
+</g>
+<g id="shape-30" data-pptx-object="group" data-pptx-frame="653.79 201.1 286.34 97.81" data-pptx-source-ref="slide:30">
+<g id="shape-31" data-pptx-object="shape" data-pptx-frame="653.79 201.10 183.98 32.18" data-pptx-prst="rect" data-pptx-source-ref="slide:31" data-pptx-semantic-object="shape">
+<path d="M 653.79 201.10 L 837.77 201.10 L 837.77 233.28 L 653.79 233.28 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="663.39" y="228.56566929" text-anchor="start" xml:space="preserve" font-size="24" fill="#404040" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">VisDrone2019</tspan></text>
+</g>
+<g id="shape-32" data-pptx-object="shape" data-pptx-frame="653.79 233.28 286.34 65.63" data-pptx-prst="rect" data-pptx-source-ref="slide:32" data-pptx-semantic-object="shape">
+<path d="M 653.79 233.28 L 940.13 233.28 L 940.13 298.9 L 653.79 298.9 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="663.39" y="259.4102077" text-anchor="start" xml:space="preserve" font-size="16" fill="#7F7F7F" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="29.12"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">FCOS +2.0 </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">/ RFLA +1.3</tspan></tspan></text>
+</g>
+</g>
+<g id="shape-42" data-pptx-object="group" data-pptx-frame="161.18 398.75 286.34 97.81" data-pptx-source-ref="slide:42">
+<g id="shape-43" data-pptx-object="shape" data-pptx-frame="161.18 398.75 146.22 32.18" data-pptx-prst="rect" data-pptx-source-ref="slide:43" data-pptx-semantic-object="shape">
+<path d="M 161.18 398.75 L 307.40 398.75 L 307.40 430.93 L 161.18 430.93 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="170.78" y="426.21228346" text-anchor="start" xml:space="preserve" font-size="24" fill="#404040" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">DOTA-v2.0</tspan></text>
+</g>
+<g id="shape-44" data-pptx-object="shape" data-pptx-frame="161.18 430.92 286.34 65.63" data-pptx-prst="rect" data-pptx-source-ref="slide:44" data-pptx-semantic-object="shape">
+<path d="M 161.18 430.92 L 447.52 430.92 L 447.52 496.55 L 161.18 496.55 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="170.78" y="457.05682188" text-anchor="start" xml:space="preserve" font-size="16" fill="#7F7F7F" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="29.12"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">FCOS +2.9 </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">/ AA +1.4</tspan></tspan></text>
+</g>
+</g>
+<g id="shape-45" data-pptx-object="group" data-pptx-frame="641.5 400.8 286.34 97.81" data-pptx-source-ref="slide:45">
+<g id="shape-46" data-pptx-object="shape" data-pptx-frame="641.50 400.80 137.78 32.18" data-pptx-prst="rect" data-pptx-source-ref="slide:46" data-pptx-semantic-object="shape">
+<path d="M 641.50 400.80 L 779.28 400.80 L 779.28 432.98 L 641.50 432.98 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="651.1" y="428.2680315" text-anchor="start" xml:space="preserve" font-size="24" fill="#404040" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">COCO2017</tspan></text>
+</g>
+<g id="shape-47" data-pptx-object="shape" data-pptx-frame="641.5 432.98 286.34 65.63" data-pptx-prst="rect" data-pptx-source-ref="slide:47" data-pptx-semantic-object="shape">
+<path d="M 641.5 432.98 L 927.84 432.98 L 927.84 498.61 L 641.5 498.61 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="651.1" y="459.11256991" text-anchor="start" xml:space="preserve" font-size="16" fill="#7F7F7F" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="29.12"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">FCOS +1.0 </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">/ AP_t +1.7</tspan></tspan></text>
+</g>
+</g>
+<g id="shape-49" data-pptx-object="group" data-pptx-frame="75.15 405.51 52.13 51.93" data-pptx-source-ref="slide:49">
+<g id="shape-50" data-pptx-object="shape" data-pptx-frame="102.35 405.51 24.73 24.73" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:50" data-pptx-semantic-object="shape">
+<path d="M 110.63 430.16 C 110.71 430.24 110.8 430.24 110.97 430.24 C 111.05 430.24 111.14 430.24 111.22 430.16 L 116.85 424.49 L 120.52 428.27 C 120.61 428.35 120.69 428.35 120.86 428.35 C 120.86 428.35 120.86 428.35 120.95 428.35 C 121.12 428.35 121.2 428.27 121.2 428.1 L 127.09 406.03 C 127.09 405.94 127.09 405.94 127.09 405.85 C 127.09 405.68 126.92 405.51 126.75 405.51 C 126.66 405.51 126.66 405.51 126.66 405.51 C 126.66 405.51 126.58 405.51 126.58 405.51 L 104.66 411.44 C 104.49 411.44 104.4 411.52 104.32 411.69 C 104.32 411.87 104.4 411.95 104.49 412.12 L 108.07 415.73 L 102.52 421.4 C 102.35 421.57 102.35 421.83 102.52 421.91 L 110.63 430.16 Z" data-pptx-part="geometry" fill="#FFFFFF" stroke="none"/>
+
+</g>
+<g id="shape-51" data-pptx-object="shape" data-pptx-frame="75.15 405.51 24.93 24.73" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:51" data-pptx-semantic-object="shape">
+<path d="M 81.09 428.1 C 81.09 428.27 81.26 428.35 81.34 428.35 C 81.43 428.35 81.43 428.35 81.52 428.35 C 81.6 428.35 81.69 428.35 81.77 428.27 L 85.56 424.49 L 91.15 430.16 C 91.23 430.24 91.32 430.24 91.4 430.24 C 91.58 430.24 91.66 430.24 91.75 430.16 L 99.92 421.91 C 100.09 421.83 100.09 421.57 99.92 421.4 L 94.33 415.73 L 97.94 412.12 C 98.11 411.95 98.11 411.87 98.11 411.69 C 98.02 411.52 97.94 411.44 97.77 411.44 L 75.67 405.51 C 75.58 405.51 75.58 405.51 75.5 405.51 C 75.41 405.51 75.33 405.51 75.24 405.6 C 75.15 405.68 75.15 405.85 75.15 405.94 L 81.09 428.1 Z" data-pptx-part="geometry" fill="#FFFFFF" stroke="none"/>
+
+</g>
+<g id="shape-55" data-pptx-object="shape" data-pptx-frame="102.35 432.51 24.93 24.93" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:55" data-pptx-semantic-object="shape">
+<path d="M 121.29 434.67 C 121.29 434.58 121.12 434.41 121.03 434.41 C 120.95 434.41 120.95 434.41 120.95 434.41 C 120.78 434.41 120.69 434.41 120.6 434.49 L 116.92 438.29 L 111.26 432.68 C 111.18 432.6 111.09 432.51 111.01 432.51 C 110.84 432.51 110.75 432.6 110.67 432.68 L 102.53 440.88 C 102.35 441.05 102.35 441.31 102.53 441.48 L 108.09 447.09 L 104.5 450.8 C 104.41 450.89 104.32 451.06 104.32 451.15 C 104.41 451.32 104.5 451.4 104.67 451.49 L 126.69 457.44 C 126.77 457.44 126.77 457.44 126.86 457.44 C 126.94 457.44 127.03 457.36 127.12 457.36 C 127.2 457.18 127.29 457.1 127.2 456.93 L 121.29 434.67 Z" data-pptx-part="geometry" fill="#FFFFFF" stroke="none"/>
+
+</g>
+<g id="shape-56" data-pptx-object="shape" data-pptx-frame="75.15 432.51 24.93 24.93" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:56" data-pptx-semantic-object="shape">
+<path d="M 91.75 432.68 C 91.66 432.6 91.58 432.51 91.4 432.51 C 91.32 432.51 91.23 432.6 91.15 432.68 L 85.56 438.29 L 81.77 434.49 C 81.69 434.41 81.6 434.41 81.52 434.41 C 81.43 434.41 81.43 434.41 81.34 434.41 C 81.26 434.41 81.09 434.58 81.09 434.67 L 75.15 456.93 C 75.15 457.1 75.15 457.18 75.24 457.36 C 75.33 457.36 75.41 457.44 75.58 457.44 C 75.58 457.44 75.58 457.44 75.67 457.44 L 97.77 451.49 C 97.94 451.4 98.02 451.32 98.11 451.15 C 98.11 451.06 98.11 450.89 97.94 450.8 L 94.33 447.09 L 99.92 441.48 C 100.09 441.31 100.09 441.05 99.92 440.88 L 91.75 432.68 Z" data-pptx-part="geometry" fill="#FFFFFF" stroke="none"/>
+
+</g>
+</g>
+<g id="shape-33" data-pptx-object="group" data-pptx-frame="701.82 4.11 245.07 72.55" data-pptx-source-ref="slide:33">
+<g id="shape-34" data-pptx-object="picture" data-pptx-frame="701.82 4.11 86.18 72.55" data-pptx-source-ref="slide:34">
+<image data-pptx-object="picture" data-pptx-frame="701.82 4.11 86.18 72.55" href="../images/image3.png" x="701.82" y="4.11" width="86.18" height="72.55" preserveAspectRatio="none"/>
+</g>
+<g id="shape-35" data-pptx-object="shape" data-pptx-frame="778.38 21.75 168.51 38.78" data-pptx-prst="rect" data-pptx-source-ref="slide:35" data-pptx-semantic-object="shape">
+<path d="M 778.38 21.75 L 946.89 21.75 L 946.89 60.53 L 778.38 60.53 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="787.98" y="49.21847769" text-anchor="start" xml:space="preserve" font-family="&quot;华文行楷&quot;, sans-serif" font-size="24" fill="#2E2E35" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">兰州理工大学</tspan></text>
+</g>
+</g></svg>

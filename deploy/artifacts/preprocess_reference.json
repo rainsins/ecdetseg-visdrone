@@ -1,0 +1,16 @@
+{
+  "orig_w": 1920,
+  "orig_h": 1080,
+  "resized_w": 640,
+  "resized_h": 640,
+  "input_w": 640,
+  "input_h": 640,
+  "pad_x": 0,
+  "pad_y": 0,
+  "scale_x": 1.0,
+  "scale_y": 1.0,
+  "pad_value": 0,
+  "color_order": "RGB",
+  "layout": "CHW",
+  "normalized": false
+}

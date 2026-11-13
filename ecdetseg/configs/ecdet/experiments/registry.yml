@@ -1,0 +1,45 @@
+# Status is an implementation gate, not a claim of measured improvement.
+schema_version: 1
+protocols:
+  p150u: configs/ecdet/ecdet_s_p150u.yml
+default_protocol: p150u
+archived_protocols:
+  p30u: configs/ecdet/ecdet_s_p30u.yml
+  p74u: configs/ecdet/ecdet_s_p74u.yml
+experiments:
+  B0:
+    name: Original ECDet baseline
+    revision: v1
+    status: ready
+    modules: []
+    overrides: {}
+  B1:
+    name: Identity auxiliary branch (extra-supervision control)
+    revision: v1
+    status: planned
+    modules: [aux_identity]
+    overrides: {}
+  B2:
+    name: Full-image smoothing auxiliary branch
+    revision: v1
+    status: planned
+    modules: [aux_branch, full_smoothing]
+    overrides: {}
+  B3:
+    name: HBS auxiliary branch
+    revision: v1
+    status: planned
+    modules: [aux_branch, hbs]
+    overrides: {}
+  B4:
+    name: API adaptation for query-based detection
+    revision: v1
+    status: planned
+    modules: [aux_branch, api]
+    overrides: {}
+  B5:
+    name: HBS and API auxiliary branch
+    revision: v1
+    status: planned
+    modules: [aux_branch, hbs, api]
+    overrides: {}

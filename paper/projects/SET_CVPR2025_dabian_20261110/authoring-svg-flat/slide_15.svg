@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="960" height="540" viewBox="0 0 960 540" font-family="&quot;字魂59号-创粗黑&quot;, sans-serif"><rect x="0" y="0" width="960" height="540" fill="#FFFFFF" />
+<g id="shape-46" data-pptx-object="shape" data-pptx-frame="91.8 103.82 135.71 36.35" data-pptx-prst="rect" data-pptx-source-ref="slide:46" data-pptx-semantic-object="shape">
+<path d="M 91.8 103.82 L 227.51 103.82 L 227.51 140.17 L 91.8 140.17 Z" fill="none" stroke="none" data-pptx-part="geometry" />
+
+
+<text x="99" y="130.25874016" text-anchor="start" xml:space="preserve" font-size="24" fill="#9F9F9F" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">输入内容：</tspan></text>
+</g>
+<g id="shape-47" data-pptx-object="group" data-pptx-frame="97.39 144.32 236.29 39.3" data-pptx-source-ref="slide:47">
+<g id="shape-48" data-pptx-object="shape" data-pptx-frame="97.39 144.32 236.29 39.3" data-pptx-prst="rect" data-pptx-source-ref="slide:48" data-pptx-semantic-object="shape">
+<path d="M 97.39 144.32 L 333.68 144.32 L 333.68 183.62 L 97.39 183.62 Z" fill="#006EA0" stroke-width="1.33333" stroke-linecap="butt" stroke="#FFFFFF" stroke-linejoin="miter" data-pptx-part="geometry" />
+
+
+</g>
+<g id="shape-52" data-pptx-object="shape" data-pptx-frame="97.39 150.64 234.87 29.08" data-pptx-prst="rect" data-pptx-source-ref="slide:52" data-pptx-semantic-object="shape">
+<path d="M 97.39 150.64 L 332.26 150.64 L 332.26 179.72 L 97.39 179.72 Z" fill="#006EA0" data-pptx-part="geometry" />
+
+
+<text x="214.82" y="171.44105523" text-anchor="middle" xml:space="preserve" font-size="16" fill="#FFFFFF" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">01 </tspan><tspan fill-opacity="1" font-style="normal" text-decoration="none">添加标题内容</tspan></text>
+</g>
+</g>
+<g id="shape-53" data-pptx-object="group" data-pptx-frame="360.68 144.32 236.29 39.3" data-pptx-source-ref="slide:53">
+<g id="shape-54" data-pptx-object="shape" data-pptx-frame="360.68 144.32 236.29 39.3" data-pptx-prst="rect" data-pptx-source-ref="slide:54" data-pptx-semantic-object="shape">
+<path d="M 360.68 144.32 L 596.97 144.32 L 596.97 183.62 L 360.68 183.62 Z" fill="#006EA0" stroke-width="1.33333" stroke-linecap="butt" stroke="#FFFFFF" stroke-linejoin="miter" data-pptx-part="geometry" />
+
+
+</g>
+<g id="shape-55" data-pptx-object="shape" data-pptx-frame="360.68 150.64 234.87 29.08" data-pptx-prst="rect" data-pptx-source-ref="slide:55" data-pptx-semantic-object="shape">
+<path d="M 360.68 150.64 L 595.55 150.64 L 595.55 179.72 L 360.68 179.72 Z" fill="#006EA0" data-pptx-part="geometry" />
+
+
+<text x="478.11" y="171.44105523" text-anchor="middle" xml:space="preserve" font-size="16" fill="#FFFFFF" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">02 </tspan><tspan fill-opacity="1" font-style="normal" text-decoration="none">添加标题内容</tspan></text>
+</g>
+</g>
+<g id="shape-56" data-pptx-object="group" data-pptx-frame="91.8 190.38 834.7 38.78" data-pptx-source-ref="slide:56">
+<g id="shape-57" data-pptx-object="shape" data-pptx-frame="91.8 190.38 164.79 38.78" data-pptx-prst="rect" data-pptx-source-ref="slide:57" data-pptx-semantic-object="shape">
+<path d="M 91.8 190.38 L 256.6 190.38 L 256.6 229.16 L 91.8 229.16 Z" fill="none" stroke="none" data-pptx-part="geometry" />
+
+
+<text x="101.4" y="218.03569554" text-anchor="start" xml:space="preserve" font-size="24" fill="#9F9F9F" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">添加小标题：</tspan></text>
+</g>
+<g id="shape-58" data-pptx-object="shape" data-pptx-frame="219.25 195.23 707.25 29.08" data-pptx-prst="rect" data-pptx-source-ref="slide:58" data-pptx-semantic-object="shape">
+<path d="M 219.25 195.23 L 926.51 195.23 L 926.51 224.31 L 219.25 224.31 Z" fill="none" data-pptx-part="geometry" />
+
+
+<text x="228.85" y="216.02837927" text-anchor="start" xml:space="preserve" font-size="16" fill="#9F9F9F" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">您的内容打在这里，或者通过复制您的文本后，并选择只保留文字。</tspan></text>
+</g>
+</g>
+<g id="shape-59" data-pptx-object="group" data-pptx-frame="91.8 231.81 712.86 38.78" data-pptx-source-ref="slide:59">
+<g id="shape-60" data-pptx-object="shape" data-pptx-frame="91.8 231.81 164.79 38.78" data-pptx-prst="rect" data-pptx-source-ref="slide:60" data-pptx-semantic-object="shape">
+<path d="M 91.8 231.81 L 256.6 231.81 L 256.6 270.58 L 91.8 270.58 Z" fill="none" stroke="none" data-pptx-part="geometry" />
+
+
+<text x="101.4" y="259.46152231" text-anchor="start" xml:space="preserve" font-size="24" fill="#9F9F9F" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">添加小标题：</tspan></text>
+</g>
+<g id="shape-61" data-pptx-object="shape" data-pptx-frame="219.25 236.65 585.41 29.08" data-pptx-prst="rect" data-pptx-source-ref="slide:61" data-pptx-semantic-object="shape">
+<path d="M 219.25 236.65 L 804.66 236.65 L 804.66 265.74 L 219.25 265.74 Z" fill="none" data-pptx-part="geometry" />
+
+
+<text x="228.85" y="257.45413714" text-anchor="start" xml:space="preserve" font-size="16" fill="#9F9F9F" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">您的内容打在这里，或者通过复制您的文本后，并选择只保留文字。</tspan></text>
+</g>
+</g>
+<g id="shape-65" data-pptx-object="group" data-pptx-frame="97.39 298.41 762.66 193.46" data-pptx-source-ref="slide:65">
+<g id="shape-66" data-pptx-object="shape" data-pptx-frame="97.39 298.41 762.66 193.46" data-pptx-prst="leftRightRibbon" data-pptx-av-adj1="val 54481" data-pptx-av-adj2="val 50000" data-pptx-av-adj3="val 16667" data-pptx-source-ref="slide:66" data-pptx-semantic-object="shape">
+<path d="M 97.39 379.01 L 194.12 298.41 L 194.12 326.31 L 478.72 326.31 A 23.83 8.06 0 0 1 478.72 342.44 A 23.83 8.06 0 0 0 478.72 358.56 L 763.32 358.56 L 763.32 330.65 L 860.04 411.26 L 763.32 491.86 L 763.32 463.95 L 478.72 463.95 A 23.83 8.06 0 0 1 454.88 455.89 L 454.88 431.71 L 194.12 431.71 L 194.12 459.62 Z M 502.55 334.37 A 23.83 8.06 0 0 1 478.72 342.44 A 23.83 8.06 0 0 0 478.72 358.56 L 502.55 358.56 Z M 97.39 379.01 L 194.12 298.41 L 194.12 326.31 L 478.72 326.31 A 23.83 8.06 0 0 1 478.72 342.44 A 23.83 8.06 0 0 0 478.72 358.56 L 763.32 358.56 L 763.32 330.65 L 860.04 411.26 L 763.32 491.86 L 763.32 463.95 L 478.72 463.95 A 23.83 8.06 0 0 1 454.88 455.89 L 454.88 431.71 L 194.12 431.71 L 194.12 459.62 Z M 502.55 334.37 L 502.55 358.56 M 454.88 350.5 L 454.88 431.71" fill="#006EA0" stroke-width="1.33333" stroke-linecap="butt" stroke="#FFFFFF" stroke-linejoin="miter" data-pptx-part="geometry" />
+
+
+</g>
+<g id="shape-67" data-pptx-object="shape" data-pptx-frame="149.27 336.53 305.69 82.85" data-pptx-prst="rect" data-pptx-source-ref="slide:67" data-pptx-semantic-object="shape">
+<path d="M 149.27 336.53 L 454.96 336.53 L 454.96 419.38 L 149.27 419.38 Z" fill="none" data-pptx-part="geometry" />
+
+
+<text x="194.87" y="359.99976109" text-anchor="start" xml:space="preserve" font-size="16" fill="#FFFFFF" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="24.96"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">您的内容打在这里，或者通过复制您的</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1">文本后，在此框中选择粘贴，并选择只</tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1">保留文字。</tspan></text>
+</g>
+<g id="shape-68" data-pptx-object="shape" data-pptx-frame="478.72 372.4 305.69 82.85" data-pptx-prst="rect" data-pptx-source-ref="slide:68" data-pptx-semantic-object="shape">
+<path d="M 478.72 372.4 L 784.4 372.4 L 784.4 455.25 L 478.72 455.25 Z" fill="none" data-pptx-part="geometry" />
+
+
+<text x="524.32" y="395.86877462" text-anchor="start" xml:space="preserve" font-size="16" fill="#FFFFFF" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="24.96"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">您的内容打在这里，或者通过复制您的</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1">文本后，在此框中选择粘贴，并选择只</tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1">保留文字。</tspan></text>
+</g>
+</g>
+<g id="shape-19" data-pptx-object="shape" data-pptx-frame="328.5 38.93 303 43.62" data-pptx-prst="rect" data-pptx-source-ref="slide:19" data-pptx-semantic-object="shape">
+<path d="M 328.5 38.93 L 631.5 38.93 L 631.5 82.55 L 328.5 82.55 Z" fill="none" data-pptx-part="geometry" />
+
+
+<text x="480" y="70.39433071" text-anchor="middle" xml:space="preserve" font-size="28" fill="#000000" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">输入章节标题文案</tspan></text>
+</g>
+<g id="shape-21" data-pptx-object="group" data-pptx-frame="701.82 4.11 245.07 72.55" data-pptx-source-ref="slide:21">
+<g id="shape-22" data-pptx-object="picture" data-pptx-frame="701.82 4.11 86.18 72.55" data-pptx-source-ref="slide:22">
+<image data-pptx-object="picture" data-pptx-frame="701.82 4.11 86.18 72.55" href="../images/image3.png" x="701.82" y="4.11" width="86.18" height="72.55" preserveAspectRatio="none" />
+</g>
+<g id="shape-23" data-pptx-object="shape" data-pptx-frame="778.38 21.75 168.51 38.78" data-pptx-prst="rect" data-pptx-source-ref="slide:23" data-pptx-semantic-object="shape">
+<path d="M 778.38 21.75 L 946.89 21.75 L 946.89 60.53 L 778.38 60.53 Z" fill="none" data-pptx-part="geometry" />
+
+
+<text x="787.98" y="49.21847769" text-anchor="start" xml:space="preserve" font-family="&quot;华文行楷&quot;, sans-serif" font-size="24" fill="#2E2E35" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">兰州理工大学</tspan></text>
+</g>
+</g></svg>

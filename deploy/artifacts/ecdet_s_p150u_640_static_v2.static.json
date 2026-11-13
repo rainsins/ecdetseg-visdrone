@@ -1,0 +1,131 @@
+{
+  "folded": [
+    {
+      "name": "/model/backbone/backbone/Equal",
+      "op": "Equal",
+      "shape": [
+        3
+      ],
+      "bytes": 3
+    },
+    {
+      "name": "/model/backbone/backbone/Where",
+      "op": "Where",
+      "shape": [
+        3
+      ],
+      "bytes": 24
+    },
+    {
+      "name": "/model/backbone/backbone/rope_embed/Sin",
+      "op": "Sin",
+      "shape": [
+        1600,
+        64
+      ],
+      "bytes": 409600
+    },
+    {
+      "name": "/model/backbone/backbone/rope_embed/Cos",
+      "op": "Cos",
+      "shape": [
+        1600,
+        64
+      ],
+      "bytes": 409600
+    }
+  ],
+  "skipped_dynamic_or_unproven": [],
+  "source": "deploy/artifacts/ecdet_s_p150u_640.onnx",
+  "source_sha256": "3e2a20507eee52d0aafb3a5ca261d2333a5f352bb3a6696c247848554d551be8",
+  "before": {
+    "Identity": 7,
+    "Constant": 926,
+    "Conv": 43,
+    "Relu": 3,
+    "Shape": 36,
+    "Slice": 161,
+    "Concat": 87,
+    "Reshape": 103,
+    "Transpose": 115,
+    "ConstantOfShape": 4,
+    "Mul": 229,
+    "Equal": 1,
+    "Where": 1,
+    "Expand": 6,
+    "Unsqueeze": 52,
+    "Flatten": 2,
+    "Sub": 22,
+    "Div": 54,
+    "Tile": 3,
+    "Sin": 1,
+    "Cos": 1,
+    "LayerNormalization": 38,
+    "MatMul": 148,
+    "Add": 262,
+    "Split": 24,
+    "Squeeze": 52,
+    "Neg": 24,
+    "Cast": 36,
+    "Sqrt": 36,
+    "Softmax": 26,
+    "Erf": 12,
+    "ReduceMean": 2,
+    "Resize": 5,
+    "Gemm": 5,
+    "Sigmoid": 58,
+    "Gather": 34,
+    "Clip": 11,
+    "ReduceMax": 1,
+    "TopK": 2,
+    "GatherElements": 2,
+    "GridSample": 12,
+    "ReduceSum": 4,
+    "Log": 1,
+    "Abs": 4
+  },
+  "after": {
+    "Identity": 7,
+    "Constant": 912,
+    "Conv": 43,
+    "Relu": 3,
+    "Shape": 36,
+    "Slice": 161,
+    "Concat": 86,
+    "Reshape": 103,
+    "Transpose": 115,
+    "Expand": 3,
+    "Unsqueeze": 49,
+    "LayerNormalization": 38,
+    "MatMul": 148,
+    "Add": 262,
+    "Split": 24,
+    "Squeeze": 52,
+    "Mul": 226,
+    "Neg": 24,
+    "Cast": 36,
+    "Sqrt": 36,
+    "Div": 53,
+    "Softmax": 26,
+    "Erf": 12,
+    "ReduceMean": 2,
+    "Resize": 5,
+    "Gemm": 5,
+    "Sigmoid": 58,
+    "Gather": 34,
+    "Clip": 11,
+    "ReduceMax": 1,
+    "TopK": 2,
+    "ConstantOfShape": 2,
+    "Tile": 2,
+    "GatherElements": 2,
+    "Sub": 21,
+    "GridSample": 12,
+    "ReduceSum": 4,
+    "Log": 1,
+    "Abs": 4
+  },
+  "board_verified": false,
+  "quantized_accuracy_verified": false,
+  "output_sha256": "e252758fc56b97a1086427855c99d1e528cb73a64b131c28ae1f1a830a885cd3"
+}

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="960" height="540" viewBox="0 0 960 540" font-family="&quot;字魂59号-创粗黑&quot;, sans-serif"><rect x="0" y="0" width="960" height="540" fill="#FFFFFF"/>
+<use data-icon="imported/flat_slide_20_ill01" data-pptx-asset-role="decoration"/><g id="shape-5" data-pptx-object="shape" data-pptx-frame="113.22 176.67 197.46 67.86" data-pptx-prst="rect" data-pptx-source-ref="slide:5" data-pptx-semantic-object="shape">
+<path d="M 113.22 176.67 L 310.68 176.67 L 310.68 244.53 L 113.22 244.53 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="211.95" y="228.14036745" text-anchor="middle" xml:space="preserve" font-size="48" fill="#45888E" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">PART 04</tspan></text>
+</g>
+<g id="shape-6" data-pptx-object="shape" data-pptx-frame="113.22 236.01 491.02 61.39" data-pptx-prst="rect" data-pptx-source-ref="slide:6" data-pptx-semantic-object="shape">
+<path d="M 113.22 236.01 L 604.25 236.01 L 604.25 297.41 L 113.22 297.41 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="122.82" y="282.14813648" text-anchor="start" xml:space="preserve" font-size="42.67" fill="#000000" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">实验与启示</tspan></text>
+</g>
+<g id="shape-7" data-pptx-object="shape" data-pptx-frame="113.22 302.69 417.03 40.62" data-pptx-prst="rect" data-pptx-source-ref="slide:7" data-pptx-semantic-object="shape">
+<path d="M 113.22 302.69 L 530.25 302.69 L 530.25 343.31 L 113.22 343.31 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="122.82" y="319.49238845" text-anchor="start" xml:space="preserve" font-size="11" fill="#7F7F7F" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="15.84"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">Four datasets, zero </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">inference overhead</tspan></tspan></text>
+</g>
+<g id="shape-9" data-pptx-object="connector" data-pptx-frame="61.81 158.53 0 222.94" data-pptx-prst="line" transform="translate(61.81 270) scale(1 -1) translate(-61.81 -270)" data-pptx-source-ref="slide:9" data-pptx-semantic-object="shape">
+<path d="M 61.81 158.53 L 61.81 381.47" stroke-width="2.66667" stroke-linecap="butt" stroke="#45888E" stroke-linejoin="miter" fill="none" data-pptx-part="geometry"/>
+
+</g>
+<g id="shape-12" data-pptx-object="group" data-pptx-frame="34.05 9.24 245.07 72.55" data-pptx-source-ref="slide:12">
+<g id="shape-13" data-pptx-object="picture" data-pptx-frame="34.05 9.24 86.18 72.55" data-pptx-source-ref="slide:13">
+<image data-pptx-object="picture" data-pptx-frame="34.05 9.24 86.18 72.55" href="../images/image3.png" x="34.05" y="9.24" width="86.18" height="72.55" preserveAspectRatio="none"/>
+</g>
+<g id="shape-14" data-pptx-object="shape" data-pptx-frame="110.61 26.88 168.51 38.78" data-pptx-prst="rect" data-pptx-source-ref="slide:14" data-pptx-semantic-object="shape">
+<path d="M 110.61 26.88 L 279.12 26.88 L 279.12 65.65 L 110.61 65.65 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="120.21" y="54.34551181" text-anchor="start" xml:space="preserve" font-family="&quot;华文行楷&quot;, sans-serif" font-size="24" fill="#2E2E35" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">兰州理工大学</tspan></text>
+</g>
+</g></svg>

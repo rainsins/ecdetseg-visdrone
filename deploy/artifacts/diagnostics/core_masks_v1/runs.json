@@ -1,0 +1,38 @@
+[
+  {
+    "name": "auto_before",
+    "mask": 0,
+    "command": "timeout -k 3 40 /root/ecdet-diag-e94P1v/build/ec_infer --model /root/ecdet_cpp/model.rknn --image /root/ecdet_cpp/test.png --grid-sample-cpu --core-mask 0 --timing --warmup 3 --iters 8 --dump-raw /root/ecdet-diag-e94P1v/cm_auto_before",
+    "exit": 0,
+    "wall_s": 10.536098123993725,
+    "telemetry_before": "42538\n41615\n42538\n42538\n42538\n41615\n41615\n1000000000\n",
+    "telemetry_after": "43461\n43461\n44384\n43461\n43461\n43461\n43461\n1000000000\n"
+  },
+  {
+    "name": "three_cores",
+    "mask": 7,
+    "command": "timeout -k 3 40 /root/ecdet-diag-e94P1v/build/ec_infer --model /root/ecdet_cpp/model.rknn --image /root/ecdet_cpp/test.png --grid-sample-cpu --core-mask 7 --timing --warmup 3 --iters 8 --dump-raw /root/ecdet-diag-e94P1v/cm_three_cores",
+    "exit": 0,
+    "wall_s": 11.146539000998018,
+    "telemetry_before": "42538\n43461\n43461\n43461\n43461\n42538\n42538\n1000000000\n",
+    "telemetry_after": "44384\n44384\n44384\n44384\n44384\n44384\n44384\n1000000000\n"
+  },
+  {
+    "name": "core0",
+    "mask": 1,
+    "command": "timeout -k 3 40 /root/ecdet-diag-e94P1v/build/ec_infer --model /root/ecdet_cpp/model.rknn --image /root/ecdet_cpp/test.png --grid-sample-cpu --core-mask 1 --timing --warmup 3 --iters 8 --dump-raw /root/ecdet-diag-e94P1v/cm_core0",
+    "exit": 0,
+    "wall_s": 10.442329165001865,
+    "telemetry_before": "43461\n44384\n43461\n44384\n44384\n43461\n43461\n1000000000\n",
+    "telemetry_after": "44384\n44384\n44384\n45307\n44384\n44384\n44384\n1000000000\n"
+  },
+  {
+    "name": "auto_after",
+    "mask": 0,
+    "command": "timeout -k 3 40 /root/ecdet-diag-e94P1v/build/ec_infer --model /root/ecdet_cpp/model.rknn --image /root/ecdet_cpp/test.png --grid-sample-cpu --core-mask 0 --timing --warmup 3 --iters 8 --dump-raw /root/ecdet-diag-e94P1v/cm_auto_after",
+    "exit": 0,
+    "wall_s": 10.490208702991367,
+    "telemetry_before": "44384\n44384\n44384\n44384\n44384\n44384\n44384\n1000000000\n",
+    "telemetry_after": "45307\n45307\n45307\n45307\n45307\n45307\n45307\n1000000000\n"
+  }
+]

@@ -1,0 +1,119 @@
+{
+  "pytorch_reference": {
+    "AP": 28.82,
+    "AP50": 48.54,
+    "AP75": 28.63
+  },
+  "fp32_letterbox_baseline": {
+    "AP": 28.820758052964102,
+    "AP50": 48.540999827288836,
+    "AP75": 28.629038151752596,
+    "APs": 18.671224428463265,
+    "APm": 41.47489374279824,
+    "APl": 61.673576191230595,
+    "AR300": 43.67101439996138,
+    "per_class_AP": {
+      "pedestrian": 23.703628727587926,
+      "people": 19.820532353165035,
+      "bicycle": 11.332093365913934,
+      "car": 58.436124295193245,
+      "van": 33.931316980322876,
+      "truck": 31.619988142648747,
+      "tricycle": 22.189203766327346,
+      "awning-tricycle": 13.236849536516948,
+      "bus": 46.40101427962093,
+      "motor": 27.536829082344028
+    },
+    "num_detections": 164400,
+    "num_images": 548,
+    "maxDets": [
+      1,
+      10,
+      100,
+      300
+    ]
+  },
+  "drop_vs_fp32_letterbox": {
+    "AP": 0.11329371972247415,
+    "AP50": 0.03208033480647288,
+    "AP75": 0.2372030938024956
+  },
+  "rknn_sim_int8": {
+    "AP": 28.707464333241628,
+    "AP50": 48.50891949248236,
+    "AP75": 28.3918350579501,
+    "APs": 18.56016772597865,
+    "APm": 41.36059932128764,
+    "APl": 61.4027319940685,
+    "AR300": 43.50482623128656,
+    "per_class_AP": {
+      "pedestrian": 23.533044674080713,
+      "people": 19.706838241781444,
+      "bicycle": 11.28699903173439,
+      "car": 58.25401179723535,
+      "van": 33.81350902475528,
+      "truck": 31.42099362556678,
+      "tricycle": 22.140385488728633,
+      "awning-tricycle": 13.187550126269665,
+      "bus": 46.365213111689535,
+      "motor": 27.366098210574542
+    },
+    "num_detections": 164400,
+    "num_images": 548,
+    "maxDets": [
+      1,
+      10,
+      100,
+      300
+    ]
+  },
+  "drop_points": {
+    "AP": 0.11253566675837234,
+    "AP50": 0.031080507517636136,
+    "AP75": 0.2381649420498988
+  },
+  "gate": {
+    "passed": true,
+    "against": "FP32 stretch baseline",
+    "reference_AP": 28.820758052964102,
+    "drop": 0.11329371972247415,
+    "fail_drop": 1.0,
+    "one_sided": true,
+    "reason": "INT8 AP 28.71 is 0.11 points below FP32 stretch baseline 28.82 (within limit 1.00)"
+  },
+  "timing": {
+    "num_images": 548,
+    "total_seconds": 590.0633311269339,
+    "ms_per_image": 1076.7579035163028,
+    "images_per_second": 0.9287138703457489,
+    "preprocess_seconds": 4.2383996124845,
+    "inference_seconds": 585.3066123812459,
+    "postprocess_seconds": 0.4949246265459806,
+    "preprocess_ms_per_image": 7.734305862197992,
+    "inference_ms_per_image": 1068.077759819792,
+    "postprocess_ms_per_image": 0.9031471287335412
+  },
+  "simulator": {
+    "source": "rebuild",
+    "artifact": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640_rk3588_int8.rknn",
+    "describes_shipped_artifact": false,
+    "rebuilt_from": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640.onnx",
+    "note": "rknn-toolkit2 rejects load_rknn + simulator; config was cross-checked against the artifact's .rknn.json report"
+  },
+  "config": {
+    "rknn": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640_rk3588_int8.rknn",
+    "ann": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_val.json",
+    "val_images": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/val",
+    "limit": 0,
+    "score_thresh": 0.0,
+    "max_det": 300,
+    "clip": true,
+    "data_format": "nchw",
+    "fp32_baseline": true,
+    "fp32_onnx": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640.onnx",
+    "hybrid_cos_thresh": 0.9999,
+    "auto_hybrid": true,
+    "optimization_level": 3,
+    "quantized_algorithm": "normal"
+  }
+}

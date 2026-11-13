@@ -23,7 +23,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent      # ecdetseg/
 
 def main():
     ap = argparse.ArgumentParser(description="Plot curves from a run's log.txt")
-    ap.add_argument("run_dir", nargs="?", default="outputs/p30u/e1_s42",
+    ap.add_argument("run_dir", nargs="?", default="outputs/p74u/e2_s42",
                     help="run output dir (absolute, or relative to ecdetseg/)")
     args = ap.parse_args()
 

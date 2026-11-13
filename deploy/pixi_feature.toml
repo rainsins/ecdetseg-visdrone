@@ -1,0 +1,63 @@
+# ============================================================================
+# Merge this fragment into the workspace pixi.toml.
+#
+# Why a separate environment?
+#   * rknn-toolkit2 requires numpy < 2, while the training environment may use
+#     a newer numpy.
+#   * rknn-toolkit2 is x86_64 host software; it must never be installed into the
+#     cross-compiled board rootfs or into the XPU training environment.
+#   * Keeping the simulator isolated means a broken RKNN wheel cannot break the
+#     training environment.
+#
+# Merge steps (manual, because pixi has no "include toml" directive):
+#   1. Copy the [feature.rknn] block below into pixi.toml.
+#   2. Copy the [environments].rknn line into the existing [environments] table
+#      (create the table if it does not exist).
+#   3. pixi install -e rknn
+#
+# rknn-toolkit2 wheel availability:
+#   Rockchip publishes wheels on GitHub, not always on the default PyPI mirror.
+#   If `pixi install` reports that no matching distribution exists, download the
+#   cp310/cp311 manylinux wheel from:
+#       https://github.com/airockchip/rknn-toolkit2/tree/master/packages
+#   then replace the pypi entry with a local path, for example:
+#       rknn-toolkit2 = { path = "packages/rknn_toolkit2-2.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" }
+#
+# rknn-toolkit2 >= 2.3 is required; the simulator was validated with 2.5.0.
+# setuptools<80.1 is required because rknn-toolkit2 imports pkg_resources.
+# ============================================================================
+
+[feature.rknn]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[feature.rknn.dependencies]
+python = ">=3.10,<3.12"
+
+[feature.rknn.pypi-dependencies]
+# rknn-toolkit2 is the host-side converter + simulator (not the board runtime).
+rknn-toolkit2 = ">=2.3.0,<3"
+# numpy<2 is a hard requirement of rknn-toolkit2 2.3.x.  Pinning it here avoids
+# ABI errors such as "module compiled against API version 0x10".
+numpy = ">=1.26,<2"
+# rknn-toolkit2 2.5 calls pkg_resources; setuptools>=81 no longer ships it.
+setuptools = "<80.1.0"
+opencv-python = "*"
+pillow = "*"
+pycocotools = "*"
+# ONNX is only used for inspection/parity checks in this environment.  The
+# exporter itself runs in the training environment.
+onnx = "==1.16.1"
+onnxruntime = "*"
+
+[feature.rknn.tasks]
+# Convenience tasks: `pixi run -e rknn sim-eval`
+convert = "python deploy/convert.py"
+sim-eval = "python deploy/sim_eval.py"
+accuracy = "python deploy/accuracy_analysis.py"
+
+[environments]
+# no-default-feature keeps torch/XPU out of the RKNN environment.  Requires
+# pixi >= 0.42; if your pixi is older, remove `no-default-feature` and accept
+# the larger solve.
+rknn = { features = ["rknn"], no-default-feature = true, solve-group = "rknn" }

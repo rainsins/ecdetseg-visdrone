@@ -1,0 +1,158 @@
+{
+  "fig1": {
+    "file": "fig1.png",
+    "page": 1,
+    "clip": [
+      315,
+      294,
+      556,
+      383
+    ],
+    "width": 723,
+    "height": 267
+  },
+  "fig2": {
+    "file": "fig2.png",
+    "page": 2,
+    "clip": [
+      57,
+      71,
+      297,
+      195
+    ],
+    "width": 720,
+    "height": 372
+  },
+  "fig3": {
+    "file": "fig3.png",
+    "page": 3,
+    "clip": [
+      57,
+      71,
+      555,
+      348
+    ],
+    "width": 1494,
+    "height": 831
+  },
+  "hbs_detail": {
+    "file": "hbs_detail.png",
+    "page": 3,
+    "clip": [
+      58,
+      72,
+      309,
+      232
+    ],
+    "width": 753,
+    "height": 480
+  },
+  "fig4": {
+    "file": "fig4.png",
+    "page": 4,
+    "clip": [
+      70,
+      71,
+      281,
+      348
+    ],
+    "width": 633,
+    "height": 831
+  },
+  "fig5": {
+    "file": "fig5.png",
+    "page": 5,
+    "clip": [
+      57,
+      70,
+      555,
+      247
+    ],
+    "width": 1494,
+    "height": 531
+  },
+  "fig6": {
+    "file": "fig6.png",
+    "page": 8,
+    "clip": [
+      57,
+      240,
+      297,
+      359
+    ],
+    "width": 720,
+    "height": 357
+  },
+  "fig7": {
+    "file": "fig7.png",
+    "page": 8,
+    "clip": [
+      317,
+      240,
+      555,
+      352
+    ],
+    "width": 714,
+    "height": 336
+  },
+  "table1": {
+    "file": "table1.png",
+    "page": 6,
+    "clip": [
+      57,
+      107,
+      555,
+      445
+    ],
+    "width": 1494,
+    "height": 1014
+  },
+  "table2": {
+    "file": "table2.png",
+    "page": 7,
+    "clip": [
+      57,
+      112,
+      297,
+      229
+    ],
+    "width": 720,
+    "height": 351
+  },
+  "table3": {
+    "file": "table3.png",
+    "page": 7,
+    "clip": [
+      316,
+      112,
+      556,
+      217
+    ],
+    "width": 720,
+    "height": 315
+  },
+  "table4": {
+    "file": "table4.png",
+    "page": 7,
+    "clip": [
+      316,
+      264,
+      563,
+      304
+    ],
+    "width": 741,
+    "height": 120
+  },
+  "table5": {
+    "file": "table5.png",
+    "page": 8,
+    "clip": [
+      57,
+      100,
+      556,
+      228
+    ],
+    "width": 1497,
+    "height": 384
+  }
+}

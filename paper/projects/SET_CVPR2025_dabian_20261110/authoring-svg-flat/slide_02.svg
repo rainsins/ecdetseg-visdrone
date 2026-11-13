@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="960" height="540" viewBox="0 0 960 540" font-family="&quot;字魂59号-创粗黑&quot;, sans-serif"><defs><filter id="fx1" x="-25%" y="-25%" width="150%" height="150%"><feDropShadow dx="-2.54411994" dy="13.08836245" stdDeviation="14.66666667" flood-color="#000000" flood-opacity="0.4"/></filter><filter id="fx2" x="-25%" y="-25%" width="150%" height="150%"><feDropShadow dx="0" dy="4" stdDeviation="2.66666667" flood-color="#000000" flood-opacity="0.4"/></filter><filter id="fx9" x="-25%" y="-25%" width="150%" height="150%"><feDropShadow dx="2.82842712" dy="2.82842712" stdDeviation="2.66666667" flood-color="#000000" flood-opacity="0.4"/></filter></defs><rect x="0" y="0" width="960" height="540" fill="#FFFFFF"/>
+<a href="#slide-3" data-pptx-source-href="#slide-3"><g id="shape-2" data-pptx-object="shape" data-pptx-frame="219.18 165.82 250.45 29.91" data-pptx-prst="rect" data-pptx-source-ref="slide:2" data-pptx-semantic-object="shape">
+<path d="M 219.18 165.82 L 469.63 165.82 L 469.63 195.73 L 219.18 195.73 Z" fill="#FFFFFF" stroke-width="0.33333" stroke-linecap="butt" stroke="none" stroke-linejoin="miter" filter="url(#fx1)" data-pptx-part="geometry"/>
+
+
+<text x="327.4" y="185.69846719" text-anchor="middle" xml:space="preserve" font-size="13.53" fill="#7F7F7F" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">01. 问题与动机</tspan></text>
+</g></a>
+<a href="#slide-3" data-pptx-source-href="#slide-3"><g id="shape-3" data-pptx-object="shape" data-pptx-frame="427.59 155.4 42.04 40.33" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:3" data-pptx-semantic-object="shape">
+<path d="M 427.59 155.4 L 427.59 186 L 469.63 195.73 L 469.63 165.13 L 427.59 155.4 Z" data-pptx-part="geometry" fill="#006EA0" stroke-width="1.33333" stroke-linecap="butt" stroke="none" stroke-linejoin="miter" filter="url(#fx2)"/>
+
+<text x="448.61" y="183.83175853" text-anchor="middle" xml:space="preserve" font-size="24" fill="#FFFFFF" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">1</tspan></text>
+</g></a>
+<a href="#slide-9" data-pptx-source-href="#slide-9"><g id="shape-6" data-pptx-object="shape" data-pptx-frame="265.17 224.88 250.45 29.91" data-pptx-prst="rect" data-pptx-source-ref="slide:6" data-pptx-semantic-object="shape">
+<path d="M 265.17 224.88 L 515.62 224.88 L 515.62 254.79 L 265.17 254.79 Z" fill="#FFFFFF" stroke-width="0.33333" stroke-linecap="butt" stroke="none" stroke-linejoin="miter" filter="url(#fx1)" data-pptx-part="geometry"/>
+
+
+<text x="373.38" y="244.76040945" text-anchor="middle" xml:space="preserve" font-size="13.53" fill="#7F7F7F" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">02. 频域洞察</tspan></text>
+</g></a>
+<a href="#slide-9" data-pptx-source-href="#slide-9"><g id="shape-7" data-pptx-object="shape" data-pptx-frame="473.57 214.46 42.04 40.33" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:7" data-pptx-semantic-object="shape">
+<path d="M 473.57 214.46 L 473.57 245.06 L 515.62 254.79 L 515.62 224.2 L 473.57 214.46 Z" data-pptx-part="geometry" fill="#006EA0" stroke-width="1.33333" stroke-linecap="butt" stroke="none" stroke-linejoin="miter" filter="url(#fx2)"/>
+
+<text x="494.59" y="242.8935958" text-anchor="middle" xml:space="preserve" font-size="24" fill="#FFFFFF" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">2</tspan></text>
+</g></a>
+<a href="#slide-10"><g id="shape-9" data-pptx-object="shape" data-pptx-frame="219.18 283.94 250.45 29.91" data-pptx-prst="rect" data-pptx-source-ref="slide:9" data-pptx-semantic-object="shape">
+<path d="M 219.18 283.94 L 469.63 283.94 L 469.63 313.85 L 219.18 313.85 Z" fill="#FFFFFF" stroke-width="0.33333" stroke-linecap="butt" stroke="none" stroke-linejoin="miter" filter="url(#fx1)" data-pptx-part="geometry"/>
+
+
+<text x="327.4" y="303.82224672" text-anchor="middle" xml:space="preserve" font-size="13.53" fill="#7F7F7F" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">03. SET 方法</tspan></text>
+</g></a>
+<a href="#slide-10"><g id="shape-10" data-pptx-object="shape" data-pptx-frame="427.59 273.52 42.04 40.33" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:10" data-pptx-semantic-object="shape">
+<path d="M 427.59 273.52 L 427.59 304.12 L 469.63 313.85 L 469.63 283.26 L 427.59 273.52 Z" data-pptx-part="geometry" fill="#006EA0" stroke-width="1.33333" stroke-linecap="butt" stroke="none" stroke-linejoin="miter" filter="url(#fx2)"/>
+
+<text x="448.61" y="301.95553806" text-anchor="middle" xml:space="preserve" font-size="24" fill="#FFFFFF" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">3</tspan></text>
+</g></a>
+<a href="#slide-20" data-pptx-source-href="#slide-20"><g id="shape-12" data-pptx-object="shape" data-pptx-frame="265.17 343.01 250.45 29.91" data-pptx-prst="rect" data-pptx-source-ref="slide:12" data-pptx-semantic-object="shape">
+<path d="M 265.17 343.01 L 515.62 343.01 L 515.62 372.92 L 265.17 372.92 Z" fill="#FFFFFF" stroke-width="0.33333" stroke-linecap="butt" stroke="none" stroke-linejoin="miter" filter="url(#fx1)" data-pptx-part="geometry"/>
+
+
+<text x="373.38" y="362.88418898" text-anchor="middle" xml:space="preserve" font-size="13.53" fill="#7F7F7F" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">04. 实验与启示</tspan></text>
+</g></a>
+<a href="#slide-20" data-pptx-source-href="#slide-20"><g id="shape-13" data-pptx-object="shape" data-pptx-frame="473.57 332.58 42.04 40.33" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:13" data-pptx-semantic-object="shape">
+<path d="M 473.57 332.58 L 473.57 363.18 L 515.62 372.92 L 515.62 342.32 L 473.57 332.58 Z" data-pptx-part="geometry" fill="#006EA0" stroke-width="1.33333" stroke-linecap="butt" stroke="none" stroke-linejoin="miter" filter="url(#fx2)"/>
+
+<text x="494.59" y="361.01737533" text-anchor="middle" xml:space="preserve" font-size="24" fill="#FFFFFF" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">4</tspan></text>
+</g></a>
+<g id="shape-18" data-pptx-object="shape" data-pptx-frame="587.8 249.87 272.45 47.31" data-pptx-prst="rect" transform="rotate(270 724.02 273.52)" data-pptx-source-ref="slide:18" data-pptx-semantic-object="shape">
+<path d="M 587.8 249.87 L 860.24 249.87 L 860.24 297.18 L 587.8 297.18 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="724.02" y="284.98944882" text-anchor="middle" xml:space="preserve" font-size="32" fill="#A6A6A6" letter-spacing="5" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">CONTENTS</tspan></text>
+</g>
+<g id="shape-19" data-pptx-object="shape" data-pptx-frame="748.09 221.63 43.87 94.51" data-pptx-prst="rect" data-pptx-source-ref="slide:19" data-pptx-semantic-object="shape">
+<path d="M 748.09 221.63 L 791.96 221.63 L 791.96 316.14 L 748.09 316.14 Z" fill="none" stroke="none" filter="url(#fx9)" data-pptx-part="geometry"/>
+
+
+<text x="757.69" y="290.21685039" text-anchor="start" xml:space="preserve" font-size="60" fill="#006EA0" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">目录</tspan></text>
+</g></svg>

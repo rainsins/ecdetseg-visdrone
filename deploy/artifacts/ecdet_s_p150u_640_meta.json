@@ -1,0 +1,130 @@
+{
+  "model": "ECDet-S / D-FINE (ViTAdapter + HybridEncoder + ECTransformer)",
+  "config": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/configs/ecdet/ecdet_s_p150u.yml",
+  "checkpoint": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/outputs/p150u/e3_s42/best.pth",
+  "checkpoint_container": "ema",
+  "checkpoint_info": {
+    "chosen_container": "ema",
+    "chosen_container_keys": [
+      "module",
+      "updates"
+    ]
+  },
+  "opset": 17,
+  "input_name": "images",
+  "input_shape": [
+    1,
+    3,
+    640,
+    640
+  ],
+  "input_dtype": "float32 (ONNX); uint8 RGB NCHW at RKNN runtime",
+  "output_names": [
+    "pred_logits",
+    "pred_boxes"
+  ],
+  "output_shapes": [
+    [
+      1,
+      300,
+      10
+    ],
+    [
+      1,
+      300,
+      4
+    ]
+  ],
+  "num_classes": 10,
+  "num_queries": 300,
+  "class_names": [
+    "pedestrian",
+    "people",
+    "bicycle",
+    "car",
+    "van",
+    "truck",
+    "tricycle",
+    "awning-tricycle",
+    "bus",
+    "motor"
+  ],
+  "preprocess": {
+    "resize": "stretch",
+    "resize_backend": "PIL bilinear (torchvision Resize-compatible)",
+    "letterbox": false,
+    "input_size": 640,
+    "pad_value": 0,
+    "color_order": "RGB",
+    "layout": "NCHW",
+    "normalized_in_python": false
+  },
+  "rknn_normalization": {
+    "mean_values_rgb_255": [
+      123.675,
+      116.28,
+      103.53
+    ],
+    "std_values_rgb_255": [
+      58.395,
+      57.12,
+      57.375
+    ],
+    "quant_img_RGB2BGR": false
+  },
+  "postprocess_location": "numpy (deploy/postprocess.py); final topk excluded from ONNX",
+  "lqe_disabled": false,
+  "score_clamp": 30.0,
+  "score_input_clamp": 10.0,
+  "lqe_note": "LQE's regression-bin TopK/Softmax is quantised incorrectly by RKNN 2.5; the deployment graph uses the raw decoder score head.",
+  "pytorch_reference_percent": {
+    "AP": 28.82,
+    "AP50": 48.54,
+    "AP75": 28.63
+  },
+  "onnx_graph_info": {
+    "inputs": [
+      {
+        "name": "images",
+        "shape": [
+          1,
+          3,
+          640,
+          640
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "name": "pred_logits",
+        "shape": [
+          1,
+          300,
+          10
+        ]
+      },
+      {
+        "name": "pred_boxes",
+        "shape": [
+          1,
+          300,
+          4
+        ]
+      }
+    ],
+    "opset": 17,
+    "num_nodes": 2656,
+    "selected_op_counts": {
+      "Gather": 34,
+      "TopK": 2
+    }
+  },
+  "onnxruntime_parity": {
+    "pred_logits": {
+      "max_abs_diff": 0.00034046173095703125
+    },
+    "pred_boxes": {
+      "max_abs_diff": 9.119510650634766e-06
+    }
+  }
+}

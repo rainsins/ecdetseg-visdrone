@@ -1,0 +1,17 @@
+# ============================================================
+# ECDet-S @ P150u — VisDrone long-schedule baseline (Mosaic ON)
+#   schedule : epochs=150  stop_epoch=148  flat_epoch=72  lr_gamma=0.5  (no-aug=2)
+#   aug tier : Mosaic ON (prob=0.75 epoch=72) | Mixup ON (prob=0.75 epoch=72)
+#   early_stop: enabled (start=100, patience=20, min_delta=0.001)
+#
+# include order = increasing priority. DO NOT REORDER (later wins):
+#   data < base(ecdet.yml) < S struct < resolution < protocol/p150u.yml (LAST)
+# ============================================================
+__include__:
+  - '../dataset/visdrone.yml'      # data only (paths injected by run_exp.sh)
+  - 'ecdet.yml'                    # base detector structure + default aug ops
+  - 'struct_s.yml'                 # S structural delta
+  - 'protocol/res640.yml'          # resolution (swap to res960.yml for 960)
+  - 'protocol/p150u.yml'           # protocol, LAST -> authoritative
+seed: 42
+output_dir: outputs/p150u

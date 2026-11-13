@@ -1,0 +1,217 @@
+{
+  "source": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640.onnx",
+  "source_sha256": "3e2a20507eee52d0aafb3a5ca261d2333a5f352bb3a6696c247848554d551be8",
+  "calibration_image": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/calib_imgs/0000008_0000338_01569_d_0000146.png",
+  "calibration_image_sha256": "2685d18ce2395ee079ff1eb66e16c6882155ff1d11b1c262af5b6ef5a06291f8",
+  "purpose": "compiler isolation only; one real activation sample; not accuracy calibration",
+  "cases": {
+    "sample": {
+      "inputs": [
+        {
+          "name": "/model/decoder/decoder/layers.0/cross_attn/Reshape_3_output_0",
+          "shape": [
+            8,
+            24,
+            80,
+            80
+          ],
+          "dtype": "float32"
+        },
+        {
+          "name": "/model/decoder/decoder/layers.0/cross_attn/Split_output_0",
+          "shape": [
+            8,
+            300,
+            3,
+            2
+          ],
+          "dtype": "float32"
+        }
+      ],
+      "outputs": [
+        "/model/decoder/decoder/layers.0/cross_attn/GridSample_output_0"
+      ],
+      "parity": {
+        "original": {
+          "nodes": 1,
+          "sha256": "ec82606cd13ce670710f126205d933cb3ec419e86cd15924bbe0955082929420",
+          "max_abs_diff": [
+            0.0
+          ]
+        },
+        "gather": {
+          "nodes": 106,
+          "sha256": "c73ff8979e93499626368e271d966e8da11e3dcbc84dc38fb198cd3e22ba4444",
+          "max_abs_diff": [
+            0.0
+          ]
+        }
+      }
+    },
+    "cross": {
+      "inputs": [
+        {
+          "name": "/model/decoder/decoder/Slice_1_output_0",
+          "shape": [
+            1,
+            8,
+            24,
+            1600
+          ],
+          "dtype": "float32"
+        },
+        {
+          "name": "/model/decoder/decoder/Slice_2_output_0",
+          "shape": [
+            1,
+            8,
+            24,
+            400
+          ],
+          "dtype": "float32"
+        },
+        {
+          "name": "/model/decoder/decoder/Slice_output_0",
+          "shape": [
+            1,
+            8,
+            24,
+            6400
+          ],
+          "dtype": "float32"
+        },
+        {
+          "name": "/model/decoder/decoder/Unsqueeze_output_0",
+          "shape": [
+            1,
+            300,
+            1,
+            4
+          ],
+          "dtype": "float32"
+        },
+        {
+          "name": "/model/decoder/decoder/layers.0/Add_2_output_0",
+          "shape": [
+            1,
+            300,
+            192
+          ],
+          "dtype": "float32"
+        }
+      ],
+      "outputs": [
+        "/model/decoder/decoder/layers.0/cross_attn/Transpose_2_output_0",
+        "onnx::ReduceSum_3346",
+        "onnx::Split_3295"
+      ],
+      "parity": {
+        "original": {
+          "nodes": 64,
+          "sha256": "b5528fe4ae143531cf026a699868ccceb64eb2457aa6ccebddf4b8af59d2b4f3",
+          "max_abs_diff": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "gather": {
+          "nodes": 379,
+          "sha256": "8f1e6ca8c7fea0ce8e75c2746afefd19e7f4005904646a2a5c62dda62827ec78",
+          "max_abs_diff": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    "decoder": {
+      "inputs": [
+        {
+          "name": "/model/decoder/GatherElements_1_output_0",
+          "shape": [
+            1,
+            300,
+            192
+          ],
+          "dtype": "float32"
+        },
+        {
+          "name": "/model/decoder/decoder/Clip_output_0",
+          "shape": [
+            1,
+            300,
+            192
+          ],
+          "dtype": "float32"
+        },
+        {
+          "name": "/model/decoder/decoder/Slice_1_output_0",
+          "shape": [
+            1,
+            8,
+            24,
+            1600
+          ],
+          "dtype": "float32"
+        },
+        {
+          "name": "/model/decoder/decoder/Slice_2_output_0",
+          "shape": [
+            1,
+            8,
+            24,
+            400
+          ],
+          "dtype": "float32"
+        },
+        {
+          "name": "/model/decoder/decoder/Slice_output_0",
+          "shape": [
+            1,
+            8,
+            24,
+            6400
+          ],
+          "dtype": "float32"
+        },
+        {
+          "name": "/model/decoder/decoder/Unsqueeze_output_0",
+          "shape": [
+            1,
+            300,
+            1,
+            4
+          ],
+          "dtype": "float32"
+        }
+      ],
+      "outputs": [
+        "/model/decoder/decoder/layers.0/norm2/LayerNormalization_output_0",
+        "onnx::ReduceSum_3346",
+        "onnx::Split_3295"
+      ],
+      "parity": {
+        "original": {
+          "nodes": 130,
+          "sha256": "26cc0fd8adb7fb7870909563b8b107e0ee8a399fa9ae130f31d71899ccc32403",
+          "max_abs_diff": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "gather": {
+          "nodes": 445,
+          "sha256": "ffa32657e218b0c974e218646a5edb0ec3896f77426db9e1d4889c39303d2872",
+          "max_abs_diff": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  }
+}

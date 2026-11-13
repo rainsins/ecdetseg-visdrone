@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial" data-pptx-page-role="content">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#FFFFFF" />
+<g id="header" data-pptx-bounds="56 30 1168 112"><text x="56" y="52" font-size="16" fill="#087E8B">02 / 方法与机制</text><text x="56" y="111" font-size="40" font-weight="bold" fill="#142D4E">SET把诊断转化为训练期特征增强</text></g>
+<g id="architecture" data-pptx-bounds="56 159 820 466"><image href="../images/fig3.png" x="56" y="165" width="810" height="451" preserveAspectRatio="xMidYMid meet" /></g>
+<g id="framework-reading" data-pptx-bounds="906 166 318 467"><text x="906" y="204" font-size="30" font-weight="bold" fill="#087E8B">HBS · 压背景</text><text x="906" y="248" font-size="24" fill="#243447"><tspan x="906" dy="0">用GT掩码解耦，</tspan><tspan x="906" dy="38">只平滑背景特征。</tspan></text><text x="906" y="350" font-size="30" font-weight="bold" fill="#BC5A24">API · 抬关键区域</text><text x="906" y="394" font-size="24" fill="#243447"><tspan x="906" dy="0">构造特征扰动，</tspan><tspan x="906" dy="38">增强辅助训练信号。</tspan></text><line x1="906" y1="468" x2="1224" y2="468" stroke="#D5DFE8" /><text x="906" y="512" font-size="24" fill="#142D4E"><tspan x="906" dy="0">原检测分支保留。</tspan><tspan x="906" dy="38">推理时移除附加</tspan><tspan x="906" dy="38">训练路径。</tspan></text></g>
+<g id="footer" data-pptx-bounds="56 653 1168 34" fill="#58677A" font-size="16"><text x="56" y="675">来源：SET，PDF p.3，Fig.3；框架以FCOS为例</text><text x="1189" y="675">05</text></g>
+</svg>

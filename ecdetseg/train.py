@@ -40,15 +40,16 @@ if debug:
 def main(args, ) -> None:
     """main
     """
-    dist_utils.setup_distributed(args.print_rank, args.print_method, seed=args.seed)
-
-    assert not all([args.tuning, args.resume]), \
-        'Only support from_scrach or resume or tuning at one time'
-
-
+    # Seed bug fix: build the cfg FIRST (so `-u seed=` and yaml `seed` are merged in
+    # precedence `--seed` > `-u seed=` > yaml `seed`), then seed the RNG with exactly
+    # `cfg.seed`. Previously `setup_distributed(seed=args.seed)` ran first with the
+    # --seed default of 0 and also clobbered `-u seed=` in update_dict.
     update_dict = yaml_utils.parse_cli(args.update) # update cfg from command line
     update_dict.update({k: v for k, v in args.__dict__.items() \
         if k not in ['update', ] and v is not None})
+
+    assert not all([args.tuning, args.resume]), \
+        'Only support from_scrach or resume or tuning at one time'
 
     cfg = YAMLConfig(args.config, **update_dict)
 
@@ -58,12 +59,30 @@ def main(args, ) -> None:
 
     print('cfg: ', cfg.__dict__)
 
+    # --dry: parse + print only (no dist init, no data, no XPU)
+    if getattr(args, 'dry', False):
+        td = cfg.yaml_cfg.get('train_dataloader', {}) or {}
+        print(f'[dry] config parsed OK | seed={cfg.seed} epochs={cfg.epochs} '
+              f'train_bs={td.get("total_batch_size")} early_stop={cfg.yaml_cfg.get("early_stop")}')
+        return
+
+    dist_utils.setup_distributed(args.print_rank, args.print_method, seed=cfg.seed)
+
     solver = TASKS[cfg.yaml_cfg['task']](cfg)
 
     if args.test_only:
         solver.val()
     else:
         solver.fit()
+
+    # Optional peak-memory probe for throughput benchmarking (env-gated, harmless otherwise).
+    if os.environ.get('LOG_XPU_MEM'):
+        import torch
+        acc = getattr(torch, 'xpu', None) or getattr(torch, 'cuda', None)
+        try:
+            print(f'[mem] peak_alloc_gb={acc.max_memory_allocated()/1e9:.2f}')
+        except Exception as e:                                   # noqa: BLE001
+            print(f'[mem] unavailable: {e}')
 
     dist_utils.cleanup()
 
@@ -77,11 +96,13 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--resume', type=str, help='resume from checkpoint')
     parser.add_argument('-t', '--tuning', type=str, help='tuning from checkpoint')
     parser.add_argument('-d', '--device', type=str, help="device (e.g. 'cuda:0', 'xpu:0', 'xpu' or 'cpu')")
-    parser.add_argument('--seed', type=int, default=0, help='exp reproducibility')
+    parser.add_argument('--seed', type=int, default=None, help='exp reproducibility (overrides -u seed=)')
     parser.add_argument('--use-amp', action='store_true', default=None, help='auto mixed precision training')
     parser.add_argument('--output-dir', type=str, help='output directoy')
     parser.add_argument('--summary-dir', type=str, help='tensorboard summry')
     parser.add_argument('--test-only', action='store_true', default=False,)
+    parser.add_argument('--dry', action='store_true', default=False,
+                        help='parse config, print it, and exit (no data / no XPU)')
 
     # priority 1
     parser.add_argument('-u', '--update', nargs='+', help='update yaml config')

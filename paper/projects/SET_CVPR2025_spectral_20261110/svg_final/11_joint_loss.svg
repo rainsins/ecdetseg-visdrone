@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial" data-pptx-page-role="content">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#FFFFFF"/>
+<g id="header" data-pptx-bounds="56 30 1168 112"><text x="56" y="52" font-size="16" fill="#087E8B">02 / 联合优化</text><text x="56" y="111" font-size="40" font-weight="bold" fill="#142D4E">增强信号通过辅助损失写入表征</text></g>
+<g id="loss-formula" data-pptx-replace-with="formula" data-pptx-x="86" data-pptx-y="208" data-pptx-width="1108" data-pptx-height="160" data-pptx-bounds="86 208 1108 160"><metadata type="application/json"><![CDATA[{"latex":"L=L_{detection}+\\lambda\\sum_{i=1}^{N}L_i^{aux}(P_i^E+\\epsilon_i^{adv})","display":"block","font_size":40,"color":"#142D4E","align":"center"}]]></metadata><text x="640" y="301" text-anchor="middle" font-size="40" fill="#142D4E">L = Ldetection + λ ∑ᵢ₌₁ᴺ Lᵢᵃᵘˣ(Pᵢᴱ + εᵢᵃᵈᵛ)</text></g>
+<g id="loss-interpretation" data-pptx-bounds="110 398 1060 89"><text x="110" y="431" font-size="24" fill="#243447">原始检测损失</text><text x="510" y="431" font-size="24" fill="#243447">各层增强特征的辅助检测损失</text><text x="510" y="469" font-size="20" fill="#58677A">λ=1；过强的辅助约束可能不利于检测。</text></g>
+<g id="deployment-boundary" data-pptx-bounds="56 534 1168 99"><rect x="56" y="534" width="1168" height="99" fill="#142D4E"/><text x="82" y="576" font-size="30" font-weight="bold" fill="#FFFFFF">训练时学到更好的表征；推理时只保留检测器。</text><text x="82" y="613" font-size="20" fill="#FFFFFF">不需要GT掩码，也不运行HBS/API辅助路径。</text></g>
+<g id="footer" data-pptx-bounds="56 653 1168 34" font-size="16" fill="#58677A"><text x="56" y="675">来源：SET，PDF p.5，§3.3及式(9)；超参数证据见Fig.6</text><text x="1189" y="675">11</text></g>
+</svg>

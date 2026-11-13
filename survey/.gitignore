@@ -1,0 +1,14 @@
+# pixi 环境
+.pixi/
+
+# 爬虫原始数据(可重新生成)
+data/raw/*.json
+data/raw/*.xml
+
+# 分析中间产物
+data/processed/
+output/
+
+# python
+__pycache__/
+*.pyc

@@ -208,3 +208,65 @@ e20:5.00e-04 e21:5.00e-04 e22:5.00e-04 e23:5.00e-04 e24:5.00e-04 e25:5.00e-04 e2
    故 P30u 数据路径由 `run_exp.sh` 用 `-u` 注入；`visdrone.yml` 内为占位符。确认可否。
 8. **是否允许在训练结束后**把 `custom.yml/ecdet.yml/ecdet_s.yml` 正式折叠成 data-only / struct-only /
    protocol 三层（本轮受硬约束只新增文件）。
+
+---
+
+# P150u（长 schedule 协议）— 2026-10-13 追加
+
+## 动机
+P74u 曲线尾部在 epoch 73–74 仍以 ~0.2 AP/epoch 上升、**未饱和** → 延长到 150 epochs。
+P74u 曲线归档为「协议决策证据」，在新主表中标注 **superseded by p150u**（不进主表）。
+
+## 参数 diff（P74u → P150u，`configs/ecdet/protocol/p74u.yml` → `p150u.yml`）
+| 键 | P74u | P150u | 说明 |
+|---|---|---|---|
+| `epochs` | 74 | **150** | 主变量 |
+| train `total_batch_size` | 8 | **10**（回退 8） | 吞吐验证决定；单变量原则：只改 batch 不改 LR |
+| val `total_batch_size` | 16 | **32** | 仅评估提速，与训练协议无关 |
+| `mosaic_epoch` | 36 | **72** | ≈49% 比例 |
+| `mixup_epoch` | 36 | **72** | 同上 |
+| `flat_epoch` | 36 | **72** | LR 平台止点与“关 Mosaic”点对齐 |
+| `stop_epoch` | 72 | **148**；`no_aug_epoch: 2` | reset_cfg 校验区间 [145,150] |
+| `num_workers` | 4 | 4 | 不变（数据管道非瓶颈） |
+| optimizer | 主 5e-4 / backbone 2.5e-5 / wd 1e-4 / warmup 2000 | **不变** | 单变量 |
+| `ema` | decay 0.9999 / warmups 1000 | **不变** | |
+| `early_stop` | 无（关闭） | **启用**（start=100, patience=20, min_delta=0.001） | 新增 |
+
+## 早停规则（`engine/early_stop.py`，独立模块）
+- 监控验证得到的 **EMA `mAP@0.5:0.95`** = `test_coco_eval_bbox[0]`（与 `eval_final.py` 的 EMA 口径一致）。
+- 仅 `epoch >= start_epoch` 后计数；首次计数建立 `best`（视为提升）；此后 `metric <= best + min_delta` 记一次“变坏”；
+  连续 `patience` 次 → 打印 `EARLY STOP at epoch X, best=Y (epoch Z)` 并终止训练循环。
+- **不干预** `best.pth` / `final.pth` / EMA / optimizer 逻辑。旧协议（无 `early_stop` 键）默认关闭 → 向后兼容。
+- 挂载点：`ec_solver.fit`（epoch 循环在此；`train.py` 无 epoch 循环，故未挂在 train.py），
+  仅 +初始化(3 行) + 检查(4 行)，**不重构训练循环**。
+
+## 性能画像依据
+`intel-gpu-top` + `top` 实测：**GPU Compute 73%、Blitter MI_SEMA 60%、dataloader worker CPU 仅 7–11%**
+（数据管道有富余）、主进程单核 106%、训练进程不在 swap。
+→ 决策：**加 batch（8→10），不加 worker（保持 4）**。
+
+## 吞吐验证
+`scripts/bench_throughput.sh`：对 bs8 / bs10 各跑 `BENCH_EPOCHS`(=2) 轮，记录 it/s 与峰值显存（`LOG_XPU_MEM=1`）。
+判定：`imgs/s_bs10 ÷ imgs/s_bs8 ≥ 1.15 且无 OOM` → 采纳 bs10，否则回退 bs8。
+⚠️ **待跑**：单卡被在跑实验占用。跑完后据结论确认 `p150u.yml` 的 batch 值，并把结论补写在此处。
+
+## seed 覆盖 bug（已修，`train.py`）
+- 症状：guardian 传 `-u seed=42`，但 `train.py` 打印 `cfg` 显示 `seed: 0`（历史 P30u 日志）。
+- 根因：`setup_distributed(..., seed=args.seed)` 先执行（`--seed` 默认 **0**）；且
+  `update_dict.update({... v is not None})` 用 `args.seed=0` **覆盖**了 `-u seed=42`。
+- 修复：`--seed` 默认改 `None`；先 `parse_cli(args.update)`，算
+  `eff_seed = args.seed if not None else update_dict.get('seed', 0)`；`setup_distributed(seed=eff_seed)`；
+  `update_dict` 里 `args.seed=None` 被过滤 → `-u seed` 生效。
+- 验收：`-u seed=42` 时打印 `cfg` 与 `snapshot/config_merged.yml` 的 `seed` 均为 42。
+
+## train_lr 组缺失（已修，`ec_engine.py`）
+- 症状：`log.txt` 的 `train_lr` 只是 `param_groups[0]`（backbone，2.5e-5），主组 5e-4 缺失 → 画曲线少主组。
+- 修复：为**每个** param group 加 meter，`train_lr_pg0/1/2/...` 全记录（`train_lr` 仍=pg0 兼容）。
+
+## 手工待办（超出本仓库范围）
+- `registry.csv`：追加 `e1_s42_p150u`（status=pending）；`p74u` 行标注 **superseded**。
+- YOLO 侧训练脚本核对：`batch=10`（与 ECDet 总 batch 一致；确认是**单卡 per-GPU** 语义、不乘卡数）、
+  `epochs=150`、`imgsz=640`。统一口径一句话：「所有模型 batch=X、150 epochs、640×640、VisDrone 6471 训练图」。
+  注意 iter/epoch 随 batch 变：ECDet bs10 ≈ 647 it/epoch（bs8 ≈ 808）。
+- 确认 epoch 72 关 Mosaic/Mixup 无需人工干预。预警线：epoch 30 `mAP@0.5:0.95 < 21%`，
+  或 epoch 73–80 关增广后无跳升 → 需排查。

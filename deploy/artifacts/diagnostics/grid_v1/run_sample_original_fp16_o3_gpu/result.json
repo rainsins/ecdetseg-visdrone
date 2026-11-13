@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/home/rainsin/Projects/Career/Paper/EdgeCrafter/.pixi/envs/rknn/bin/python",
+    "-B",
+    "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/diagnose_rknn.py",
+    "_worker",
+    "--model",
+    "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/diagnostics/grid_v1/sample/original.onnx",
+    "--dataset",
+    "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/diagnostics/grid_v1/sample/dataset.txt",
+    "--output",
+    "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/diagnostics/grid_v1/run_sample_original_fp16_o3_gpu/probe.rknn",
+    "--optimization",
+    "3",
+    "--target",
+    "gpu"
+  ],
+  "returncode": 0,
+  "stop_reason": null,
+  "elapsed_s": 1.0187742929992964,
+  "sampled_peak_tree_rss_bytes": 535465984,
+  "sampled_max_live_tree_cpu_s": 0.95,
+  "timeout_s": 30.0,
+  "rss_limit_mib": 4096.0,
+  "resource_note": "200ms samples; RSS sums may double-count shared pages; not exact peak rusage",
+  "model_sha256": "ec82606cd13ce670710f126205d933cb3ec419e86cd15924bbe0955082929420",
+  "exported": true,
+  "success": true
+}

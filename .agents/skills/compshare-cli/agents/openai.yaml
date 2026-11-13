@@ -1,0 +1,4 @@
+interface:
+  display_name: "CompShare CLI"
+  short_description: "Manage CompShare GPU and MiniMax H3 resources"
+  default_prompt: "Use $compshare-cli to manage CompShare GPU or MiniMax H3 resources safely."

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="960" height="540" viewBox="0 0 960 540" font-family="&quot;字魂59号-创粗黑&quot;, sans-serif"><rect x="0" y="0" width="960" height="540" fill="#FFFFFF"/>
+<g id="shape-60" data-pptx-object="shape" data-pptx-frame="416.33 158.29 109 96.17" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:60" data-pptx-semantic-object="shape">
+<path d="M 525.33 254.46 L 470.83 158.29 L 416.33 254.46 L 525.33 254.46 Z" data-pptx-part="geometry" fill="#006EA0" stroke="none"/>
+
+</g>
+<g id="shape-61" data-pptx-object="shape" data-pptx-frame="308.33 254.46 108 104" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:61" data-pptx-semantic-object="shape">
+<path d="M 416.33 254.46 L 308.33 276.7 L 382.73 358.46 L 416.33 254.46 Z" data-pptx-part="geometry" fill="#006EA0" stroke="none"/>
+
+</g>
+<g id="shape-62" data-pptx-object="shape" data-pptx-frame="370.33 358.46 100.33 109.67" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:62" data-pptx-semantic-object="shape">
+<path d="M 382.69 358.46 L 370.33 468.13 L 470.67 422.51 L 382.69 358.46 Z" data-pptx-part="geometry" fill="#2E2E35" stroke="none"/>
+
+</g>
+<g id="shape-63" data-pptx-object="shape" data-pptx-frame="470.67 358.46 100.67 109.67" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:63" data-pptx-semantic-object="shape">
+<path d="M 470.67 422.51 L 571.33 468.13 L 558.97 358.46 L 470.67 422.51 Z" data-pptx-part="geometry" fill="#2E2E35" stroke="none"/>
+
+</g>
+<g id="shape-64" data-pptx-object="shape" data-pptx-frame="525.33 254.46 108 104" data-pptx-geometry-kind="custom" data-pptx-source-ref="slide:64" data-pptx-semantic-object="shape">
+<path d="M 558.98 358.46 L 633.33 276.7 L 525.33 254.46 L 558.98 358.46 Z" data-pptx-part="geometry" fill="#006EA0" stroke="none"/>
+
+</g>
+<g id="shape-70" data-pptx-object="shape" data-pptx-frame="512.33 142.46 270 53.32" data-pptx-prst="rect" data-pptx-source-ref="slide:70" data-pptx-semantic-object="shape">
+<path d="M 512.33 142.46 L 782.33 142.46 L 782.33 195.77 L 512.33 195.77 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="512.33" y="157.12566929" text-anchor="start" xml:space="preserve" font-size="14.67" fill="#595959" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="17.6"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">多次下采样后，</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">小目标的高频</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">响应迅速衰减。</tspan></tspan></text>
+</g>
+<g id="shape-71" data-pptx-object="shape" data-pptx-frame="644.5 270.96 221.5 71.09" data-pptx-prst="rect" data-pptx-source-ref="slide:71" data-pptx-semantic-object="shape">
+<path d="M 644.5 270.96 L 866 270.96 L 866 342.05 L 644.5 342.05 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="644.5" y="285.62582677" text-anchor="start" xml:space="preserve" font-size="14.67" fill="#595959" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="17.6"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">背景高频噪声强，</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">目标容</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">易被</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">淹没。</tspan></tspan></text>
+</g>
+<g id="shape-72" data-pptx-object="shape" data-pptx-frame="590.33 422.79 221.5 71.09" data-pptx-prst="rect" data-pptx-source-ref="slide:72" data-pptx-semantic-object="shape">
+<path d="M 590.33 422.79 L 811.83 422.79 L 811.83 493.88 L 590.33 493.88 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="590.33" y="437.45900262" text-anchor="start" xml:space="preserve" font-size="14.67" fill="#595959" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="17.6"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">同一场景内目标从 </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">2 像素到 </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">100+ </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">像素不等。</tspan></tspan></text>
+</g>
+<g id="shape-73" data-pptx-object="shape" data-pptx-frame="119.33 391.13 221.33 71.09" data-pptx-prst="rect" data-pptx-source-ref="slide:73" data-pptx-semantic-object="shape">
+<path d="M 119.33 391.13 L 340.67 391.13 L 340.67 462.21 L 119.33 462.21 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="119.33" y="405.79244094" text-anchor="start" xml:space="preserve" font-size="14.67" fill="#595959" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="17.6"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">小目标标注困难、</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">漏标多，</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">数据规模</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">受限。</tspan></tspan></text>
+</g>
+<g id="shape-74" data-pptx-object="shape" data-pptx-frame="119.33 207.63 221.33 71.09" data-pptx-prst="rect" data-pptx-source-ref="slide:74" data-pptx-semantic-object="shape">
+<path d="M 119.33 207.63 L 340.67 207.63 L 340.67 278.71 L 119.33 278.71 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="119.33" y="222.29238845" text-anchor="start" xml:space="preserve" font-size="14.67" fill="#595959" data-pptx-text-baseline="metrics-v1" data-pptx-text-model="lines" data-paragraph-line-height="17.6"><tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">目标仅占 </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">16×16 </tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">像素，</tspan></tspan><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none" data-paragraph-line-break="1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">纹理与形状信息极少。</tspan></tspan></text>
+</g>
+<g id="shape-75" data-pptx-object="shape" data-pptx-frame="512.33 113.79 132.5 22.62" data-pptx-prst="rect" data-pptx-source-ref="slide:75" data-pptx-semantic-object="shape">
+<path d="M 512.33 113.79 L 644.83 113.79 L 644.83 136.41 L 512.33 136.41 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="512.33" y="131.12566929" text-anchor="start" xml:space="preserve" font-size="18.67" fill="#9F9F9F" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">特征微弱</tspan></text>
+</g>
+<g id="shape-76" data-pptx-object="shape" data-pptx-frame="644.5 239.96 132.5 22.62" data-pptx-prst="rect" data-pptx-source-ref="slide:76" data-pptx-semantic-object="shape">
+<path d="M 644.5 239.96 L 777 239.96 L 777 262.58 L 644.5 262.58 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="644.5" y="257.29228346" text-anchor="start" xml:space="preserve" font-size="18.67" fill="#9F9F9F" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">背景杂乱</tspan></text>
+</g>
+<g id="shape-77" data-pptx-object="shape" data-pptx-frame="590.33 391.96 132.5 22.62" data-pptx-prst="rect" data-pptx-source-ref="slide:77" data-pptx-semantic-object="shape">
+<path d="M 590.33 391.96 L 722.83 391.96 L 722.83 414.58 L 590.33 414.58 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="590.33" y="409.29238845" text-anchor="start" xml:space="preserve" font-size="18.67" fill="#9F9F9F" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">尺度跨度大</tspan></text>
+</g>
+<g id="shape-78" data-pptx-object="shape" data-pptx-frame="119.33 359.96 112.69 22.62" data-pptx-prst="rect" data-pptx-source-ref="slide:78" data-pptx-semantic-object="shape">
+<path d="M 119.33 359.96 L 232.02 359.96 L 232.02 382.58 L 119.33 382.58 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="119.33" y="377.29228346" text-anchor="start" xml:space="preserve" font-size="18.67" fill="#9F9F9F" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">标注成本高</tspan></text>
+</g>
+<g id="shape-79" data-pptx-object="shape" data-pptx-frame="119.33 175.79 113.5 22.62" data-pptx-prst="rect" data-pptx-source-ref="slide:79" data-pptx-semantic-object="shape">
+<path d="M 119.33 175.79 L 232.83 175.79 L 232.83 198.41 L 119.33 198.41 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="119.33" y="193.1255643" text-anchor="start" xml:space="preserve" font-size="18.67" fill="#9F9F9F" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">分辨率低</tspan></text>
+</g>
+<g id="shape-80" data-pptx-object="shape" data-pptx-frame="368.45 291.46 213.26 71.09" data-pptx-prst="rect" data-pptx-source-ref="slide:80" data-pptx-semantic-object="shape">
+<path d="M 368.45 291.46 L 581.71 291.46 L 581.71 362.55 L 368.45 362.55 Z" fill="none" stroke="none" data-pptx-part="geometry"/>
+
+
+<text x="475.08" y="319.45900262" text-anchor="middle" xml:space="preserve" font-size="29.33" fill="#000000" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">TOD 五大挑战</tspan></text>
+</g>
+<g id="shape-23" data-pptx-object="shape" data-pptx-frame="328.5 38.93 303 43.62" data-pptx-prst="rect" data-pptx-source-ref="slide:23" data-pptx-semantic-object="shape">
+<path d="M 328.5 38.93 L 631.5 38.93 L 631.5 82.55 L 328.5 82.55 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="480" y="70.39433071" text-anchor="middle" xml:space="preserve" font-size="28" fill="#000000" font-weight="bold" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-style="normal" text-decoration="none">为什么小目标这么难？</tspan></text>
+</g>
+<g id="shape-20" data-pptx-object="group" data-pptx-frame="21.82 15.68 245.07 72.55" data-pptx-source-ref="slide:20">
+<g id="shape-21" data-pptx-object="picture" data-pptx-frame="21.82 15.68 86.18 72.55" data-pptx-source-ref="slide:21">
+<image data-pptx-object="picture" data-pptx-frame="21.82 15.68 86.18 72.55" href="../images/image3.png" x="21.82" y="15.68" width="86.18" height="72.55" preserveAspectRatio="none"/>
+</g>
+<g id="shape-22" data-pptx-object="shape" data-pptx-frame="98.38 33.32 168.51 38.78" data-pptx-prst="rect" data-pptx-source-ref="slide:22" data-pptx-semantic-object="shape">
+<path d="M 98.38 33.32 L 266.89 33.32 L 266.89 72.09 L 98.38 72.09 Z" fill="none" data-pptx-part="geometry"/>
+
+
+<text x="107.98" y="60.78309711" text-anchor="start" xml:space="preserve" font-family="&quot;华文行楷&quot;, sans-serif" font-size="24" fill="#2E2E35" data-pptx-text-baseline="metrics-v1"><tspan fill-opacity="1" font-weight="normal" font-style="normal" text-decoration="none">兰州理工大学</tspan></text>
+</g>
+</g></svg>

@@ -1,0 +1,108 @@
+{
+  "pytorch_reference": {
+    "AP": 28.82,
+    "AP50": 48.54,
+    "AP75": 28.63
+  },
+  "fp32_stretch_baseline": {
+    "AP": 28.820758052964102,
+    "AP50": 48.540999827288836,
+    "AP75": 28.629038151752596,
+    "APs": 18.671224428463265,
+    "APm": 41.47489374279824,
+    "APl": 61.673576191230595,
+    "AR300": 43.67101439996138,
+    "per_class_AP": {
+      "pedestrian": 23.703628727587926,
+      "people": 19.820532353165035,
+      "bicycle": 11.332093365913934,
+      "car": 58.436124295193245,
+      "van": 33.931316980322876,
+      "truck": 31.619988142648747,
+      "tricycle": 22.189203766327346,
+      "awning-tricycle": 13.236849536516948,
+      "bus": 46.40101427962093,
+      "motor": 27.536829082344028
+    },
+    "num_detections": 164400,
+    "num_images": 548,
+    "maxDets": [
+      1,
+      10,
+      100,
+      300
+    ]
+  },
+  "rknn_board_int8": {
+    "AP": 28.76916252162901,
+    "AP50": 48.37683725216193,
+    "AP75": 28.638130657815363,
+    "APs": 18.598996679080816,
+    "APm": 41.361858149294434,
+    "APl": 61.2909839431525,
+    "AR300": 43.560663686406,
+    "per_class_AP": {
+      "pedestrian": 23.460684467211422,
+      "people": 19.831486889567852,
+      "bicycle": 11.310256625476235,
+      "car": 58.343053223690355,
+      "van": 34.018048645031925,
+      "truck": 31.65366073351902,
+      "tricycle": 22.07716932613618,
+      "awning-tricycle": 13.31727072846594,
+      "bus": 46.09289940359529,
+      "motor": 27.587095173595916
+    },
+    "num_detections": 164400,
+    "num_images": 548,
+    "maxDets": [
+      1,
+      10,
+      100,
+      300
+    ]
+  },
+  "drop_vs_fp32_stretch": {
+    "AP": 0.051596,
+    "AP50": 0.164163,
+    "AP75": -0.009093
+  },
+  "drop_vs_sim_int8": {
+    "AP": -0.061698,
+    "AP50": 0.132082,
+    "AP75": -0.246296
+  },
+  "gate": {
+    "passed": true,
+    "against": "FP32 stretch baseline",
+    "reference_AP": 28.820758052964102,
+    "drop": 0.051596,
+    "fail_drop": 1.0,
+    "one_sided": true,
+    "reason": "board INT8 AP 28.77 is 0.05 points below FP32 stretch baseline 28.82 (within limit 1.00)"
+  },
+  "timing": {
+    "num_images": 548,
+    "total_seconds": 347.2,
+    "ms_per_image": 633.577,
+    "images_per_second": 1.578
+  },
+  "board": {
+    "source": "RK3588 real hardware (TOPEET iTOP-RK3588)",
+    "artifact": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640_rk3588_int8.rknn",
+    "describes_shipped_artifact": true,
+    "runtime": "librknnrt 2.5.0 (74ea630ce8@2026-09-30)",
+    "driver": "0.9.8",
+    "grid_sample": "CPU custom-op fallback (cpp/grid_sample_cpu.cpp)",
+    "note": "GridSample is unsupported on RK3588 NPU/GPU in this runtime; executed via CPU custom-op fallback. Correctness is validated, but inference is slow (~1.6 FPS, CPU-bound) and is not representative of NPU throughput."
+  },
+  "config": {
+    "rknn": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/deploy/artifacts/ecdet_s_p150u_640_rk3588_int8.rknn",
+    "ann": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_val.json",
+    "val_images": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/val",
+    "score_thresh": 0.0,
+    "max_det": 300,
+    "num_images": 548,
+    "grid_sample_cpu": true
+  }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei, Arial" data-pptx-page-role="content">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#FFFFFF"/>
+<g id="header" data-pptx-bounds="56 30 1168 112"><text x="56" y="52" font-size="16" fill="#BC5A24">02 / API · 显著性证据</text><text x="56" y="111" font-size="40" font-weight="bold" fill="#142D4E">API增强关键区域，tiny目标更显著</text></g>
+<g id="saliency-evidence" data-pptx-bounds="56 154 1168 380"><image href="../images/fig5.png" x="64" y="159" width="1148" height="369" preserveAspectRatio="xMidYMid meet"/></g>
+<g id="saliency-readout" data-pptx-bounds="56 554 510 85"><text x="56" y="591" font-size="30" font-weight="bold" fill="#BC5A24">53.99 → 69.93　≈ +29.5%</text><text x="56" y="627" font-size="20" fill="#58677A">左侧示例：tiny目标平均显著性</text></g>
+<g id="saliency-caveat" data-pptx-bounds="610 551 614 91"><text x="610" y="582" font-size="24" fill="#243447"><tspan x="610" dy="0">显著性由P3特征梯度的L2范数计算。</tspan><tspan x="610" dy="38">这是单个示例，不能替代全测试集统计。</tspan></text></g>
+<g id="footer" data-pptx-bounds="56 653 1168 34" font-size="16" fill="#58677A"><text x="56" y="675">来源：SET，PDF p.5，Fig.5；不保证每个尺度、每个实例均提升</text><text x="1189" y="675">10</text></g>
+</svg>

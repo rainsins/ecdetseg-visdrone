@@ -14,6 +14,7 @@ import torch
 
 from ..misc import dist_utils, stats
 from ..optim.lr_scheduler import FlatCosineLRScheduler
+from ..early_stop import EarlyStopper
 from ._solver import BaseSolver
 from .ec_engine import evaluate, train_one_epoch
 
@@ -23,6 +24,10 @@ class ECSolver(BaseSolver):
     def fit(self, ):
         self.train()
         args = self.cfg
+
+        # early-stop fuse (config-gated; absent/disabled -> None => no behaviour change)
+        _es = (getattr(self.cfg, 'yaml_cfg', None) or {}).get('early_stop') or {}
+        self.early_stopper = EarlyStopper(**_es) if _es.get('enabled') else None
 
         n_parameters, model_stats = stats(self.cfg)
         print(model_stats)
@@ -169,6 +174,12 @@ class ECSolver(BaseSolver):
                         for name in filenames:
                             torch.save(coco_evaluator.coco_eval[self.iou_type].eval,
                                     self.output_dir / "eval" / name)
+            # early-stop fuse (monitors EMA mAP@0.5:0.95; no-op when disabled)
+            if self.early_stopper is not None:
+                _m = test_stats.get('coco_eval_bbox') or test_stats.get('coco_eval_mask')
+                if _m is not None and self.early_stopper.step(epoch, _m[0]):
+                    break
+
             accelerator = getattr(torch, dist_utils.current_device(), None)
             if accelerator is not None:  # Just for clearing up GPU memory. You can remove it if you have enough GPU memory.
                 accelerator.empty_cache()
