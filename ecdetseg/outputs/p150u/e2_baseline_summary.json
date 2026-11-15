@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "groups": [
+    {
+      "group": {
+        "experiment": "B0",
+        "revision": "legacy",
+        "protocol": "p150u",
+        "resolution": 640,
+        "init": "e2",
+        "variant": "historical",
+        "device": "xpu",
+        "source_kind": "historical",
+        "comparison_sha256": "a00d9834a797573450bb07730dbfe59ca596da31f24c251fff0f771485c2a491",
+        "source_sha256": ""
+      },
+      "primary_result": "final_ema",
+      "metric_units": "fraction",
+      "expected_seeds": [
+        42,
+        43,
+        44
+      ],
+      "completed_seeds": [
+        42,
+        43,
+        44
+      ],
+      "missing_seeds": [],
+      "complete": true,
+      "n": 3,
+      "statistics": {
+        "AP": {
+          "mean": 0.27966510625426183,
+          "sample_std": 0.0006201156872447114
+        },
+        "AP50": {
+          "mean": 0.477063758273548,
+          "sample_std": 0.0008727122713753777
+        },
+        "AP75": {
+          "mean": 0.27594315061189845,
+          "sample_std": 0.0005324935725238486
+        },
+        "APS": {
+          "mean": 0.18039736662949893,
+          "sample_std": 0.0007890140798447704
+        },
+        "APM": {
+          "mean": 0.4017957092678314,
+          "sample_std": 0.001613027320609746
+        },
+        "APL": {
+          "mean": 0.5996919091264551,
+          "sample_std": 0.025722677159887058
+        }
+      },
+      "provenance_note": "Historical source equivalence is unverified; see original snapshots and resume_history."
+    }
+  ]
+}

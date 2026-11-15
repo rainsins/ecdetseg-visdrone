@@ -7,31 +7,27 @@ Copyright(c) 2023 lyuwenyu. All Rights Reserved.
 import torch
 
 from ..core import register
+from ..device import active_device, resolve_device, precision_policy
 
 __all__ = ['GradScaler', 'get_amp_dtype']
 
 
 def _default_amp_device() -> str:
-    if torch.cuda.is_available():
-        return 'cuda'
-    if getattr(torch, 'xpu', None) is not None and torch.xpu.is_available():
-        return 'xpu'
-    return 'cpu'
+    return active_device().type
 
 
-def get_amp_dtype(device_type: str = None):
-    dt = device_type or _default_amp_device()
-    if dt == 'cuda':
-        return torch.float16
-    if dt == 'xpu':
-        return torch.bfloat16
-    return torch.float32
+def get_amp_dtype(device_type: str = None, precision='auto'):
+    return precision_policy(device_type or active_device(), precision)[1]
 
 
 @register()
 class GradScaler(torch.amp.GradScaler):
-    def __init__(self, device: str = None, enabled: bool = None, **kwargs):
-        device = device or _default_amp_device()
+    def __init__(self, device: str = None, enabled: bool = None, precision='auto', **kwargs):
+        device = resolve_device(device) if device is not None else active_device()
+        self.precision, self.amp_dtype = precision_policy(device, precision)
+        self.amp_enabled = self.precision != 'fp32'
         if enabled is None:
-            enabled = (device == 'cuda')
-        super().__init__(device=device, enabled=enabled, **kwargs)
+            enabled = self.precision == 'fp16'
+        if enabled and not self.amp_enabled:
+            raise ValueError('Gradient scaling cannot be enabled for FP32 policy')
+        super().__init__(device=device.type, enabled=enabled, **kwargs)

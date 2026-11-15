@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-11-13T13:40:02.481479+00:00",
+  "reason": "Preserve original seed43 state before early-stop recovery fix",
+  "checkpoint_epoch": 41,
+  "files": {
+    "last.pth": "d026b8e5472a20c337ee92158ed319b6a9f7fe65a8ad368ab4610bc7c8211405",
+    "best.pth": "6a61df8337145c254fb768655becfc94377c8e4303e06e56a5769cbb59c1fb14",
+    "log.txt": "3bcbd443f772f119dc0061794da210d1f30d5a20639631eb9dc2f340501652ae",
+    "train.log": "88e7784dd2015a54d563f83c73d5c461715a7a684bc77f42a550e2af06c620a9"
+  },
+  "snapshot_files": {
+    "config_merged.yml": "fc339f89b64937ea675fd6e1c84cb81cb6eb9d6812770e6c8bb6116a9439256f",
+    "config.dump.err": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "config.yml": "fc339f89b64937ea675fd6e1c84cb81cb6eb9d6812770e6c8bb6116a9439256f",
+    "git_commit.txt": "89923c163b7ffa23b84d3ed78bd175618bf2961214635688481c3711e027002b",
+    "git_status.txt": "988b97c6dce6c050ee8582e29f96c2c0c11fda281352c7996d14ff0fdad89b19",
+    "git_diff.patch": "bcee0d5f63c45359e7104ce92a896199260e4ef8bb93e0d1fdd3664b8b63356d",
+    "pixi.lock.sha256": "9a2a0e638a20683648e497e5548e5e4241e842bb5a8cc83aac5de378d416882c",
+    "start_time.txt": "e070b61677a51b21627d2b6f91bcf98fbea74ade4712e37d17df65396ce651eb",
+    "command.txt": "a8f851d852da7ba6249b5b8f46e7e016158559fc25a4e1a63efab28b19558952"
+  },
+  "previous_pm2_entry": {
+    "status": "stopped",
+    "pm_exec_path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/scripts/run_all_p30u.sh",
+    "pm_cwd": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg"
+  }
+}

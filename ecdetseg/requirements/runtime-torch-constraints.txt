@@ -1,0 +1,4 @@
+# Backend-local suffixes (+cpu/+cu126/+xpu) satisfy these public-version pins.
+# Install the chosen official wheel first; these constraints prevent upgrades.
+torch==2.9.1
+torchvision==0.24.1

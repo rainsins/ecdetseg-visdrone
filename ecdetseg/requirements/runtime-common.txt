@@ -1,0 +1,13 @@
+# Install the backend-specific torch/torchvision pair FIRST; no XPU extras here.
+numpy>=1.26,<2
+scipy==1.11.4
+opencv-python<4.12
+Pillow
+pycocotools
+PyYAML
+tensorboard
+calflops
+transformers
+huggingface_hub>=1.32,<2
+tabulate
+matplotlib

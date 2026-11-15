@@ -23,26 +23,20 @@ from torch.utils.data import DistributedSampler
 
 # from torch.utils.data.dataloader import DataLoader
 from ..data import DataLoader
+from ..device import active_device, activate_device
 
 
 def _accelerator_module():
-    """Return the active accelerator module (torch.xpu or torch.cuda), or None on CPU-only setups."""
-    if getattr(torch, 'xpu', None) is not None and torch.xpu.is_available():
-        return torch.xpu
-    if torch.cuda.is_available():
-        return torch.cuda
-    return None
+    device = active_device()
+    return getattr(torch, device.type) if device.type != 'cpu' else None
 
 
 def current_device() -> str:
     """Return the device type string ('xpu', 'cuda' or 'cpu') for the active accelerator."""
-    accelerator = _accelerator_module()
-    if accelerator is None:
-        return 'cpu'
-    return accelerator.__name__.rsplit('.', 1)[-1]
+    return active_device().type
 
 
-def setup_distributed(print_rank: int=0, print_method: str='builtin', seed: int=None, ):
+def setup_distributed(print_rank: int=0, print_method: str='builtin', seed: int=None, device=None):
     """
     env setup
     args:
@@ -50,28 +44,16 @@ def setup_distributed(print_rank: int=0, print_method: str='builtin', seed: int=
         print_method, (builtin, rich)
         seed,
     """
-    try:
-        # https://pytorch.org/docs/stable/elastic/run.html
-        RANK = int(os.getenv('RANK', -1))
-        LOCAL_RANK = int(os.getenv('LOCAL_RANK', -1))
-        WORLD_SIZE = int(os.getenv('WORLD_SIZE', 1))
-
-        accelerator = _accelerator_module()
-        if accelerator is not None:
-            accelerator.set_device(LOCAL_RANK)
-        # torch.distributed.init_process_group(backend=backend, init_method='env://')
-        torch.distributed.init_process_group(init_method='env://')
-        # torch.distributed.barrier()
-        
-        # rank = torch.distributed.get_rank()
-        if accelerator is not None:
-            accelerator.empty_cache()
-        enabled_dist = True
-        if get_rank() == print_rank:
-            print('Initialized distributed mode...')
-
-    except Exception:
-        enabled_dist = False
+    selected = activate_device(device)
+    keys = ('RANK', 'LOCAL_RANK', 'WORLD_SIZE')
+    enabled_dist = any(k in os.environ for k in keys)
+    if enabled_dist:
+        if not all(k in os.environ for k in keys):
+            raise ValueError('Incomplete distributed environment: require RANK, LOCAL_RANK, WORLD_SIZE')
+        backend = {'cpu': 'gloo', 'cuda': 'nccl', 'xpu': 'xccl'}[selected.type]
+        torch.distributed.init_process_group(backend=backend, init_method='env://')
+        print(f'Initialized distributed mode: {backend} device={selected}')
+    else:
         print('Not init distributed mode.')
 
     setup_print(get_rank() == print_rank, method=print_method)
@@ -117,7 +99,6 @@ def cleanup():
     """cleanup distributed environment
     """
     if is_dist_available_and_initialized():
-        torch.distributed.barrier()
         torch.distributed.destroy_process_group()
 
 
@@ -153,15 +134,15 @@ def warp_model(
     **kwargs
 ):
     if is_dist_available_and_initialized():
-        rank = get_rank()
+        local_index = active_device().index
         model = nn.SyncBatchNorm.convert_sync_batchnorm(model) if sync_bn else model
         if dist_mode == 'dp':
             if current_device() != 'cuda':
                 raise RuntimeError('DataParallel is only supported for CUDA; use DDP for XPU.')
-            model = DP(model, device_ids=[rank], output_device=rank)
+            model = DP(model, device_ids=[local_index], output_device=local_index)
         elif dist_mode == 'ddp':
-            if current_device() == 'cuda':
-                model = DDP(model, device_ids=[rank], output_device=rank,
+            if current_device() != 'cpu':
+                model = DDP(model, device_ids=[local_index], output_device=local_index,
                             find_unused_parameters=find_unused_parameters)
             else:
                 model = DDP(model, device_ids=None, find_unused_parameters=find_unused_parameters)
@@ -245,8 +226,9 @@ def all_gather(data):
 def sync_time():
     """sync_time
     """
-    if torch.cuda.is_available():
-        torch.cuda.synchronize()
+    accelerator = _accelerator_module()
+    if accelerator is not None:
+        accelerator.synchronize(active_device())
 
     return time.time()
 
@@ -261,11 +243,12 @@ def setup_seed(seed: int, deterministic=False):
     np.random.seed(seed)
     torch.manual_seed(seed)
 
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed_all(seed)
+    accelerator = _accelerator_module()
+    if accelerator is not None:
+        accelerator.manual_seed_all(seed)
 
     # memory will be large when setting deterministic to True
-    if torch.backends.cudnn.is_available() and deterministic:
+    if current_device() == 'cuda' and torch.backends.cudnn.is_available() and deterministic:
         torch.backends.cudnn.deterministic = True
 
 
@@ -275,8 +258,8 @@ def check_compile():
 
     import torch
     gpu_ok = False
-    if torch.cuda.is_available():
-        device_cap = torch.cuda.get_device_capability()
+    if current_device() == 'cuda':
+        device_cap = torch.cuda.get_device_capability(active_device())
         if device_cap in ((7, 0), (8, 0), (9, 0)):
             gpu_ok = True
     if not gpu_ok:

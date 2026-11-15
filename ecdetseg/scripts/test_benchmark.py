@@ -73,6 +73,62 @@ class BenchmarkTests(unittest.TestCase):
                     self.assertEqual(op['output_size'], 480)
         self.assertNotIn('__include__', cfg)
 
+    def test_runtime_precision_identity_and_override_isolation(self):
+        extra = ('--device', 'cpu', '--precision', 'fp32', '--runtime-python', os.sys.executable)
+        with patch.dict(os.environ, EXP_PRECISION='bf16'):
+            out, plan = self.start(extra)
+        self.assertEqual(plan['identity']['runtime_python'], os.sys.executable)
+        merged = yaml.safe_load((out / 'snapshot/config_merged.yml').read_text())
+        self.assertEqual(merged['precision'], 'fp32')
+        self.assertEqual(bench.digest(merged), plan['config_sha256'])
+        changed = self.cli('run', extra=('--device', 'cpu', '--precision', 'bf16',
+                                       '--runtime-python', os.sys.executable))
+        self.assertEqual(changed.returncode, 2)
+        self.assertIn('RESUME_MISMATCH', changed.stderr)
+        invalid = self.cli(extra=('--runtime-python', str(self.root / 'missing')))
+        self.assertEqual(invalid.returncode, 2)
+
+    def test_runtime_interpreter_routes_all_subprocesses(self):
+        # Transport doubles: proves interpreter/arguments, not accelerator training.
+        wrapper = self.root / 'runtime python'
+        calls = self.root / 'python_calls.jsonl'
+        wrapper.write_text(f'''#!{os.sys.executable}
+import json, os, pathlib, subprocess, sys
+args = sys.argv[1:]
+with open({str(calls)!r}, 'a') as f:
+    f.write(json.dumps(args) + '\\n')
+if args and args[0] == 'scripts/runtime_preflight.py':
+    sys.exit(0)
+if args and args[0] == 'train.py':
+    rc = subprocess.call(['bash', {str(bench.PROJECT / 'scripts/fake_train.sh')!r}, *args[1:]])
+    if rc == 0:
+        for name in ('last.pth', 'best.pth', 'final.pth'):
+            (pathlib.Path(os.environ['OUT_DIR']) / name).touch()
+    sys.exit(rc)
+if args and args[0] == 'scripts/eval_final.py':
+    sys.exit(subprocess.call(['bash', {str(bench.PROJECT / 'scripts/fake_eval.sh')!r}, *args[1:]]))
+if len(args) == 2 and args[0] == '-' and args[1].endswith('.pth'):
+    sys.exit(0)
+os.execv({os.sys.executable!r}, [{os.sys.executable!r}, *args])
+''')
+        wrapper.chmod(0o755)
+        with patch.dict(os.environ, PYTHON_BIN='', EVAL_BIN='', FAKE_CKPT_OK='0',
+                        FAKE_CODES='1,0', SKIP_FINAL_EVAL='0'):
+            out, _ = self.start(('--device', 'cuda:0', '--precision', 'fp16',
+                                 '--runtime-python', str(wrapper)))
+        invocations = [json.loads(line) for line in calls.read_text().splitlines()]
+        for entry in ('scripts/dump_config.py', 'scripts/runtime_preflight.py', 'train.py', 'scripts/eval_final.py'):
+            self.assertTrue(any(a[0] == entry for a in invocations), entry)
+        self.assertTrue(any(len(a) == 2 and a[0] == '-' and a[1].endswith('.pth') for a in invocations))
+        train = [a for a in invocations if a[0] == 'train.py']
+        evals = [a for a in invocations if a[0] == 'scripts/eval_final.py']
+        self.assertEqual(len(train), 2)
+        self.assertEqual(len(evals), 3)
+        for args in train + evals:
+            self.assertEqual(args[args.index('-d') + 1], 'cuda:0')
+        self.assertIn('-r', train[1])
+        self.assertEqual(len((out / 'eval.jsonl').read_text().splitlines()), 3)
+
     def test_protocol_resolution_seed_variant_isolation(self):
         variants = [(), ('--allow-archived', '--protocol', 'p74u'), ('--allow-archived', '--protocol', 'p30u'),
                     ('--res', '960'), ('--seed', '43'), ('--init', 'e3'),
@@ -185,6 +241,34 @@ class BenchmarkTests(unittest.TestCase):
         self.assertEqual({r['label'] for r in rows}, {'final_ema', 'final_raw', 'best_ema'})
         self.assertEqual({r['protocol'] for r in rows}, {'p150u', 'p74u'})
         self.assertTrue(all(r['config_sha256'] and r['source_sha256'] for r in rows))
+
+    def test_legacy_lock_and_missing_weights_refused(self):
+        import fcntl
+        out, plan = self.start()
+        env = dict(os.environ, EXP_OUT_ROOT=str(out.parent),
+                   EXP_CONFIG=str(out / 'snapshot/benchmark_config.yml'))
+        command = ['bash', str(bench.PROJECT / 'scripts/run_exp.sh'), 'e2', '42']
+        with (out / '.run.lock').open('a') as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            result = subprocess.run(command, env=env, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 4)
+        self.assertIn('already running', result.stderr)
+        env.update(EXP_OUT_ROOT=str(self.root / 'fresh'), VISDRONE_ROOT=str(self.data),
+                   WEIGHTS_DIR=str(self.root / 'missing'),
+                   EXP_CONFIG=str(bench.PROJECT / 'configs/ecdet/ecdet_s_p150u.yml'))
+        result = subprocess.run(command, env=env, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('missing initialization weights', result.stdout)
+
+    def test_failed_final_eval_preserves_previous_results_and_fails_queue(self):
+        out, _ = self.start()
+        (out / 'best.pth').touch()
+        previous = '{"old": true}\n'
+        (out / 'eval.jsonl').write_text(previous)
+        with patch.dict(os.environ, {'SKIP_FINAL_EVAL': '0', 'EVAL_BIN': '/bin/false'}):
+            result = self.cli('run')
+        self.assertEqual(result.returncode, 5, result.stdout + result.stderr)
+        self.assertEqual((out / 'eval.jsonl').read_text(), previous)
 
 
 if __name__ == '__main__':

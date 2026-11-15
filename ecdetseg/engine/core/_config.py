@@ -66,6 +66,7 @@ class BaseConfig(object):
         self.flat_epoch: int = None
         
         self.use_amp :bool = False
+        self.precision :str = 'auto'
         self.use_ema :bool = False
         self.ema_decay :float = 0.9999
         self.default_ema_warmups: int = 2000
@@ -183,10 +184,12 @@ class BaseConfig(object):
 
     @property
     def scaler(self) -> GradScaler:
+        if not self.use_amp and self.precision not in ('auto', 'fp32'):
+            raise ValueError('Explicit mixed precision conflicts with use_amp=False')
         if self._scaler is None and self.use_amp:
             from ..optim.amp import GradScaler as DeviceGradScaler
 
-            self._scaler = DeviceGradScaler()
+            self._scaler = DeviceGradScaler(device=self.device or None, precision=self.precision)
         return self._scaler
 
     @scaler.setter

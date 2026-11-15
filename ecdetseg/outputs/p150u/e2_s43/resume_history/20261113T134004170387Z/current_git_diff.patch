@@ -1,0 +1,783 @@
+diff --git a/ecdetseg/BENCHMARK.md b/ecdetseg/BENCHMARK.md
+index 12c881b..ff25b68 100644
+--- a/ecdetseg/BENCHMARK.md
++++ b/ecdetseg/BENCHMARK.md
+@@ -9,12 +9,13 @@
+ 后续 B0–B5 使用 P150u，默认 640 输入；150 为最大轮数，保留原早停规则。
+ P30u/P74u 已归档，只有显式 `--allow-archived --protocol p74u` 才可选择历史协议。
+ 640 与 960 仍须分组比较；初始化和 batch 等设置也必须对齐。
++主初始化固定 E2（ecdet_s.pth），seed42/43/44，主结果 final_ema。批量与 PM2 默认只跑 E2。
+ 
+ ## 当前状态
+ 
+ | 编号 | 实验 | 状态 |
+ |---|---|---|
+-| B0 | 原始 ECDet | 已接入管理入口；不代表本次已完成训练 |
++| B0 | 当前项目 ECDet 基线 | 已接入管理入口；历史完成度见 P150u 汇总 |
+ | B1 | 不增强的辅助分支，控制额外监督收益 | planned |
+ | B2 | 全图平滑辅助分支 | planned |
+ | B3 | HBS 辅助分支 | planned |
+@@ -78,8 +79,11 @@ device、weights_dir。完整配置指纹包含优化器、模块参数和数据
+ 配置树，修改其他实验配置也会要求新的 variant；它不自动判断语义等价。
+ 
+ 请始终通过 `benchmark.py run` 恢复受管理实验，直接调用旧启动器会绕过这些
+-新增检查。已有 `outputs/p30u` 等历史目录不自动收编；汇总只扫描带
+-`benchmark.json` 的新目录。
++新增检查。历史目录不自动收编；默认汇总扫描 `benchmark.json`。
++用 `--historical-root outputs/p150u` 显式纳入旧 P150u 结果，保留原快照及历史来源标识。
++同时指定 `--baseline-summary outputs/p150u/e2_baseline_summary.json` 可导出历史 E2 完成度和
++final_ema 的均值/样本标准差（0–1 单位）。当前历史源一致性不能由现有指纹追认；
++此次恢复另外留存 `resume_history/` 代码与输入证据。详细命令见 `README_exp.md`。
+ 
+ ## 后续模块如何插拔
+ 
+diff --git a/ecdetseg/README_exp.md b/ecdetseg/README_exp.md
+index 471a919..05f44b5 100644
+--- a/ecdetseg/README_exp.md
++++ b/ecdetseg/README_exp.md
+@@ -1,6 +1,8 @@
+ # 当前实验协议：P150u
+ 
+ 后续基线、模块验证和消融统一使用 **P150u**。
++主初始化固定为 **E2（ecdet_s.pth）**，种子为 **42/43/44**；E1/E3 仅作初始化对照。
++主结果为 `final_ema`，`final_raw` 和 val 选择的 `best_ema` 单独保留。
+ 
+ | 设置 | 当前基线 |
+ |---|---|
+@@ -53,4 +55,26 @@ pm2 start ecosystem.config.js --only p150u-all
+ - 源代码快照校验仍严格：整理前已创建的受管理运行若因源指纹改变而拒绝恢复，
+   应在原快照对应的代码环境恢复，不改写指纹绕过检查。
+ 
+-本次只整理文件和默认入口，不启动/停止训练或改动 PM2 中已运行的进程。
++## 历史汇总与恢复
++
++在 `ecdetseg/` 下刷新已有 P150u 结果：
++
++```bash
++python scripts/benchmark.py summarize --historical-root outputs/p150u \
++  -o outputs/p150u/results.csv \
++  --baseline-summary outputs/p150u/e2_baseline_summary.json
++```
++
++CSV 为逐运行/逐权重结果，指标单位为 0–1；JSON 给出 E2 完成种子、缺失种子、均值及样本标准差。
++不足两次完成运行时标准差为空；三 seed 未齐时 `complete=false`，不能当作正式三 seed 结论。
++历史配置按当前 P150u 展开核对，按配置、分辨率、初始化、设备和来源隔离。
++历史源指纹留空，保留原始 snapshot；此次恢复的代码、输入校验和原因追加到 `resume_history/`，
++当前代码快照不冒充历史代码。PM2 队列每完成一个运行后自动刷新上述汇总。
++
++早停对象现在先于 checkpoint 恢复创建，每轮在验证和早停计数后保存 checkpoint。
++旧 checkpoint 无早停状态时，从原日志重建；计入早停的历史缺失则拒绝猜测。
++epoch 148 回载 best 时保留早停计数；已停止的 checkpoint 恢复后不再多训一轮。
++`DONE` 只表示训练结束，三类终评及相关权重齐备才在汇总中标为 complete。
++
++基线收尾后进入 SET：B1 无增强辅助监督 → B2 全图平滑 → B3 HBS → B4 查询式 API → B5 联合。
++B1–B5 仍需实现和验证，当前不自动启动。B0 指当前项目基线，不表示上游论文逐项复现。
+diff --git a/ecdetseg/configs/ecdet/experiments/registry.yml b/ecdetseg/configs/ecdet/experiments/registry.yml
+index 1dc2398..ced5fc9 100644
+--- a/ecdetseg/configs/ecdet/experiments/registry.yml
++++ b/ecdetseg/configs/ecdet/experiments/registry.yml
+@@ -3,12 +3,15 @@ schema_version: 1
+ protocols:
+   p150u: configs/ecdet/ecdet_s_p150u.yml
+ default_protocol: p150u
++default_init: e2
++baseline_seeds: [42, 43, 44]
++primary_result: final_ema
+ archived_protocols:
+   p30u: configs/ecdet/ecdet_s_p30u.yml
+   p74u: configs/ecdet/ecdet_s_p74u.yml
+ experiments:
+   B0:
+-    name: Original ECDet baseline
++    name: Project ECDet baseline
+     revision: v1
+     status: ready
+     modules: []
+diff --git a/ecdetseg/ecosystem.config.js b/ecdetseg/ecosystem.config.js
+index 48d93c4..df0002e 100644
+--- a/ecdetseg/ecosystem.config.js
++++ b/ecdetseg/ecosystem.config.js
+@@ -19,7 +19,9 @@ module.exports = {
+         EXP_OUT_ROOT: process.env.EXP_OUT_ROOT || path.join(__dirname, 'outputs', 'p150u'),
+         EXP_RES: process.env.EXP_RES || '640',
+         SEEDS: process.env.SEEDS || '42 43 44',
+-        INITS: process.env.INITS || 'e1 e2 e3',
++        INITS: process.env.INITS || 'e2',
++        SUMMARY_HISTORICAL_ROOT: process.env.EXP_OUT_ROOT || path.join(__dirname, 'outputs', 'p150u'),
++        EXECUTION_REASON: process.env.EXECUTION_REASON || 'P150u E2 baseline completion',
+         CONTINUE_ON_FAIL: process.env.CONTINUE_ON_FAIL || '0',
+       },
+     },
+diff --git a/ecdetseg/engine/early_stop.py b/ecdetseg/engine/early_stop.py
+index 3d7c5d1..8c41832 100644
+--- a/ecdetseg/engine/early_stop.py
++++ b/ecdetseg/engine/early_stop.py
+@@ -16,10 +16,14 @@ Semantics:
+     * only epochs >= start_epoch are counted;
+     * the first counted epoch establishes `best` (counts as improvement);
+     * a counted epoch with metric <= best + min_delta increments the bad counter;
+-    * when the bad counter reaches `patience`, `step()` returns True once.
++    * when the bad counter reaches `patience`, the stop decision stays latched.
+ """
+ from __future__ import annotations
+ 
++import json
++import math
++from pathlib import Path
++
+ 
+ class EarlyStopper:
+     def __init__(self, enabled=False, start_epoch=100, patience=20, min_delta=0.001, **kwargs):
+@@ -31,9 +35,67 @@ class EarlyStopper:
+         self.best_epoch = None
+         self.num_bad = 0
+         self.stopped = False
++        self.last_epoch = -1
++        self.restored = False
++
++    def state_dict(self):
++        return dict(version=1, enabled=self.enabled, start_epoch=self.start_epoch,
++                    patience=self.patience, min_delta=self.min_delta, best=self.best,
++                    best_epoch=self.best_epoch, num_bad=self.num_bad,
++                    stopped=self.stopped, last_epoch=self.last_epoch)
++
++    def load_state_dict(self, state):
++        if state.get('version') != 1:
++            raise ValueError('Unsupported early-stop checkpoint version')
++        for key in ('enabled', 'start_epoch', 'patience', 'min_delta'):
++            if state[key] != getattr(self, key):
++                raise ValueError(f'Early-stop configuration changed: {key}')
++        for key in ('best', 'best_epoch', 'num_bad', 'stopped', 'last_epoch'):
++            setattr(self, key, state[key])
++        self.restored = True
++
++    def restore_from_log(self, path, last_epoch, current_metric=None):
++        """Replay legacy validation history, never invent missing patience state.
++
++        Legacy last.pth was saved before validation. Only its final epoch may
++        use a freshly evaluated metric; earlier counted epochs must be logged.
++        Last occurrence wins for epochs replayed after an interrupted save.
++        """
++        history = {}
++        path = Path(path)
++        if path.exists():
++            for line in path.read_text().splitlines():
++                try:
++                    row = json.loads(line)
++                except json.JSONDecodeError:
++                    continue  # a partial final line cannot supply a metric
++                metric = row.get('test_coco_eval_bbox') or row.get('test_coco_eval_mask')
++                if metric and isinstance(row.get('epoch'), int):
++                    history[row['epoch']] = metric[0]
++        if current_metric is not None:
++            history.setdefault(last_epoch, current_metric)
++        replay = type(self)(enabled=self.enabled, start_epoch=self.start_epoch,
++                            patience=self.patience, min_delta=self.min_delta)
++        for epoch in range(self.start_epoch, last_epoch + 1):
++            if epoch not in history:
++                raise ValueError(f'Cannot recover early-stop history: missing epoch {epoch} in {path}')
++            if replay.stopped:
++                raise ValueError('Legacy history continues past the recovered early-stop decision')
++            replay.step(epoch, history[epoch])
++        replay.last_epoch = last_epoch
++        self.load_state_dict(replay.state_dict())
++        print(f'[early-stop] recovered legacy history through epoch {last_epoch}; '
++              f'bad={self.num_bad}, stopped={self.stopped}')
+ 
+     def step(self, epoch: int, metric: float) -> bool:
+         """Feed one epoch's EMA mAP; return True when training should stop."""
++        if self.stopped:
++            return True
++        if epoch <= self.last_epoch:
++            raise ValueError(f'Early-stop epoch already observed: {epoch}')
++        if not math.isfinite(metric):
++            raise ValueError(f'Non-finite early-stop metric at epoch {epoch}')
++        self.last_epoch = epoch
+         if not self.enabled or epoch < self.start_epoch:
+             return False
+ 
+diff --git a/ecdetseg/engine/solver/ec_solver.py b/ecdetseg/engine/solver/ec_solver.py
+index 672c791..072f7b1 100644
+--- a/ecdetseg/engine/solver/ec_solver.py
++++ b/ecdetseg/engine/solver/ec_solver.py
+@@ -22,12 +22,13 @@ from .ec_engine import evaluate, train_one_epoch
+ class ECSolver(BaseSolver):
+ 
+     def fit(self, ):
+-        self.train()
+         args = self.cfg
+ 
+         # early-stop fuse (config-gated; absent/disabled -> None => no behaviour change)
+         _es = (getattr(self.cfg, 'yaml_cfg', None) or {}).get('early_stop') or {}
+         self.early_stopper = EarlyStopper(**_es) if _es.get('enabled') else None
++        # Must exist before BaseSolver.train() loads a resume checkpoint.
++        self.train()
+ 
+         n_parameters, model_stats = stats(self.cfg)
+         print(model_stats)
+@@ -58,7 +59,7 @@ class ECSolver(BaseSolver):
+         top1 = 0
+         best_stat = {'epoch': -1, }
+         # evaluate again before resume training
+-        if self.last_epoch > 0:
++        if self.last_epoch >= 0:
+             module = self.ema.module if self.ema else self.model
+             test_stats, coco_evaluator = evaluate(
+                 module,
+@@ -73,11 +74,40 @@ class ECSolver(BaseSolver):
+                 best_stat[k] = test_stats[k][0]
+                 top1 = test_stats[k][0]
+                 print(f'best_stat: {best_stat}')
++            if self.early_stopper is not None:
++                if not self.early_stopper.restored:
++                    metric = test_stats.get('coco_eval_bbox') or test_stats.get('coco_eval_mask')
++                    self.early_stopper.restore_from_log(
++                        self.output_dir / 'log.txt', self.last_epoch,
++                        metric[0] if metric else None)
++                elif self.early_stopper.last_epoch != self.last_epoch:
++                    raise ValueError('Checkpoint epoch and early-stop state are out of sync')
++            # Resume must retain the historical VAL-selected best threshold.
++            log_path = self.output_dir / 'log.txt'
++            if log_path.exists():
++                history = {}
++                for line in log_path.read_text().splitlines():
++                    try:
++                        row = json.loads(line)
++                    except json.JSONDecodeError:
++                        continue
++                    if isinstance(row.get('epoch'), int) and row['epoch'] <= self.last_epoch:
++                        history[row['epoch']] = row
++                for previous_epoch, row in sorted(history.items()):
++                    for k in test_stats:
++                        metric = row.get(f'test_{k}')
++                        if metric and metric[0] > best_stat[k]:
++                            best_stat[k] = metric[0]
++                            best_stat['epoch'] = previous_epoch
++                            top1 = max(top1, metric[0])
+ 
+         best_stat_print = best_stat.copy()
+         start_time = time.time()
+         start_epoch = self.last_epoch + 1
+         for epoch in range(start_epoch, args.epochs):
++            if self.early_stopper is not None and self.early_stopper.stopped:
++                print('[early-stop] restored stop decision; no additional training epoch')
++                break
+ 
+             self.train_dataloader.set_epoch(epoch)
+             # self.train_dataloader.dataset.set_epoch(epoch)
+@@ -87,7 +117,13 @@ class ECSolver(BaseSolver):
+             if epoch == stop_aug_epoch:
+                 if dist_utils.is_dist_available_and_initialized():
+                     torch.distributed.barrier()
+-                self.load_resume_state(str(self.output_dir / 'best.pth'))
++                # Rewind model/optimizer/EMA as before, not the patience clock.
++                stopper = self.early_stopper
++                self.early_stopper = None
++                try:
++                    self.load_resume_state(str(self.output_dir / 'best.pth'))
++                finally:
++                    self.early_stopper = stopper
+                 self.last_epoch = epoch - 1
+ 
+             train_stats = train_one_epoch(
+@@ -113,14 +149,6 @@ class ECSolver(BaseSolver):
+ 
+             self.last_epoch += 1
+ 
+-            if self.output_dir:
+-                checkpoint_paths = [self.output_dir / 'last.pth']
+-                # extra checkpoint before LR drop and every 100 epochs
+-                if (epoch + 1) % args.checkpoint_freq == 0:
+-                    checkpoint_paths.append(self.output_dir / f'checkpoint{epoch:04}.pth')
+-                for checkpoint_path in checkpoint_paths:
+-                    dist_utils.save_on_master(self.state_dict(), checkpoint_path)
+-
+             module = self.ema.module if self.ema else self.model
+             test_stats, coco_evaluator = evaluate(
+                 module,
+@@ -131,6 +159,14 @@ class ECSolver(BaseSolver):
+                 self.device
+             )
+ 
++            # Commit only evaluated epochs, with this epoch's patience state.
++            should_stop = False
++            if self.early_stopper is not None:
++                metric = test_stats.get('coco_eval_bbox') or test_stats.get('coco_eval_mask')
++                if metric is None:
++                    raise ValueError('Early stopping requires a validation AP metric')
++                should_stop = self.early_stopper.step(epoch, metric[0])
++
+             for k in test_stats:
+                 if self.writer and dist_utils.is_main_process():
+                     for i, v in enumerate(test_stats[k]):
+@@ -153,6 +189,13 @@ class ECSolver(BaseSolver):
+                 best_stat_print[k] = max(best_stat[k], top1)
+                 print(f'best_stat: {best_stat_print}')  # global best
+ 
++            if self.output_dir:
++                checkpoint_paths = [self.output_dir / 'last.pth']
++                if (epoch + 1) % args.checkpoint_freq == 0:
++                    checkpoint_paths.append(self.output_dir / f'checkpoint{epoch:04}.pth')
++                for checkpoint_path in checkpoint_paths:
++                    dist_utils.save_on_master(self.state_dict(), checkpoint_path)
++
+             log_stats = {
+                 **{f'train_{k}': v for k, v in train_stats.items()},
+                 **{f'test_{k}': v for k, v in test_stats.items()},
+@@ -174,11 +217,8 @@ class ECSolver(BaseSolver):
+                         for name in filenames:
+                             torch.save(coco_evaluator.coco_eval[self.iou_type].eval,
+                                     self.output_dir / "eval" / name)
+-            # early-stop fuse (monitors EMA mAP@0.5:0.95; no-op when disabled)
+-            if self.early_stopper is not None:
+-                _m = test_stats.get('coco_eval_bbox') or test_stats.get('coco_eval_mask')
+-                if _m is not None and self.early_stopper.step(epoch, _m[0]):
+-                    break
++            if should_stop:
++                break
+ 
+             accelerator = getattr(torch, dist_utils.current_device(), None)
+             if accelerator is not None:  # Just for clearing up GPU memory. You can remove it if you have enough GPU memory.
+diff --git a/ecdetseg/scripts/benchmark.py b/ecdetseg/scripts/benchmark.py
+index 604534e..d48da37 100644
+--- a/ecdetseg/scripts/benchmark.py
++++ b/ecdetseg/scripts/benchmark.py
+@@ -63,7 +63,8 @@ def source_files():
+         for suffix in ('*.yml', '*.yaml'):
+             paths.update((PROJECT / directory).rglob(suffix))
+     paths.update(PROJECT / p for p in ('train.py', 'scripts/benchmark.py',
+-                 'scripts/run_exp.sh', 'scripts/dump_config.py', 'scripts/eval_final.py'))
++                 'scripts/run_exp.sh', 'scripts/run_all.sh', 'scripts/record_execution.py',
++                 'scripts/historical_results.py', 'scripts/dump_config.py', 'scripts/eval_final.py'))
+     paths.update(REPO / p for p in ('pixi.toml', 'pixi.lock'))
+     return {str(p.relative_to(REPO)): file_hash(p) for p in sorted(paths) if p.is_file()}
+ 
+@@ -219,11 +220,13 @@ def run(plan):
+                 signal.signal(sig, handler)
+ 
+ 
+-def summarize(root, output):
++def summarize(root, output, historical_root=None, baseline_summary=None):
+     fields = ['experiment', 'revision', 'protocol', 'resolution', 'init', 'seed',
+               'variant', 'device', 'config_sha256', 'source_sha256', 'label',
+               'weights_type', 'epoch', 'AP', 'AP50', 'AP75', 'APS', 'APM', 'APL',
+-              'params', 'ckpt', 'note', 'output_dir']
++              'params', 'ckpt', 'note', 'output_dir', 'source_kind', 'completion',
++              'config_status', 'comparison_sha256', 'provenance', 'snapshot',
++              'initialization', 'resume_records', 'logged_last_epoch']
+     rows = []
+     for path in sorted(Path(root).expanduser().resolve().rglob('benchmark.json')):
+         manifest = json.loads(path.read_text())
+@@ -239,15 +242,22 @@ def summarize(root, output):
+                     raise ValueError('unknown evaluation label')
+                 row = {**manifest['identity'], **result,
+                        'config_sha256': manifest['config_sha256'],
+-                       'source_sha256': manifest['source_sha256'], 'output_dir': str(path.parent)}
++                       'source_sha256': manifest['source_sha256'], 'output_dir': str(path.parent),
++                       'source_kind': 'managed', 'provenance': 'benchmark_manifest'}
+                 rows.append({key: row.get(key, '') for key in fields})
+             except (ValueError, KeyError, TypeError) as exc:
+                 raise ValueError(f'{results}:{line_no}: {exc}') from exc
++    if historical_root is not None:
++        from historical_results import historical_rows
++        rows.extend(historical_rows(historical_root, PROJECT, digest))
++    if baseline_summary:
++        from historical_results import write_baseline_summary
++        write_baseline_summary(rows, baseline_summary, tuple(registry()['baseline_seeds']))
+     stream = open(output, 'w', newline='') if output else sys.stdout
+     try:
+         writer = csv.DictWriter(stream, fieldnames=fields)
+         writer.writeheader()
+-        writer.writerows(rows)
++        writer.writerows({key: row.get(key, '') for key in fields} for row in rows)
+     finally:
+         if output:
+             stream.close()
+@@ -264,7 +274,7 @@ def main(argv=None):
+         p.add_argument('--protocol', choices=list(registry()['protocols']) + list(registry().get('archived_protocols', {})),
+                        default=registry()['default_protocol'], help='default: p150u; old protocols require --allow-archived')
+         p.add_argument('--allow-archived', action='store_true', help='explicit opt-in to historical protocols')
+-        p.add_argument('--init', choices=('e1', 'e2', 'e3'), default='e2')
++        p.add_argument('--init', choices=('e1', 'e2', 'e3'), default=registry()['default_init'])
+         p.add_argument('--seed', type=int, default=42)
+         p.add_argument('--res', type=int, default=640)
+         p.add_argument('--variant', default='default')
+@@ -276,6 +286,8 @@ def main(argv=None):
+     p = commands.add_parser('summarize', help='export per-run/per-weight rows; no mixed-protocol averaging')
+     p.add_argument('--out-root', default=str(PROJECT / 'outputs/benchmark'))
+     p.add_argument('-o', '--output')
++    p.add_argument('--historical-root', help='include legacy P150u runs with original snapshots')
++    p.add_argument('--baseline-summary', help='write isolated E2 seed completion/mean/sample-std JSON')
+     args = parser.parse_args(argv)
+     try:
+         if args.command == 'list':
+@@ -284,7 +296,7 @@ def main(argv=None):
+                 print(f"{key} {method['revision']:4} {'ready' if ready else 'planned':8} {method['name']}")
+             return 0
+         if args.command == 'summarize':
+-            summarize(args.out_root, args.output)
++            summarize(args.out_root, args.output, args.historical_root, args.baseline_summary)
+             return 0
+         plan = make_plan(args)
+         if args.command == 'plan':
+diff --git a/ecdetseg/scripts/run_all.sh b/ecdetseg/scripts/run_all.sh
+index 28211aa..fa8ccb8 100755
+--- a/ecdetseg/scripts/run_all.sh
++++ b/ecdetseg/scripts/run_all.sh
+@@ -2,14 +2,14 @@
+ # ============================================================
+ # Sequential P150u-default batch runner (for pm2 / nohup).
+ # Single Arc GPU -> ONE experiment at a time. Order: seeds x inits.
+-#   SEEDS="42 43 44" INITS="e1 e2 e3" [CONTINUE_ON_FAIL=1] bash scripts/run_all.sh
++#   SEEDS="42 43 44" INITS="e2" [CONTINUE_ON_FAIL=1] bash scripts/run_all.sh
+ # Forwards SIGTERM to the in-flight run_exp.sh (which forwards to training).
+ # ============================================================
+ set -u
+ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ RUN_EXP="${RUN_EXP:-$HERE/run_exp.sh}"
+ SEEDS="${SEEDS:-42 43 44}"
+-INITS="${INITS:-e1 e2 e3}"
++INITS="${INITS:-e2}"
+ CONTINUE_ON_FAIL="${CONTINUE_ON_FAIL:-0}"
+ 
+ CURRENT=""
+@@ -31,6 +31,11 @@ for seed in $SEEDS; do
+     rc=0; wait "$CURRENT" || rc=$?
+     CURRENT=""
+     echo "====== run_all: init=$init seed=$seed rc=$rc ======"
++    if [ -n "${SUMMARY_HISTORICAL_ROOT:-}" ]; then
++      python "$HERE/benchmark.py" summarize --historical-root "$SUMMARY_HISTORICAL_ROOT" \
++        -o "$SUMMARY_HISTORICAL_ROOT/results.csv" \
++        --baseline-summary "$SUMMARY_HISTORICAL_ROOT/e2_baseline_summary.json" || exit 5
++    fi
+     if [ "$rc" -ne 0 ]; then
+       if [ "$CONTINUE_ON_FAIL" != "1" ]; then
+         echo "[run_all] stopping on first failure (rc=$rc); CONTINUE_ON_FAIL=1 to keep going"
+diff --git a/ecdetseg/scripts/run_exp.sh b/ecdetseg/scripts/run_exp.sh
+index c56ee61..c4a1725 100755
+--- a/ecdetseg/scripts/run_exp.sh
++++ b/ecdetseg/scripts/run_exp.sh
+@@ -94,6 +94,8 @@ TRAIN_LOG="$OUT_DIR/train.log"
+ DONE_FILE="$OUT_DIR/DONE"
+ LAST_CKPT="$OUT_DIR/last.pth"
+ mkdir -p "$OUT_DIR" "$OUT_DIR/snapshot"
++exec 9>"$OUT_DIR/.run.lock"
++flock -n 9 || { echo "run_exp: experiment is already running: $OUT_DIR" >&2; exit 4; }
+ 
+ # ----- XPU env -----
+ export PYTORCH_SYCL_ALLOC_CONF="${PYTORCH_SYCL_ALLOC_CONF:-expandable_segments:True}"
+@@ -168,7 +170,7 @@ snapshot() {
+   local snap="$OUT_DIR/snapshot"
+   [ -f "$snap/command.txt" ] && return 0            # keep the original snapshot
+   ( cd "$PROJECT_DIR" && python scripts/dump_config.py -c "$CONFIG" -u "${OVERRIDES[@]}" ) \
+-      > "$snap/config_merged.yml" 2> "$snap/config.dump.err"
++      > "$snap/config_merged.yml" 2> "$snap/config.dump.err" || return 1
+   cp -f "$snap/config_merged.yml" "$snap/config.yml" 2>/dev/null || true
+   ( cd "$GIT_ROOT" && git rev-parse HEAD )            > "$snap/git_commit.txt" 2>&1
+   ( cd "$GIT_ROOT" && git status --porcelain )        > "$snap/git_status.txt" 2>&1
+@@ -212,7 +214,7 @@ find_resume_ckpt() {
+   for c in "${cands[@]:-}"; do
+     [ -z "$c" ] && continue
+     if ckpt_loadable "$c"; then printf '%s\n' "$c"; return 0; fi
+-    log "resume: unusable checkpoint, skipping: $c"
++    log "resume: unusable checkpoint, skipping: $c" >&2
+   done
+   return 1
+ }
+@@ -223,30 +225,20 @@ guard_protocol_consistency() {
+   # P74u config, where the epochs mismatch silently rewrites stop_epoch).
+   local snap="$OUT_DIR/snapshot/config_merged.yml"
+   [ -f "$snap" ] || snap="$OUT_DIR/snapshot/config.yml"
+-  [ -f "$snap" ] || { log "resume-guard: no snapshot config found; skipping check"; return 0; }
++  [ -f "$snap" ] || { log "resume-guard: no snapshot config found"; return 1; }
+   local cur="$OUT_DIR/snapshot/.current_merged.yml"
+   ( cd "$PROJECT_DIR" && python scripts/dump_config.py -c "$CONFIG" -u "${OVERRIDES[@]}" ) \
+-      > "$cur" 2>/dev/null || { log "resume-guard: could not expand current config; skipping"; return 0; }
++      > "$cur" 2>/dev/null || { log "resume-guard: could not expand current config"; return 1; }
+   local out rc
+   out="$(python - "$snap" "$cur" <<'PY'
+ import sys, yaml
+-KEYS=[('epochs',),('flat_epoch',),('no_aug_epoch',),
+-      ('train_dataloader','dataset','transforms','stop_epoch'),
+-      ('train_dataloader','dataset','transforms','mosaic_prob'),
+-      ('train_dataloader','dataset','transforms','mosaic_epoch'),
+-      ('train_dataloader','collate_fn','mixup_prob'),
+-      ('train_dataloader','collate_fn','mixup_epoch')]
+-def glom(d, path):
+-    for k in path:
+-        if not isinstance(d, dict) or k not in d:
+-            return '<absent>'
+-        d = d[k]
+-    return d
+ def load(p):
+     d = yaml.safe_load(open(p)) or {}
+-    return {'.'.join(k): glom(d, k) for k in KEYS}
++    for key in ('__include__', 'resume', 'tuning', 'config', 'device', 'summary_dir'):
++        d.pop(key, None)
++    return d
+ a = load(sys.argv[1]); b = load(sys.argv[2])
+-diff = {k: (a[k], b[k]) for k in a if str(a[k]) != str(b[k])}
++diff = {k: (a.get(k), b.get(k)) for k in a.keys() | b.keys() if a.get(k) != b.get(k)}
+ if diff:
+     print('PROTOCOL_MISMATCH ' + repr(diff)); sys.exit(4)
+ print('PROTOCOL_OK')
+@@ -304,47 +296,66 @@ run_training() {   # returns train exit code; forwards logs to train.log
+ 
+ do_final_eval() {
+   [ "${SKIP_FINAL_EVAL:-0}" = "1" ] && { log "final eval skipped (SKIP_FINAL_EVAL=1)"; return 0; }
+-  if [ "${FORCE_FINAL_EVAL:-0}" != "1" ] \
+-     && grep -q '"label": "final_ema"' "$OUT_DIR/eval.jsonl" 2>/dev/null \
+-     && grep -q '"label": "final_raw"' "$OUT_DIR/eval.jsonl" 2>/dev/null; then
++  if [ "${FORCE_FINAL_EVAL:-0}" != "1" ] && python - "$SCRIPT_DIR" "$OUT_DIR/eval.jsonl" <<'PY'
++import sys
++from pathlib import Path
++sys.path.insert(0, sys.argv[1])
++from historical_results import read_evaluations, LABELS
++try:
++    complete = set(read_evaluations(Path(sys.argv[2]))) == set(LABELS)
++except (ValueError, OSError):
++    complete = False
++sys.exit(0 if complete else 1)
++PY
++  then
+     log "final eval already present and complete ($OUT_DIR/eval.jsonl); skip (FORCE_FINAL_EVAL=1 to redo)."
+     return 0
+   fi
+   log "=== final evaluation on val (final.pth: EMA + raw; best.pth: EMA) ==="
+-  : > "$OUT_DIR/eval.jsonl"
++  local pending="$OUT_DIR/.eval.jsonl.pending"
++  : > "$pending"
+ 
+   run_eval() {   # $1=ckpt $2=weights(ema|raw) $3=label $4=note
+     # NOTE: keep these two `local` lines separate — `local a="$1" b="...$a..."` would
+     # expand $a before `local` assigns it (unbound under `set -u`).
+     local ckpt="$1" weights="$2" label="$3" note="$4"
+-    local out="$OUT_DIR/eval_${label}.json"
+-    [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 0; }
++    local out="$OUT_DIR/.eval_${label}.pending.json"
++    [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 1; }
++    rm -f "$out"
++    local rc=0
+     if [ -n "${EVAL_BIN:-}" ]; then                    # test hook (no XPU)
+       "$EVAL_BIN" -c "$CONFIG" -d "$DEVICE" -r "$ckpt" -o "$out" --weights "$weights" \
+-        -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" >> "$TRAIN_LOG" 2>&1
++        -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" >> "$TRAIN_LOG" 2>&1 || rc=$?
+     else
+       ( cd "$PROJECT_DIR" && \
+         pixi run --manifest-path "$MANIFEST" python scripts/eval_final.py \
+           -c "$CONFIG" -d "$DEVICE" -r "$ckpt" -o "$out" --weights "$weights" \
+-          -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1
++          -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1 || rc=$?
+     fi
+-    if [ -f "$out" ]; then
+-      python - "$out" "$label" "$note" <<'PY' >> "$OUT_DIR/eval.jsonl"
+-import json, sys
++    if [ "$rc" -eq 0 ] && [ -f "$out" ]; then
++      python - "$out" "$label" "$note" <<'PY' >> "$pending"
++import json, math, sys
+ d = json.load(open(sys.argv[1])); d["label"] = sys.argv[2]; d["note"] = sys.argv[3]
++assert d['weights_type'] == ('raw' if sys.argv[2] == 'final_raw' else 'ema')
++assert isinstance(d['epoch'], int)
++assert all(isinstance(d.get(k), (int, float)) and math.isfinite(d[k]) for k in ('AP','AP50','AP75','APS','APM','APL'))
+ print(json.dumps(d))
+ PY
++      [ "$?" -eq 0 ] || return 1
++      mv "$out" "$OUT_DIR/eval_${label}.json"
+       log "eval[$label] -> $(basename "$out")"
+     else
+       log "eval[$label]: failed (see train.log)"
++      return 1
+     fi
+   }
+ 
+   # final.pth if present (post-fix); fall back to last.pth for runs predating the fix.
+   FINAL_CKPT="$OUT_DIR/final.pth"; [ -f "$FINAL_CKPT" ] || FINAL_CKPT="$OUT_DIR/last.pth"
+-  run_eval "$FINAL_CKPT"       "ema" "final_ema" "final weights, EMA (weights_type=ema)"
+-  run_eval "$FINAL_CKPT"       "raw" "final_raw" "final weights, raw model (weights_type=raw)"
+-  run_eval "$OUT_DIR/best.pth" "ema" "best_ema"  "best.pth: SELECTED ON VAL -> reference only"
++  run_eval "$FINAL_CKPT"       "ema" "final_ema" "final weights, EMA (weights_type=ema)" || return 1
++  run_eval "$FINAL_CKPT"       "raw" "final_raw" "final weights, raw model (weights_type=raw)" || return 1
++  run_eval "$OUT_DIR/best.pth" "ema" "best_ema"  "best.pth: SELECTED ON VAL -> reference only" || return 1
++  mv "$pending" "$OUT_DIR/eval.jsonl"
+   log "final eval summary: $OUT_DIR/eval.jsonl"
+ }
+ 
+@@ -359,13 +370,14 @@ do_plot() {
+ }
+ 
+ # ============================================================
+-snapshot
++snapshot || { echo 'run_exp: snapshot expansion failed' >&2; exit 4; }
+ log "=== experiment guardian start | init=$INIT seed=$SEED out=$OUT_DIR ==="
+ log "config=$CONFIG tuning=${TUNING:-<none>} res=${RES}"
+ 
+ if [ -f "$DONE_FILE" ]; then
++  guard_protocol_consistency || exit 4
+   log "DONE marker already present -> training complete; running final eval only. (delete $DONE_FILE to retrain)"
+-  do_final_eval
++  do_final_eval || exit 5
+   do_plot
+   log "=== experiment guardian done ==="
+   exit 0
+@@ -383,12 +395,26 @@ while :; do
+     fi
+     MODE_ARGS=( -r "$RESUME_CKPT" )
+     log "attempt #$attempt: resume from $RESUME_CKPT"
+-  elif [ -n "$TUNING" ] && [ -f "$TUNING" ]; then
+-    MODE_ARGS=( -t "$TUNING" )
+-    log "attempt #$attempt: cold start with -t $TUNING"
+   else
+-    MODE_ARGS=()
+-    log "attempt #$attempt: cold start (${INIT}, no -t)"
++    if [ -f "$LAST_CKPT" ] || compgen -G "$OUT_DIR/checkpoint*.pth" >/dev/null || [ -s "$OUT_DIR/log.txt" ]; then
++      log 'ERROR: existing training artifacts but no loadable checkpoint; refusing cold restart.'
++      exit 4
++    fi
++    if [ -n "$TUNING" ]; then
++      [ -f "$TUNING" ] || { log "ERROR: missing initialization weights: $TUNING"; exit 2; }
++      MODE_ARGS=( -t "$TUNING" )
++      log "attempt #$attempt: cold start with -t $TUNING"
++    else
++      MODE_ARGS=()
++      log "attempt #$attempt: cold start (${INIT}, no -t)"
++    fi
++  fi
++  if [ "$attempt" -eq 1 ]; then
++    RECORD_ARGS=( --out "$OUT_DIR" --device "$DEVICE" --init "$INIT" --seed "$SEED"
++                  --reason "${EXECUTION_REASON:-launcher invocation}" )
++    [ -n "${RESUME_CKPT:-}" ] && RECORD_ARGS+=( --checkpoint "$RESUME_CKPT" )
++    [ -f "$TUNING" ] && RECORD_ARGS+=( --weights "$TUNING" )
++    python "$SCRIPT_DIR/record_execution.py" "${RECORD_ARGS[@]}" >> "$TRAIN_LOG" 2>&1 || exit 4
+   fi
+ 
+   MARKER="$OUT_DIR/.attempt_marker"; : > "$MARKER"
+@@ -431,7 +457,7 @@ while :; do
+ done
+ 
+ # ----- final evaluation (EMA on val; NO test-dev) -----
+-do_final_eval
++do_final_eval || exit 5
+ do_plot
+ 
+ log "=== experiment guardian done ==="
+diff --git a/ecdetseg/scripts/test_benchmark.py b/ecdetseg/scripts/test_benchmark.py
+index abd35b3..4a8e4af 100644
+--- a/ecdetseg/scripts/test_benchmark.py
++++ b/ecdetseg/scripts/test_benchmark.py
+@@ -186,6 +186,34 @@ class BenchmarkTests(unittest.TestCase):
+         self.assertEqual({r['protocol'] for r in rows}, {'p150u', 'p74u'})
+         self.assertTrue(all(r['config_sha256'] and r['source_sha256'] for r in rows))
+ 
++    def test_legacy_lock_and_missing_weights_refused(self):
++        import fcntl
++        out, plan = self.start()
++        env = dict(os.environ, EXP_OUT_ROOT=str(out.parent),
++                   EXP_CONFIG=str(out / 'snapshot/benchmark_config.yml'))
++        command = ['bash', str(bench.PROJECT / 'scripts/run_exp.sh'), 'e2', '42']
++        with (out / '.run.lock').open('a') as lock:
++            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
++            result = subprocess.run(command, env=env, capture_output=True, text=True)
++        self.assertEqual(result.returncode, 4)
++        self.assertIn('already running', result.stderr)
++        env.update(EXP_OUT_ROOT=str(self.root / 'fresh'), VISDRONE_ROOT=str(self.data),
++                   WEIGHTS_DIR=str(self.root / 'missing'),
++                   EXP_CONFIG=str(bench.PROJECT / 'configs/ecdet/ecdet_s_p150u.yml'))
++        result = subprocess.run(command, env=env, capture_output=True, text=True)
++        self.assertEqual(result.returncode, 2)
++        self.assertIn('missing initialization weights', result.stdout)
++
++    def test_failed_final_eval_preserves_previous_results_and_fails_queue(self):
++        out, _ = self.start()
++        (out / 'best.pth').touch()
++        previous = '{"old": true}\n'
++        (out / 'eval.jsonl').write_text(previous)
++        with patch.dict(os.environ, {'SKIP_FINAL_EVAL': '0', 'EVAL_BIN': '/bin/false'}):
++            result = self.cli('run')
++        self.assertEqual(result.returncode, 5, result.stdout + result.stderr)
++        self.assertEqual((out / 'eval.jsonl').read_text(), previous)
++
+ 
+ if __name__ == '__main__':
+     unittest.main()
+diff --git a/ecdetseg/scripts/test_early_stop.py b/ecdetseg/scripts/test_early_stop.py
+index e71e8d7..7260746 100644
+--- a/ecdetseg/scripts/test_early_stop.py
++++ b/ecdetseg/scripts/test_early_stop.py
+@@ -5,6 +5,10 @@
+ """
+ import importlib.util
+ import os
++import json
++from pathlib import Path
++import tempfile
++import unittest
+ 
+ # Load the module by file path to avoid importing the engine package (which pulls torch).
+ _p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "engine", "early_stop.py")
+@@ -45,5 +49,65 @@ def main():
+     print("early_stop tests OK")
+ 
+ 
+-if __name__ == "__main__":
++class RecoveryTests(unittest.TestCase):
++    def stopper(self):
++        return EarlyStopper(enabled=True, start_epoch=2, patience=3, min_delta=0.001)
++
++    def test_every_interruption_keeps_stop_epoch(self):
++        metrics = [.1, .2, .3, .301, .4, .4, .4, .4, .9]
++        full = self.stopper()
++        expected = next(e for e, m in enumerate(metrics) if full.step(e, m))
++        self.assertEqual(expected, 7)
++        for split in range(expected + 1):
++            first = self.stopper()
++            for e in range(split + 1):
++                first.step(e, metrics[e])
++            resumed = self.stopper()
++            resumed.load_state_dict(json.loads(json.dumps(first.state_dict())))
++            actual = split if resumed.stopped else next(
++                e for e in range(split + 1, len(metrics)) if resumed.step(e, metrics[e]))
++            self.assertEqual(actual, expected)
++            self.assertEqual(resumed.state_dict(), full.state_dict())
++
++    def test_legacy_replay_missing_last_eval_and_duplicate_epochs(self):
++        with tempfile.TemporaryDirectory(dir='/tmp/opencode') as tmp:
++            path = Path(tmp) / 'log.txt'
++            rows = [dict(epoch=2, test_coco_eval_bbox=[.3]),
++                    dict(epoch=3, test_coco_eval_bbox=[.9]),
++                    dict(epoch=3, test_coco_eval_bbox=[.3]),
++                    dict(epoch=8, test_coco_eval_bbox=[.9])]
++            path.write_text('\n'.join(map(json.dumps, rows)) + '\n{"epoch":')
++            es = self.stopper()
++            es.restore_from_log(path, 4, .3)
++            self.assertEqual(es.num_bad, 2)
++            self.assertTrue(es.step(5, .3))
++            missing = self.stopper()
++            with self.assertRaisesRegex(ValueError, 'missing epoch 4'):
++                missing.restore_from_log(path, 5, .3)
++
++    def test_legacy_before_threshold_and_latched_stop(self):
++        es = self.stopper()
++        es.restore_from_log('/nonexistent/history', 1)
++        self.assertIsNone(es.best)
++        for e in range(2, 6):
++            es.step(e, .3)
++        state = es.state_dict()
++        self.assertTrue(es.step(6, .99))
++        self.assertEqual(state, es.state_dict())
++
++    def test_reject_changed_config_duplicate_and_nan(self):
++        es = self.stopper()
++        es.step(2, .3)
++        with self.assertRaisesRegex(ValueError, 'already observed'):
++            es.step(2, .3)
++        with self.assertRaisesRegex(ValueError, 'Non-finite'):
++            es.step(3, float('nan'))
++        changed = self.stopper()
++        changed.patience = 4
++        with self.assertRaisesRegex(ValueError, 'configuration changed'):
++            changed.load_state_dict(es.state_dict())
++
++
++if __name__ == '__main__':
+     main()
++    unittest.main()

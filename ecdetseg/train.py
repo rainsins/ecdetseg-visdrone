@@ -31,7 +31,6 @@ warnings.filterwarnings("always", message=".*stop_epoch.*")
 
 if debug:
     import torch
-    torch.xpu.empty_cache()
     def custom_repr(self):
         return f'{{Tensor:{tuple(self.shape)}}} {original_repr(self)}'
     original_repr = torch.Tensor.__repr__
@@ -66,7 +65,9 @@ def main(args, ) -> None:
               f'train_bs={td.get("total_batch_size")} early_stop={cfg.yaml_cfg.get("early_stop")}')
         return
 
-    dist_utils.setup_distributed(args.print_rank, args.print_method, seed=cfg.seed)
+    dist_utils.setup_distributed(args.print_rank, args.print_method, seed=cfg.seed, device=cfg.device)
+    from engine.device import active_device
+    cfg.device = str(active_device())
 
     solver = TASKS[cfg.yaml_cfg['task']](cfg)
 
@@ -76,11 +77,14 @@ def main(args, ) -> None:
         solver.fit()
 
     # Optional peak-memory probe for throughput benchmarking (env-gated, harmless otherwise).
-    if os.environ.get('LOG_XPU_MEM'):
+    if os.environ.get('LOG_DEVICE_MEM') or os.environ.get('LOG_XPU_MEM'):
         import torch
-        acc = getattr(torch, 'xpu', None) or getattr(torch, 'cuda', None)
+        acc = dist_utils._accelerator_module()
         try:
-            print(f'[mem] peak_alloc_gb={acc.max_memory_allocated()/1e9:.2f}')
+            if acc is not None:
+                print(f'[mem] device={solver.device} peak_alloc_gb={acc.max_memory_allocated(solver.device)/1e9:.2f}')
+            else:
+                print('[mem] device=cpu; accelerator memory counter not applicable')
         except Exception as e:                                   # noqa: BLE001
             print(f'[mem] unavailable: {e}')
 
@@ -98,6 +102,7 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--device', type=str, help="device (e.g. 'cuda:0', 'xpu:0', 'xpu' or 'cpu')")
     parser.add_argument('--seed', type=int, default=None, help='exp reproducibility (overrides -u seed=)')
     parser.add_argument('--use-amp', action='store_true', default=None, help='auto mixed precision training')
+    parser.add_argument('--precision', choices=['auto', 'fp32', 'fp16', 'bf16'], default=None)
     parser.add_argument('--output-dir', type=str, help='output directoy')
     parser.add_argument('--summary-dir', type=str, help='tensorboard summry')
     parser.add_argument('--test-only', action='store_true', default=False,)

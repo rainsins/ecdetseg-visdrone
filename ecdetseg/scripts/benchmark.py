@@ -63,7 +63,10 @@ def source_files():
         for suffix in ('*.yml', '*.yaml'):
             paths.update((PROJECT / directory).rglob(suffix))
     paths.update(PROJECT / p for p in ('train.py', 'scripts/benchmark.py',
-                 'scripts/run_exp.sh', 'scripts/dump_config.py', 'scripts/eval_final.py'))
+                 'scripts/runtime_preflight.py', 'requirements/runtime-common.txt',
+                 'requirements/runtime-torch-constraints.txt', 'scripts/smoke_runtime.py',
+                 'scripts/run_exp.sh', 'scripts/run_all.sh', 'scripts/record_execution.py',
+                 'scripts/historical_results.py', 'scripts/dump_config.py', 'scripts/eval_final.py'))
     paths.update(REPO / p for p in ('pixi.toml', 'pixi.lock'))
     return {str(p.relative_to(REPO)): file_hash(p) for p in sorted(paths) if p.is_file()}
 
@@ -83,6 +86,11 @@ def make_plan(args):
     identity = dict(experiment=args.experiment, revision=token(method['revision']),
                     protocol=args.protocol, resolution=args.res, init=args.init,
                     seed=args.seed, variant=token(args.variant), device=args.device)
+    if args.runtime_python:
+        executable = Path(args.runtime_python).expanduser().absolute()
+        if not executable.is_file() or not os.access(executable, os.X_OK):
+            raise ValueError('runtime Python must be an executable file')
+        identity['runtime_python'] = str(executable)
     out = (Path(args.out_root).expanduser().resolve() /
            f"{args.experiment}-{identity['revision']}" / args.protocol /
            f'r{args.res}' / identity['variant'] / f'{args.init}_s{args.seed}')
@@ -104,6 +112,8 @@ def make_plan(args):
                 for split in ('train', 'val') for field in DATA_KEYS):
             raise ValueError(f'{key} is managed; use dedicated options')
     cfg = yu.merge_dict(cfg, yu.parse_cli(args.update))
+    if args.precision is not None:
+        cfg['precision'] = args.precision
     cfg.update(output_dir=str(out), seed=args.seed, device=args.device,
                eval_spatial_size=[args.res, args.res])
     for split in ('train', 'val'):
@@ -200,6 +210,8 @@ def run(plan):
             (out / 'benchmark.json').write_text(json.dumps(manifest, indent=2) + '\n')
         identity = plan['identity']
         env = os.environ.copy()
+        env.pop('EXP_PRECISION', None)  # policy comes from the immutable config
+        env['RUNTIME_PYTHON'] = identity.get('runtime_python', '')
         env.update(EXP_CONFIG=str(out / 'snapshot/benchmark_config.yml'),
                    EXP_OUT_ROOT=str(out.parent), EXP_RES=str(identity['resolution']),
                    P30U_CONFIG=str(out / 'snapshot/benchmark_config.yml'),
@@ -219,11 +231,13 @@ def run(plan):
                 signal.signal(sig, handler)
 
 
-def summarize(root, output):
+def summarize(root, output, historical_root=None, baseline_summary=None):
     fields = ['experiment', 'revision', 'protocol', 'resolution', 'init', 'seed',
               'variant', 'device', 'config_sha256', 'source_sha256', 'label',
               'weights_type', 'epoch', 'AP', 'AP50', 'AP75', 'APS', 'APM', 'APL',
-              'params', 'ckpt', 'note', 'output_dir']
+              'params', 'ckpt', 'note', 'output_dir', 'source_kind', 'completion',
+              'config_status', 'comparison_sha256', 'provenance', 'snapshot',
+              'initialization', 'resume_records', 'logged_last_epoch']
     rows = []
     for path in sorted(Path(root).expanduser().resolve().rglob('benchmark.json')):
         manifest = json.loads(path.read_text())
@@ -239,15 +253,22 @@ def summarize(root, output):
                     raise ValueError('unknown evaluation label')
                 row = {**manifest['identity'], **result,
                        'config_sha256': manifest['config_sha256'],
-                       'source_sha256': manifest['source_sha256'], 'output_dir': str(path.parent)}
+                       'source_sha256': manifest['source_sha256'], 'output_dir': str(path.parent),
+                       'source_kind': 'managed', 'provenance': 'benchmark_manifest'}
                 rows.append({key: row.get(key, '') for key in fields})
             except (ValueError, KeyError, TypeError) as exc:
                 raise ValueError(f'{results}:{line_no}: {exc}') from exc
+    if historical_root is not None:
+        from historical_results import historical_rows
+        rows.extend(historical_rows(historical_root, PROJECT, digest))
+    if baseline_summary:
+        from historical_results import write_baseline_summary
+        write_baseline_summary(rows, baseline_summary, tuple(registry()['baseline_seeds']))
     stream = open(output, 'w', newline='') if output else sys.stdout
     try:
         writer = csv.DictWriter(stream, fieldnames=fields)
         writer.writeheader()
-        writer.writerows(rows)
+        writer.writerows({key: row.get(key, '') for key in fields} for row in rows)
     finally:
         if output:
             stream.close()
@@ -264,11 +285,14 @@ def main(argv=None):
         p.add_argument('--protocol', choices=list(registry()['protocols']) + list(registry().get('archived_protocols', {})),
                        default=registry()['default_protocol'], help='default: p150u; old protocols require --allow-archived')
         p.add_argument('--allow-archived', action='store_true', help='explicit opt-in to historical protocols')
-        p.add_argument('--init', choices=('e1', 'e2', 'e3'), default='e2')
+        p.add_argument('--init', choices=('e1', 'e2', 'e3'), default=registry()['default_init'])
         p.add_argument('--seed', type=int, default=42)
         p.add_argument('--res', type=int, default=640)
         p.add_argument('--variant', default='default')
         p.add_argument('--device', default='xpu')
+        p.add_argument('--precision', choices=('auto', 'fp32', 'fp16', 'bf16'), default=None)
+        p.add_argument('--runtime-python', default=os.environ.get('RUNTIME_PYTHON'),
+                       help='absolute Python executable for ALL training/eval/checkpoint commands')
         p.add_argument('--data-root', default=os.environ.get('VISDRONE_ROOT'))
         p.add_argument('--weights-dir', default=os.environ.get('WEIGHTS_DIR', str(PROJECT)))
         p.add_argument('--out-root', default=str(PROJECT / 'outputs/benchmark'))
@@ -276,6 +300,8 @@ def main(argv=None):
     p = commands.add_parser('summarize', help='export per-run/per-weight rows; no mixed-protocol averaging')
     p.add_argument('--out-root', default=str(PROJECT / 'outputs/benchmark'))
     p.add_argument('-o', '--output')
+    p.add_argument('--historical-root', help='include legacy P150u runs with original snapshots')
+    p.add_argument('--baseline-summary', help='write isolated E2 seed completion/mean/sample-std JSON')
     args = parser.parse_args(argv)
     try:
         if args.command == 'list':
@@ -284,7 +310,7 @@ def main(argv=None):
                 print(f"{key} {method['revision']:4} {'ready' if ready else 'planned':8} {method['name']}")
             return 0
         if args.command == 'summarize':
-            summarize(args.out_root, args.output)
+            summarize(args.out_root, args.output, args.historical_root, args.baseline_summary)
             return 0
         plan = make_plan(args)
         if args.command == 'plan':

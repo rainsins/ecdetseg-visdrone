@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-13T13:40:04.170387+00:00",
+  "reason": "Complete authorized P150u E2 baseline: resume seed43 epoch41; new seed44; early-stop recovery fixed",
+  "mode": "resume",
+  "init": "e2",
+  "seed": 43,
+  "device": "xpu",
+  "source_sha256": "2ffef357f14c50d87d92292187d16ba7a1bbfcc98bbc3e04fb38becbb6215058",
+  "archive_sha256": "7a808ebbb1b5b9d8d81e0153ac06bc04e74c81ea492e5be1db5a2cad637c7e3a",
+  "inputs": {
+    "train_annotations": {
+      "path": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_train.json",
+      "sha256": "daeb575833311eae89491e131370d3ae34c472b5733b8e8fda90ae4013ac9d9a"
+    },
+    "val_annotations": {
+      "path": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_val.json",
+      "sha256": "502c91bbcdef34822051b1fa8974330b0413e82e4375e3f1c406998b6b09e4b2"
+    },
+    "initial_weights": {
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/ecdet_s.pth",
+      "sha256": "35340a45101d24a094becf8776aeaa327c9e6b37453e5e81dfd2923c134c4619"
+    },
+    "resume_checkpoint": {
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/outputs/p150u/e2_s43/last.pth",
+      "sha256": "d026b8e5472a20c337ee92158ed319b6a9f7fe65a8ad368ab4610bc7c8211405"
+    }
+  },
+  "original_snapshot_sha256": {
+    "config_merged.yml": "fc339f89b64937ea675fd6e1c84cb81cb6eb9d6812770e6c8bb6116a9439256f",
+    "config.dump.err": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "config.yml": "fc339f89b64937ea675fd6e1c84cb81cb6eb9d6812770e6c8bb6116a9439256f",
+    "git_commit.txt": "89923c163b7ffa23b84d3ed78bd175618bf2961214635688481c3711e027002b",
+    "git_status.txt": "988b97c6dce6c050ee8582e29f96c2c0c11fda281352c7996d14ff0fdad89b19",
+    "git_diff.patch": "bcee0d5f63c45359e7104ce92a896199260e4ef8bb93e0d1fdd3664b8b63356d",
+    "pixi.lock.sha256": "9a2a0e638a20683648e497e5548e5e4241e842bb5a8cc83aac5de378d416882c",
+    "start_time.txt": "e070b61677a51b21627d2b6f91bcf98fbea74ade4712e37d17df65396ce651eb",
+    "command.txt": "a8f851d852da7ba6249b5b8f46e7e016158559fc25a4e1a63efab28b19558952"
+  },
+  "historical_source_equivalence": "not asserted"
+}

@@ -1,4 +1,5 @@
 import atexit
+import json
 from datetime import datetime
 from pathlib import Path
 from typing import Dict
@@ -8,6 +9,7 @@ import torch.nn as nn
 
 from ..core import BaseConfig
 from ..misc import dist_utils
+from ..device import activate_device, precision_policy
 
 
 def to(m: nn.Module, device: str):
@@ -41,14 +43,11 @@ class BaseSolver(object):
     def _setup(self):
         """Avoid instantiating unnecessary classes"""
         cfg = self.cfg
-        if cfg.device:
-            device = torch.device(cfg.device)
-        elif torch.cuda.is_available():
-            device = torch.device('cuda')
-        elif getattr(torch, 'xpu', None) is not None and torch.xpu.is_available():
-            device = torch.device('xpu')
-        else:
-            device = torch.device('cpu')
+        device = activate_device(cfg.device)
+        cfg.device = str(device)
+        selected_precision, _ = precision_policy(device, cfg.precision, cfg.use_amp)
+        self.runtime_policy = dict(device_type=device.type, precision=selected_precision)
+        print(f'[runtime] device={device} precision={selected_precision} torch={torch.__version__}')
 
         self.model = cfg.model
 
@@ -66,6 +65,7 @@ class BaseSolver(object):
 
         self.ema = self.to(cfg.ema, device)
         self.scaler = cfg.scaler
+        self.runtime_policy['scaler_enabled'] = self.scaler.is_enabled() if self.scaler is not None else False
 
         self.device = device
         self.last_epoch = self.cfg.last_epoch
@@ -129,6 +129,7 @@ class BaseSolver(object):
 
         # For resume
         state['last_epoch'] = self.last_epoch
+        state['runtime_policy'] = self.runtime_policy
 
         for k, v in self.__dict__.items():
             if hasattr(v, 'state_dict'):
@@ -139,11 +140,27 @@ class BaseSolver(object):
 
     def load_state_dict(self, state):
         """Load state dict, train/eval"""
+        if hasattr(self, 'optimizer'):
+            old_policy = state.get('runtime_policy')
+            if old_policy is not None and old_policy != self.runtime_policy:
+                raise ValueError('Resume backend/precision changed; use tuning in a new run instead')
+            if old_policy is None:
+                evidence_path = self.output_dir / 'runtime.json'
+                evidence = json.loads(evidence_path.read_text()) if evidence_path.exists() else {}
+                if not evidence.get('legacy_policy_verified') or any(
+                        evidence.get(k) != self.runtime_policy[k] for k in ('device_type', 'precision', 'scaler_enabled')):
+                    raise ValueError('Legacy resume requires launcher-verified runtime evidence; use run_exp.sh or tuning in a new directory')
+                print('[runtime] legacy device/policy evidence checked; historical software equivalence is not asserted')
+            if self.scaler is not None and self.scaler.is_enabled() and not state.get('scaler'):
+                raise ValueError('Cannot resume enabled gradient scaling from an empty scaler state; use tuning in a new run')
         if 'last_epoch' in state:
             self.last_epoch = state['last_epoch']
             print(f'Load last_epoch {self.last_epoch}')
 
         for k, v in self.__dict__.items():
+            if k == 'scaler' and not hasattr(self, 'optimizer'):
+                # Evaluation is FP32 and must not restore a training-only scaler.
+                continue
             if hasattr(v, 'load_state_dict') and k in state:
                 v = dist_utils.de_parallel(v)
                 v.load_state_dict(state[k])

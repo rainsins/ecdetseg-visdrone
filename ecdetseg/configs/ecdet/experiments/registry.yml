@@ -3,12 +3,15 @@ schema_version: 1
 protocols:
   p150u: configs/ecdet/ecdet_s_p150u.yml
 default_protocol: p150u
+default_init: e2
+baseline_seeds: [42, 43, 44]
+primary_result: final_ema
 archived_protocols:
   p30u: configs/ecdet/ecdet_s_p30u.yml
   p74u: configs/ecdet/ecdet_s_p74u.yml
 experiments:
   B0:
-    name: Original ECDet baseline
+    name: Project ECDet baseline
     revision: v1
     status: ready
     modules: []

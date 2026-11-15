@@ -94,8 +94,16 @@ class YAMLConfig(BaseConfig):
 
     @property
     def scaler(self, ):
-        if self._scaler is None and self.yaml_cfg.get('use_amp', False):
-            self._scaler = create('scaler', self.global_cfg)
+        if self._scaler is None and self.use_amp and 'scaler' in self.yaml_cfg:
+            configured = self.yaml_cfg.get('scaler', {})
+            if configured.get('device') is not None:
+                from ..device import resolve_device
+                if resolve_device(configured['device']) != resolve_device(self.device):
+                    raise ValueError('scaler.device conflicts with the selected training device')
+            if configured.get('precision', self.precision) != self.precision:
+                raise ValueError('Use top-level precision, not a conflicting scaler.precision')
+            self._scaler = create('scaler', self.global_cfg,
+                                  device=self.device or None, precision=self.precision)
         return super().scaler
 
     @property
@@ -209,4 +217,3 @@ class YAMLConfig(BaseConfig):
                 "'stop_epoch' was not correctly set for training transforms. "
                 "Automatically adjusted to: epochs - 2.",
                 UserWarning)
-        

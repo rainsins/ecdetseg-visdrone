@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-14T08:05:00.919956+00:00",
+  "reason": "Complete authorized P150u E2 baseline: resume seed43 epoch41; new seed44; early-stop recovery fixed",
+  "mode": "cold",
+  "init": "e2",
+  "seed": 44,
+  "device": "xpu",
+  "source_sha256": "2ffef357f14c50d87d92292187d16ba7a1bbfcc98bbc3e04fb38becbb6215058",
+  "archive_sha256": "612516bb2c4f67d801487b05082b4ff1c708b4daf6ccf126c99e31adbfb3a84d",
+  "inputs": {
+    "train_annotations": {
+      "path": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_train.json",
+      "sha256": "daeb575833311eae89491e131370d3ae34c472b5733b8e8fda90ae4013ac9d9a"
+    },
+    "val_annotations": {
+      "path": "/home/rainsin/Projects/Career/Paper/dataset/VisDrone/annotations_VisDrone_val.json",
+      "sha256": "502c91bbcdef34822051b1fa8974330b0413e82e4375e3f1c406998b6b09e4b2"
+    },
+    "initial_weights": {
+      "path": "/home/rainsin/Projects/Career/Paper/EdgeCrafter/ecdetseg/ecdet_s.pth",
+      "sha256": "35340a45101d24a094becf8776aeaa327c9e6b37453e5e81dfd2923c134c4619"
+    }
+  },
+  "original_snapshot_sha256": {
+    "config_merged.yml": "28d67c761e5ae9e609247b9fbe0de12c3686260a5e6d0e67de102fe3d7a6a7b8",
+    "config.dump.err": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "config.yml": "28d67c761e5ae9e609247b9fbe0de12c3686260a5e6d0e67de102fe3d7a6a7b8",
+    "git_commit.txt": "386785192b923f0e522e3135503c60627ce6b67560428620868e5719f7641828",
+    "git_status.txt": "f1800196dd29f36b152298a39d352926bcc6c85a4c4aef3bd4d8ceb53351a42b",
+    "git_diff.patch": "cc4e09b0c9df45fc2f4d59f6e8d9298cf01501bcb7b73eda3f92a163938b07bc",
+    "pixi.lock.sha256": "d788311363f6c2cc3f85f880459567be29eb6c72644f5762fb4143461d285a23",
+    "start_time.txt": "163bc83aedfdda8e69ad4b918c4052f9ce99f9d66b123f1989a4d0661c54e025",
+    "command.txt": "39f317fa9a59da88da914f38aa707a96b6d3a9f76173fe8f6733d2368738ae98"
+  },
+  "historical_source_equivalence": "not asserted"
+}

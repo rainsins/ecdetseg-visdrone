@@ -22,12 +22,13 @@ from .ec_engine import evaluate, train_one_epoch
 class ECSolver(BaseSolver):
 
     def fit(self, ):
-        self.train()
         args = self.cfg
 
         # early-stop fuse (config-gated; absent/disabled -> None => no behaviour change)
         _es = (getattr(self.cfg, 'yaml_cfg', None) or {}).get('early_stop') or {}
         self.early_stopper = EarlyStopper(**_es) if _es.get('enabled') else None
+        # Must exist before BaseSolver.train() loads a resume checkpoint.
+        self.train()
 
         n_parameters, model_stats = stats(self.cfg)
         print(model_stats)
@@ -58,7 +59,7 @@ class ECSolver(BaseSolver):
         top1 = 0
         best_stat = {'epoch': -1, }
         # evaluate again before resume training
-        if self.last_epoch > 0:
+        if self.last_epoch >= 0:
             module = self.ema.module if self.ema else self.model
             test_stats, coco_evaluator = evaluate(
                 module,
@@ -73,11 +74,40 @@ class ECSolver(BaseSolver):
                 best_stat[k] = test_stats[k][0]
                 top1 = test_stats[k][0]
                 print(f'best_stat: {best_stat}')
+            if self.early_stopper is not None:
+                if not self.early_stopper.restored:
+                    metric = test_stats.get('coco_eval_bbox') or test_stats.get('coco_eval_mask')
+                    self.early_stopper.restore_from_log(
+                        self.output_dir / 'log.txt', self.last_epoch,
+                        metric[0] if metric else None)
+                elif self.early_stopper.last_epoch != self.last_epoch:
+                    raise ValueError('Checkpoint epoch and early-stop state are out of sync')
+            # Resume must retain the historical VAL-selected best threshold.
+            log_path = self.output_dir / 'log.txt'
+            if log_path.exists():
+                history = {}
+                for line in log_path.read_text().splitlines():
+                    try:
+                        row = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    if isinstance(row.get('epoch'), int) and row['epoch'] <= self.last_epoch:
+                        history[row['epoch']] = row
+                for previous_epoch, row in sorted(history.items()):
+                    for k in test_stats:
+                        metric = row.get(f'test_{k}')
+                        if metric and metric[0] > best_stat[k]:
+                            best_stat[k] = metric[0]
+                            best_stat['epoch'] = previous_epoch
+                            top1 = max(top1, metric[0])
 
         best_stat_print = best_stat.copy()
         start_time = time.time()
         start_epoch = self.last_epoch + 1
         for epoch in range(start_epoch, args.epochs):
+            if self.early_stopper is not None and self.early_stopper.stopped:
+                print('[early-stop] restored stop decision; no additional training epoch')
+                break
 
             self.train_dataloader.set_epoch(epoch)
             # self.train_dataloader.dataset.set_epoch(epoch)
@@ -87,7 +117,13 @@ class ECSolver(BaseSolver):
             if epoch == stop_aug_epoch:
                 if dist_utils.is_dist_available_and_initialized():
                     torch.distributed.barrier()
-                self.load_resume_state(str(self.output_dir / 'best.pth'))
+                # Rewind model/optimizer/EMA as before, not the patience clock.
+                stopper = self.early_stopper
+                self.early_stopper = None
+                try:
+                    self.load_resume_state(str(self.output_dir / 'best.pth'))
+                finally:
+                    self.early_stopper = stopper
                 self.last_epoch = epoch - 1
 
             train_stats = train_one_epoch(
@@ -113,14 +149,6 @@ class ECSolver(BaseSolver):
 
             self.last_epoch += 1
 
-            if self.output_dir:
-                checkpoint_paths = [self.output_dir / 'last.pth']
-                # extra checkpoint before LR drop and every 100 epochs
-                if (epoch + 1) % args.checkpoint_freq == 0:
-                    checkpoint_paths.append(self.output_dir / f'checkpoint{epoch:04}.pth')
-                for checkpoint_path in checkpoint_paths:
-                    dist_utils.save_on_master(self.state_dict(), checkpoint_path)
-
             module = self.ema.module if self.ema else self.model
             test_stats, coco_evaluator = evaluate(
                 module,
@@ -130,6 +158,14 @@ class ECSolver(BaseSolver):
                 self.evaluator,
                 self.device
             )
+
+            # Commit only evaluated epochs, with this epoch's patience state.
+            should_stop = False
+            if self.early_stopper is not None:
+                metric = test_stats.get('coco_eval_bbox') or test_stats.get('coco_eval_mask')
+                if metric is None:
+                    raise ValueError('Early stopping requires a validation AP metric')
+                should_stop = self.early_stopper.step(epoch, metric[0])
 
             for k in test_stats:
                 if self.writer and dist_utils.is_main_process():
@@ -153,6 +189,13 @@ class ECSolver(BaseSolver):
                 best_stat_print[k] = max(best_stat[k], top1)
                 print(f'best_stat: {best_stat_print}')  # global best
 
+            if self.output_dir:
+                checkpoint_paths = [self.output_dir / 'last.pth']
+                if (epoch + 1) % args.checkpoint_freq == 0:
+                    checkpoint_paths.append(self.output_dir / f'checkpoint{epoch:04}.pth')
+                for checkpoint_path in checkpoint_paths:
+                    dist_utils.save_on_master(self.state_dict(), checkpoint_path)
+
             log_stats = {
                 **{f'train_{k}': v for k, v in train_stats.items()},
                 **{f'test_{k}': v for k, v in test_stats.items()},
@@ -174,11 +217,8 @@ class ECSolver(BaseSolver):
                         for name in filenames:
                             torch.save(coco_evaluator.coco_eval[self.iou_type].eval,
                                     self.output_dir / "eval" / name)
-            # early-stop fuse (monitors EMA mAP@0.5:0.95; no-op when disabled)
-            if self.early_stopper is not None:
-                _m = test_stats.get('coco_eval_bbox') or test_stats.get('coco_eval_mask')
-                if _m is not None and self.early_stopper.step(epoch, _m[0]):
-                    break
+            if should_stop:
+                break
 
             accelerator = getattr(torch, dist_utils.current_device(), None)
             if accelerator is not None:  # Just for clearing up GPU memory. You can remove it if you have enough GPU memory.

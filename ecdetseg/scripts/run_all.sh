@@ -2,14 +2,14 @@
 # ============================================================
 # Sequential P150u-default batch runner (for pm2 / nohup).
 # Single Arc GPU -> ONE experiment at a time. Order: seeds x inits.
-#   SEEDS="42 43 44" INITS="e1 e2 e3" [CONTINUE_ON_FAIL=1] bash scripts/run_all.sh
+#   SEEDS="42 43 44" INITS="e2" [CONTINUE_ON_FAIL=1] bash scripts/run_all.sh
 # Forwards SIGTERM to the in-flight run_exp.sh (which forwards to training).
 # ============================================================
 set -u
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RUN_EXP="${RUN_EXP:-$HERE/run_exp.sh}"
 SEEDS="${SEEDS:-42 43 44}"
-INITS="${INITS:-e1 e2 e3}"
+INITS="${INITS:-e2}"
 CONTINUE_ON_FAIL="${CONTINUE_ON_FAIL:-0}"
 
 CURRENT=""
@@ -31,6 +31,11 @@ for seed in $SEEDS; do
     rc=0; wait "$CURRENT" || rc=$?
     CURRENT=""
     echo "====== run_all: init=$init seed=$seed rc=$rc ======"
+    if [ -n "${SUMMARY_HISTORICAL_ROOT:-}" ]; then
+      "${RUNTIME_PYTHON:-python}" "$HERE/benchmark.py" summarize --historical-root "$SUMMARY_HISTORICAL_ROOT" \
+        -o "$SUMMARY_HISTORICAL_ROOT/results.csv" \
+        --baseline-summary "$SUMMARY_HISTORICAL_ROOT/e2_baseline_summary.json" || exit 5
+    fi
     if [ "$rc" -ne 0 ]; then
       if [ "$CONTINUE_ON_FAIL" != "1" ]; then
         echo "[run_all] stopping on first failure (rc=$rc); CONTINUE_ON_FAIL=1 to keep going"

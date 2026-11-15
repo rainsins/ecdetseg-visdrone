@@ -50,7 +50,11 @@ def train_one_epoch(self_lr_scheduler, lr_scheduler, model: torch.nn.Module, cri
         metas = dict(epoch=epoch, step=i, global_step=global_step, epoch_step=len(data_loader))
 
         if scaler is not None:
-            with torch.autocast(device_type=device.type, dtype=get_amp_dtype(device.type), cache_enabled=True):
+            amp_dtype = getattr(scaler, 'amp_dtype', None)
+            if amp_dtype is None:
+                amp_dtype = get_amp_dtype(device.type)
+            with torch.autocast(device_type=device.type, dtype=amp_dtype,
+                                enabled=amp_dtype != torch.float32, cache_enabled=True):
                 outputs = model(samples, targets=targets)
 
             if torch.isnan(outputs['pred_boxes']).any() or torch.isinf(outputs['pred_boxes']).any():

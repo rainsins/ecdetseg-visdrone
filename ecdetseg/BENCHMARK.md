@@ -4,17 +4,22 @@
 `scripts/benchmark.py`（只依赖标准库和 PyYAML，不导入 torch）。
 真正训练仍由现有 `scripts/run_exp.sh` 负责恢复、重试、信号转发和终评。
 
+设备与运行环境：见 `docs/DEVICE_RUNTIME.md`。新增 `--precision` 和
+`--runtime-python`，解释器选择计入运行身份，精度计入不可变配置；切换后端/精度
+需新 variant。CPU/XPU 已通过有限步真实数据短测，CUDA 尚未实机验证。
+
 ## 唯一活动协议：P150u
 
 后续 B0–B5 使用 P150u，默认 640 输入；150 为最大轮数，保留原早停规则。
 P30u/P74u 已归档，只有显式 `--allow-archived --protocol p74u` 才可选择历史协议。
 640 与 960 仍须分组比较；初始化和 batch 等设置也必须对齐。
+主初始化固定 E2（ecdet_s.pth），seed42/43/44，主结果 final_ema。批量与 PM2 默认只跑 E2。
 
 ## 当前状态
 
 | 编号 | 实验 | 状态 |
 |---|---|---|
-| B0 | 原始 ECDet | 已接入管理入口；不代表本次已完成训练 |
+| B0 | 当前项目 ECDet 基线 | 已接入管理入口；历史完成度见 P150u 汇总 |
 | B1 | 不增强的辅助分支，控制额外监督收益 | planned |
 | B2 | 全图平滑辅助分支 | planned |
 | B3 | HBS 辅助分支 | planned |
@@ -78,8 +83,11 @@ device、weights_dir。完整配置指纹包含优化器、模块参数和数据
 配置树，修改其他实验配置也会要求新的 variant；它不自动判断语义等价。
 
 请始终通过 `benchmark.py run` 恢复受管理实验，直接调用旧启动器会绕过这些
-新增检查。已有 `outputs/p30u` 等历史目录不自动收编；汇总只扫描带
-`benchmark.json` 的新目录。
+新增检查。历史目录不自动收编；默认汇总扫描 `benchmark.json`。
+用 `--historical-root outputs/p150u` 显式纳入旧 P150u 结果，保留原快照及历史来源标识。
+同时指定 `--baseline-summary outputs/p150u/e2_baseline_summary.json` 可导出历史 E2 完成度和
+final_ema 的均值/样本标准差（0–1 单位）。当前历史源一致性不能由现有指纹追认；
+此次恢复另外留存 `resume_history/` 代码与输入证据。详细命令见 `README_exp.md`。
 
 ## 后续模块如何插拔
 

@@ -23,6 +23,8 @@
 #   Legacy P30U/P74U variables remain lower-priority compatibility aliases.
 #   NO_PROGRESS_LIMIT, RETRY_WAIT  optional tunables
 #   EXP_DEVICE      optional train/eval device (default xpu; e.g. cuda:0)
+#   EXP_PRECISION   optional auto/fp32/fp16/bf16 (auto preserves backend defaults)
+#   RUNTIME_PYTHON  absolute executable for training/checkpoint/preflight/eval
 #   PYTHON_BIN      optional test hook: replace `pixi run python train.py`
 #   SKIP_FINAL_EVAL / SKIP_PLOT / FORCE_FINAL_EVAL  optional toggles
 #   FAKE_CKPT_OK, FAKE_*  test hooks (see scripts/fake_train.sh)
@@ -53,6 +55,16 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"            # ecdetseg/
 REPO_ROOT="$(cd "$PROJECT_DIR/.." && pwd)"             # pixi.toml lives here
 MANIFEST="$REPO_ROOT/pixi.toml"
+RUNTIME_PYTHON="${RUNTIME_PYTHON:-}"
+if [ -n "$RUNTIME_PYTHON" ]; then
+  [ -x "$RUNTIME_PYTHON" ] && [[ "$RUNTIME_PYTHON" = /* ]] || { echo 'RUNTIME_PYTHON must be an absolute executable path' >&2; exit 2; }
+  PYTHON_CMD=( "$RUNTIME_PYTHON" )
+else
+  PYTHON_CMD=( pixi run --manifest-path "$MANIFEST" python )
+fi
+# Lightweight configuration tools need no torch; use the chosen interpreter
+# when supplied, retaining the existing system Python for default Pixi runs.
+CONFIG_PYTHON="${RUNTIME_PYTHON:-python}"
 GIT_ROOT="$(cd "$REPO_ROOT" && git rev-parse --show-toplevel 2>/dev/null || echo "$REPO_ROOT")"
 
 # VISDRONE_ROOT is required for a fresh run, but optional when resuming/eval-ing a
@@ -94,6 +106,8 @@ TRAIN_LOG="$OUT_DIR/train.log"
 DONE_FILE="$OUT_DIR/DONE"
 LAST_CKPT="$OUT_DIR/last.pth"
 mkdir -p "$OUT_DIR" "$OUT_DIR/snapshot"
+exec 9>"$OUT_DIR/.run.lock"
+flock -n 9 || { echo "run_exp: experiment is already running: $OUT_DIR" >&2; exit 4; }
 
 # ----- XPU env -----
 export PYTORCH_SYCL_ALLOC_CONF="${PYTORCH_SYCL_ALLOC_CONF:-expandable_segments:True}"
@@ -117,7 +131,7 @@ done
 DATA_OVERRIDES=()
 if [ -n "$SNAP_CFG" ]; then
   while IFS= read -r line; do [ -n "$line" ] && DATA_OVERRIDES+=( "$line" ); done < <(
-    python - "$SNAP_CFG" <<'PY'
+    "$CONFIG_PYTHON" - "$SNAP_CFG" <<'PY'
 import sys, yaml
 d = yaml.safe_load(open(sys.argv[1])) or {}
 def glom(path):
@@ -159,6 +173,7 @@ for entry in "${DATA_OVERRIDES[@]}"; do
 done
 OVERRIDES=()
 OVERRIDES+=( "output_dir=$OUT_DIR" "seed=$SEED" )
+[ -n "${EXP_PRECISION:-}" ] && OVERRIDES+=( "precision=$EXP_PRECISION" )
 OVERRIDES+=( "${DATA_OVERRIDES[@]}" )
 [ "${RES}" != "640" ] && OVERRIDES+=( "eval_spatial_size=[${RES}, ${RES}]" )
 [ ${#EXTRA[@]} -gt 0 ] && OVERRIDES+=( "${EXTRA[@]}" )
@@ -167,8 +182,8 @@ OVERRIDES+=( "${DATA_OVERRIDES[@]}" )
 snapshot() {
   local snap="$OUT_DIR/snapshot"
   [ -f "$snap/command.txt" ] && return 0            # keep the original snapshot
-  ( cd "$PROJECT_DIR" && python scripts/dump_config.py -c "$CONFIG" -u "${OVERRIDES[@]}" ) \
-      > "$snap/config_merged.yml" 2> "$snap/config.dump.err"
+  ( cd "$PROJECT_DIR" && "$CONFIG_PYTHON" scripts/dump_config.py -c "$CONFIG" -u "${OVERRIDES[@]}" ) \
+      > "$snap/config_merged.yml" 2> "$snap/config.dump.err" || return 1
   cp -f "$snap/config_merged.yml" "$snap/config.yml" 2>/dev/null || true
   ( cd "$GIT_ROOT" && git rev-parse HEAD )            > "$snap/git_commit.txt" 2>&1
   ( cd "$GIT_ROOT" && git status --porcelain )        > "$snap/git_status.txt" 2>&1
@@ -192,7 +207,7 @@ ckpt_loadable() {
   [ -f "$1" ] || return 1
   [ "${FAKE_CKPT_OK:-0}" = "1" ] && return 0
   ( cd "$PROJECT_DIR" && \
-    pixi run --manifest-path "$MANIFEST" python - "$1" <<'PY'
+    "${PYTHON_CMD[@]}" - "$1" <<'PY'
 import sys, torch
 try:
     torch.load(sys.argv[1], map_location="cpu", weights_only=True)
@@ -212,7 +227,7 @@ find_resume_ckpt() {
   for c in "${cands[@]:-}"; do
     [ -z "$c" ] && continue
     if ckpt_loadable "$c"; then printf '%s\n' "$c"; return 0; fi
-    log "resume: unusable checkpoint, skipping: $c"
+    log "resume: unusable checkpoint, skipping: $c" >&2
   done
   return 1
 }
@@ -223,30 +238,20 @@ guard_protocol_consistency() {
   # P74u config, where the epochs mismatch silently rewrites stop_epoch).
   local snap="$OUT_DIR/snapshot/config_merged.yml"
   [ -f "$snap" ] || snap="$OUT_DIR/snapshot/config.yml"
-  [ -f "$snap" ] || { log "resume-guard: no snapshot config found; skipping check"; return 0; }
+  [ -f "$snap" ] || { log "resume-guard: no snapshot config found"; return 1; }
   local cur="$OUT_DIR/snapshot/.current_merged.yml"
-  ( cd "$PROJECT_DIR" && python scripts/dump_config.py -c "$CONFIG" -u "${OVERRIDES[@]}" ) \
-      > "$cur" 2>/dev/null || { log "resume-guard: could not expand current config; skipping"; return 0; }
+  ( cd "$PROJECT_DIR" && "$CONFIG_PYTHON" scripts/dump_config.py -c "$CONFIG" -u "${OVERRIDES[@]}" ) \
+      > "$cur" 2>/dev/null || { log "resume-guard: could not expand current config"; return 1; }
   local out rc
-  out="$(python - "$snap" "$cur" <<'PY'
+  out="$("$CONFIG_PYTHON" - "$snap" "$cur" <<'PY'
 import sys, yaml
-KEYS=[('epochs',),('flat_epoch',),('no_aug_epoch',),
-      ('train_dataloader','dataset','transforms','stop_epoch'),
-      ('train_dataloader','dataset','transforms','mosaic_prob'),
-      ('train_dataloader','dataset','transforms','mosaic_epoch'),
-      ('train_dataloader','collate_fn','mixup_prob'),
-      ('train_dataloader','collate_fn','mixup_epoch')]
-def glom(d, path):
-    for k in path:
-        if not isinstance(d, dict) or k not in d:
-            return '<absent>'
-        d = d[k]
-    return d
 def load(p):
     d = yaml.safe_load(open(p)) or {}
-    return {'.'.join(k): glom(d, k) for k in KEYS}
+    for key in ('__include__', 'resume', 'tuning', 'config', 'device', 'summary_dir'):
+        d.pop(key, None)
+    return d
 a = load(sys.argv[1]); b = load(sys.argv[2])
-diff = {k: (a[k], b[k]) for k in a if str(a[k]) != str(b[k])}
+diff = {k: (a.get(k), b.get(k)) for k in a.keys() | b.keys() if a.get(k) != b.get(k)}
 if diff:
     print('PROTOCOL_MISMATCH ' + repr(diff)); sys.exit(4)
 print('PROTOCOL_OK')
@@ -289,7 +294,7 @@ build_cmd() {   # $@ = mode args (-r ckpt | -t ckpt | nothing)
   if [ -n "${PYTHON_BIN:-}" ]; then
     CMD=( "$PYTHON_BIN" "${TRAIN_ARGS[@]}" )
   else
-    CMD=( pixi run --manifest-path "$MANIFEST" python train.py "${TRAIN_ARGS[@]}" )
+    CMD=( "${PYTHON_CMD[@]}" train.py "${TRAIN_ARGS[@]}" )
   fi
 }
 
@@ -304,54 +309,73 @@ run_training() {   # returns train exit code; forwards logs to train.log
 
 do_final_eval() {
   [ "${SKIP_FINAL_EVAL:-0}" = "1" ] && { log "final eval skipped (SKIP_FINAL_EVAL=1)"; return 0; }
-  if [ "${FORCE_FINAL_EVAL:-0}" != "1" ] \
-     && grep -q '"label": "final_ema"' "$OUT_DIR/eval.jsonl" 2>/dev/null \
-     && grep -q '"label": "final_raw"' "$OUT_DIR/eval.jsonl" 2>/dev/null; then
+  if [ "${FORCE_FINAL_EVAL:-0}" != "1" ] && "$CONFIG_PYTHON" - "$SCRIPT_DIR" "$OUT_DIR/eval.jsonl" <<'PY'
+import sys
+from pathlib import Path
+sys.path.insert(0, sys.argv[1])
+from historical_results import read_evaluations, LABELS
+try:
+    complete = set(read_evaluations(Path(sys.argv[2]))) == set(LABELS)
+except (ValueError, OSError):
+    complete = False
+sys.exit(0 if complete else 1)
+PY
+  then
     log "final eval already present and complete ($OUT_DIR/eval.jsonl); skip (FORCE_FINAL_EVAL=1 to redo)."
     return 0
   fi
   log "=== final evaluation on val (final.pth: EMA + raw; best.pth: EMA) ==="
-  : > "$OUT_DIR/eval.jsonl"
+  local pending="$OUT_DIR/.eval.jsonl.pending"
+  : > "$pending"
 
   run_eval() {   # $1=ckpt $2=weights(ema|raw) $3=label $4=note
     # NOTE: keep these two `local` lines separate — `local a="$1" b="...$a..."` would
     # expand $a before `local` assigns it (unbound under `set -u`).
     local ckpt="$1" weights="$2" label="$3" note="$4"
-    local out="$OUT_DIR/eval_${label}.json"
-    [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 0; }
+    local out="$OUT_DIR/.eval_${label}.pending.json"
+    [ -f "$ckpt" ] || { log "eval[$label]: missing $ckpt"; return 1; }
+    rm -f "$out"
+    local rc=0
     if [ -n "${EVAL_BIN:-}" ]; then                    # test hook (no XPU)
       "$EVAL_BIN" -c "$CONFIG" -d "$DEVICE" -r "$ckpt" -o "$out" --weights "$weights" \
-        -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" >> "$TRAIN_LOG" 2>&1
+        -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" >> "$TRAIN_LOG" 2>&1 || rc=$?
     else
       ( cd "$PROJECT_DIR" && \
-        pixi run --manifest-path "$MANIFEST" python scripts/eval_final.py \
+        "${PYTHON_CMD[@]}" scripts/eval_final.py \
           -c "$CONFIG" -d "$DEVICE" -r "$ckpt" -o "$out" --weights "$weights" \
-          -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1
+          -u output_dir="$OUT_DIR" "${OVERRIDES[@]}" ) >> "$TRAIN_LOG" 2>&1 || rc=$?
     fi
-    if [ -f "$out" ]; then
-      python - "$out" "$label" "$note" <<'PY' >> "$OUT_DIR/eval.jsonl"
-import json, sys
+    if [ "$rc" -eq 0 ] && [ -f "$out" ]; then
+      "$CONFIG_PYTHON" - "$out" "$label" "$note" <<'PY' >> "$pending"
+import json, math, sys
 d = json.load(open(sys.argv[1])); d["label"] = sys.argv[2]; d["note"] = sys.argv[3]
+assert d['weights_type'] == ('raw' if sys.argv[2] == 'final_raw' else 'ema')
+assert isinstance(d['epoch'], int)
+assert all(isinstance(d.get(k), (int, float)) and math.isfinite(d[k]) for k in ('AP','AP50','AP75','APS','APM','APL'))
 print(json.dumps(d))
 PY
+      [ "$?" -eq 0 ] || return 1
+      mv "$out" "$OUT_DIR/eval_${label}.json"
       log "eval[$label] -> $(basename "$out")"
     else
       log "eval[$label]: failed (see train.log)"
+      return 1
     fi
   }
 
   # final.pth if present (post-fix); fall back to last.pth for runs predating the fix.
   FINAL_CKPT="$OUT_DIR/final.pth"; [ -f "$FINAL_CKPT" ] || FINAL_CKPT="$OUT_DIR/last.pth"
-  run_eval "$FINAL_CKPT"       "ema" "final_ema" "final weights, EMA (weights_type=ema)"
-  run_eval "$FINAL_CKPT"       "raw" "final_raw" "final weights, raw model (weights_type=raw)"
-  run_eval "$OUT_DIR/best.pth" "ema" "best_ema"  "best.pth: SELECTED ON VAL -> reference only"
+  run_eval "$FINAL_CKPT"       "ema" "final_ema" "final weights, EMA (weights_type=ema)" || return 1
+  run_eval "$FINAL_CKPT"       "raw" "final_raw" "final weights, raw model (weights_type=raw)" || return 1
+  run_eval "$OUT_DIR/best.pth" "ema" "best_ema"  "best.pth: SELECTED ON VAL -> reference only" || return 1
+  mv "$pending" "$OUT_DIR/eval.jsonl"
   log "final eval summary: $OUT_DIR/eval.jsonl"
 }
 
 do_plot() {
   [ "${SKIP_PLOT:-0}" = "1" ] && { log "plot skipped (SKIP_PLOT=1)"; return 0; }
   [ -f "$OUT_DIR/log.txt" ] || { log "plot: no log.txt yet; skip"; return 0; }
-  if ( cd "$PROJECT_DIR" && python scripts/polt.py "$OUT_DIR" ) >> "$TRAIN_LOG" 2>&1; then
+  if ( cd "$PROJECT_DIR" && "$CONFIG_PYTHON" scripts/polt.py "$OUT_DIR" ) >> "$TRAIN_LOG" 2>&1; then
     log "plot -> $OUT_DIR/dfine_curve.png"
   else
     log "plot: polt.py failed (see train.log)"
@@ -359,13 +383,19 @@ do_plot() {
 }
 
 # ============================================================
-snapshot
+snapshot || { echo 'run_exp: snapshot expansion failed' >&2; exit 4; }
+guard_protocol_consistency || exit 4
+if [ -z "${PYTHON_BIN:-}" ]; then
+  ( cd "$PROJECT_DIR" && "${PYTHON_CMD[@]}" scripts/runtime_preflight.py \
+      --device "$DEVICE" --out "$OUT_DIR" ) || exit 4
+fi
 log "=== experiment guardian start | init=$INIT seed=$SEED out=$OUT_DIR ==="
 log "config=$CONFIG tuning=${TUNING:-<none>} res=${RES}"
 
 if [ -f "$DONE_FILE" ]; then
+  guard_protocol_consistency || exit 4
   log "DONE marker already present -> training complete; running final eval only. (delete $DONE_FILE to retrain)"
-  do_final_eval
+  do_final_eval || exit 5
   do_plot
   log "=== experiment guardian done ==="
   exit 0
@@ -383,12 +413,26 @@ while :; do
     fi
     MODE_ARGS=( -r "$RESUME_CKPT" )
     log "attempt #$attempt: resume from $RESUME_CKPT"
-  elif [ -n "$TUNING" ] && [ -f "$TUNING" ]; then
-    MODE_ARGS=( -t "$TUNING" )
-    log "attempt #$attempt: cold start with -t $TUNING"
   else
-    MODE_ARGS=()
-    log "attempt #$attempt: cold start (${INIT}, no -t)"
+    if [ -f "$LAST_CKPT" ] || compgen -G "$OUT_DIR/checkpoint*.pth" >/dev/null || [ -s "$OUT_DIR/log.txt" ]; then
+      log 'ERROR: existing training artifacts but no loadable checkpoint; refusing cold restart.'
+      exit 4
+    fi
+    if [ -n "$TUNING" ]; then
+      [ -f "$TUNING" ] || { log "ERROR: missing initialization weights: $TUNING"; exit 2; }
+      MODE_ARGS=( -t "$TUNING" )
+      log "attempt #$attempt: cold start with -t $TUNING"
+    else
+      MODE_ARGS=()
+      log "attempt #$attempt: cold start (${INIT}, no -t)"
+    fi
+  fi
+  if [ "$attempt" -eq 1 ]; then
+    RECORD_ARGS=( --out "$OUT_DIR" --device "$DEVICE" --init "$INIT" --seed "$SEED"
+                  --reason "${EXECUTION_REASON:-launcher invocation}" )
+    [ -n "${RESUME_CKPT:-}" ] && RECORD_ARGS+=( --checkpoint "$RESUME_CKPT" )
+    [ -f "$TUNING" ] && RECORD_ARGS+=( --weights "$TUNING" )
+    "$CONFIG_PYTHON" "$SCRIPT_DIR/record_execution.py" "${RECORD_ARGS[@]}" >> "$TRAIN_LOG" 2>&1 || exit 4
   fi
 
   MARKER="$OUT_DIR/.attempt_marker"; : > "$MARKER"
@@ -431,7 +475,7 @@ while :; do
 done
 
 # ----- final evaluation (EMA on val; NO test-dev) -----
-do_final_eval
+do_final_eval || exit 5
 do_plot
 
 log "=== experiment guardian done ==="

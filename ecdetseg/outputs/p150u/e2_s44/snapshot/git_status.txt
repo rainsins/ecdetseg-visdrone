@@ -1,0 +1,36 @@
+ M ecdetseg/BENCHMARK.md
+ M ecdetseg/README_exp.md
+ M ecdetseg/configs/ecdet/experiments/registry.yml
+ M ecdetseg/ecosystem.config.js
+ M ecdetseg/engine/early_stop.py
+ M ecdetseg/engine/solver/ec_solver.py
+ M ecdetseg/outputs/p150u/e2_s43/dfine_curve.png
+ M ecdetseg/outputs/p150u/e2_s43/log.txt
+ M ecdetseg/scripts/benchmark.py
+ M ecdetseg/scripts/run_all.sh
+ M ecdetseg/scripts/run_exp.sh
+ M ecdetseg/scripts/test_benchmark.py
+ M ecdetseg/scripts/test_early_stop.py
+ D paper/projects/SET_CVPR2025_spectral_20261110/live_preview/lock.json
+?? competition/
+?? ecdetseg/outputs/p150u/e2_baseline_summary.json
+?? ecdetseg/outputs/p150u/e2_s43/.run.lock
+?? ecdetseg/outputs/p150u/e2_s43/DONE
+?? ecdetseg/outputs/p150u/e2_s43/best.pth.info
+?? ecdetseg/outputs/p150u/e2_s43/eval.jsonl
+?? ecdetseg/outputs/p150u/e2_s43/eval_best_ema.json
+?? ecdetseg/outputs/p150u/e2_s43/eval_final_ema.json
+?? ecdetseg/outputs/p150u/e2_s43/eval_final_raw.json
+?? ecdetseg/outputs/p150u/e2_s43/recovery_backups/
+?? ecdetseg/outputs/p150u/e2_s43/resume_history/
+?? ecdetseg/outputs/p150u/e2_s43/snapshot/.current_merged.yml
+?? ecdetseg/outputs/p150u/e2_s43/summary/events.out.tfevents.1794577207.rainsin.1161811.0
+?? ecdetseg/outputs/p150u/e2_s43/summary/events.out.tfevents.1794643409.rainsin.1523686.0
+?? ecdetseg/outputs/p150u/e2_s43/summary/events.out.tfevents.1794643440.rainsin.1523944.0
+?? ecdetseg/outputs/p150u/e2_s43/summary/events.out.tfevents.1794643470.rainsin.1524163.0
+?? ecdetseg/outputs/p150u/e2_s44/
+?? ecdetseg/outputs/p150u/results.csv
+?? ecdetseg/scripts/historical_results.py
+?? ecdetseg/scripts/record_execution.py
+?? ecdetseg/scripts/test_historical_results.py
+?? ecdetseg/scripts/test_solver_resume.py

@@ -27,7 +27,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("-c", "--config", required=True)
     ap.add_argument("-r", "--resume", required=True)
-    ap.add_argument("-d", "--device", default="xpu")
+    ap.add_argument("-d", "--device", default="auto")
     ap.add_argument("-o", "--out", required=True)
     ap.add_argument("--weights", choices=["ema", "raw", "both"], default="ema")
     ap.add_argument("-u", "--update", nargs="+", default=[])
@@ -39,7 +39,8 @@ def main():
     from engine.solver.ec_engine import evaluate
 
     update = yaml_utils.parse_cli(args.update)
-    cfg = YAMLConfig(args.config, resume=args.resume, device=args.device, **update)
+    update.update(resume=args.resume, device=args.device)
+    cfg = YAMLConfig(args.config, **update)
     # resume supplies the backbone; skip the standalone ViT weights (same as train.py)
     if "ViTAdapter" in cfg.yaml_cfg:
         cfg.yaml_cfg["ViTAdapter"]["skip_load_backbone"] = True
